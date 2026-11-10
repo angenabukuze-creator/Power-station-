@@ -3,869 +3,1387 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#b80000">
-<title>POWER STATION</title>
+<title>POWER STATION - Boutique</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;background:#fff8f0;color:#292020;padding-bottom:75px}
-header{background:#b80000;color:white;text-align:center;padding:20px}
-header h1{color:#ffd700;font-size:27px}
-header p{margin-top:8px}
-button{cursor:pointer}
-.top-button{background:#ffd700;color:#8b0000;border:0;padding:12px 18px;border-radius:7px;font-weight:bold;margin-top:12px}
-.container{max-width:650px;margin:auto;padding:15px}
-.carousel{height:190px;overflow:hidden;border-radius:12px;margin-bottom:18px}
-.slide{display:none;width:100%;height:100%}
-.slide.active{display:block}
-.slide img{width:100%;height:100%;object-fit:cover}
-.welcome{background:#b80000;color:white;padding:22px;text-align:center;border-radius:12px;margin-bottom:18px}
-.welcome h2{color:#ffd700;margin-bottom:10px}
-.social{display:flex;gap:7px;margin-bottom:18px}
-.social a{flex:1;padding:12px 3px;text-align:center;color:white;text-decoration:none;border-radius:7px;font-size:12px;font-weight:bold}
-.whatsapp{background:#128c45}
-.telegram{background:#168ac7}
-.service{background:#8b0000}
-.section-title{color:#a00000;margin:20px 0 12px}
-.auth-box,.panel{display:none;background:white;border:1px solid #e5c9a9;border-radius:12px;padding:16px;margin:18px 0}
-.auth-box h2,.panel h2{color:#a00000;margin-bottom:15px}
-input,select,textarea{width:100%;padding:12px;border:1px solid #ccc;border-radius:7px;margin-bottom:12px;font-size:15px;background:white}
-textarea{min-height:75px}
-.main-button{width:100%;padding:13px;background:#b80000;color:white;border:0;border-radius:7px;font-weight:bold;margin-bottom:10px}
-.switch{text-align:center;color:#a00000;margin-top:10px;cursor:pointer}
-.shortcuts,.products{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.shortcut{background:white;border:1px solid #e6c7a2;padding:16px 6px;text-align:center;border-radius:10px;font-weight:bold}
-.product,.cart-item,.order-card,.payment-card{background:white;border:1px solid #e5d2bd;border-radius:10px;overflow:hidden;margin-bottom:12px}
-.product img{width:100%;height:115px;object-fit:cover}
-.product-info{padding:10px}
-.product h3{font-size:15px;margin-bottom:7px}
-.product p{font-size:13px;margin-bottom:8px}
-.product button{width:100%;background:#b80000;color:white;border:0;padding:10px;border-radius:6px}
-.cart-item,.order-card,.payment-card{padding:12px}
-.cart-item button{padding:7px 12px;margin:5px}
-.price{color:#a00000;font-weight:bold}
-.payment-info{background:#fff1cc;padding:12px;border-radius:8px;margin-bottom:12px;line-height:1.8}
-.account{display:none;background:white;padding:18px;border-radius:10px;margin-top:15px}
-.account p{margin:10px 0}
-footer{text-align:center;padding:20px;font-size:12px;color:#777}
-nav{position:fixed;bottom:0;left:0;width:100%;background:#b80000;display:flex;justify-content:space-around;padding:12px 2px;z-index:10}
-nav button{color:white;background:none;border:0;font-size:12px;font-weight:bold}
+:root {
+  --rouge:#d71920;
+  --jaune:#ffcc00;
+  --blanc:#ffffff;
+  --fond:#fff8ed;
+  --texte:#292929;
+}
+
+* {
+  box-sizing:border-box;
+}
+
+body {
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:var(--fond);
+  color:var(--texte);
+  padding-bottom:75px;
+}
+
+header {
+  background:var(--rouge);
+  color:white;
+  padding:16px;
+  text-align:center;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+header h1 {
+  margin:0;
+  font-size:25px;
+}
+
+header p {
+  margin:5px 0 0;
+}
+
+button {
+  border:none;
+  border-radius:7px;
+  padding:12px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.btn {
+  background:var(--jaune);
+  color:#222;
+}
+
+.btn-red {
+  background:var(--rouge);
+  color:white;
+}
+
+.container {
+  padding:12px;
+  max-width:850px;
+  margin:auto;
+}
+
+.card {
+  background:white;
+  padding:15px;
+  border-radius:12px;
+  margin:12px 0;
+  box-shadow:0 2px 8px #00000012;
+}
+
+input,textarea,select {
+  width:100%;
+  padding:13px;
+  margin:7px 0;
+  border:1px solid #ddd;
+  border-radius:7px;
+  font-size:15px;
+}
+
+h2 {
+  color:var(--rouge);
+  font-size:21px;
+}
+
+.carousel {
+  position:relative;
+  overflow:hidden;
+  border-radius:12px;
+  height:190px;
+  background:#ddd;
+}
+
+.carousel img {
+  width:100%;
+  height:190px;
+  object-fit:cover;
+}
+
+.slide {
+  display:none;
+}
+
+.slide.active {
+  display:block;
+}
+
+.quick {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+}
+
+.quick button {
+  background:var(--jaune);
+  min-height:65px;
+}
+
+.categories {
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding:8px 0;
+}
+
+.categories button {
+  white-space:nowrap;
+  background:#ffe7a0;
+}
+
+.products {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+
+.product {
+  background:white;
+  border-radius:10px;
+  overflow:hidden;
+  box-shadow:0 2px 7px #0002;
+}
+
+.product img {
+  width:100%;
+  height:125px;
+  object-fit:cover;
+  background:#eee;
+}
+
+.product-info {
+  padding:10px;
+}
+
+.product h3 {
+  font-size:15px;
+  margin:4px 0;
+}
+
+.price {
+  color:var(--rouge);
+  font-weight:bold;
+  margin:8px 0;
+}
+
+.hidden {
+  display:none !important;
+}
+
+.payment-box {
+  background:#fff4cc;
+  padding:12px;
+  border-radius:8px;
+  margin:8px 0;
+}
+
+.bottom-nav {
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  background:white;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  box-shadow:0 -2px 10px #0002;
+  z-index:20;
+}
+
+.bottom-nav button {
+  background:white;
+  padding:12px 2px;
+  font-size:12px;
+}
+
+.bottom-nav button.active {
+  color:var(--rouge);
+  background:#fff2c5;
+}
+
+.status {
+  padding:10px;
+  border-radius:7px;
+  margin:8px 0;
+  background:#eee;
+  font-size:14px;
+  overflow-wrap:anywhere;
+}
+
+.success {
+  background:#d9f8df;
+  color:#145b22;
+}
+
+.error {
+  background:#ffe0e0;
+  color:#9b0000;
+}
+
+footer {
+  text-align:center;
+  padding:20px;
+  color:#666;
+}
+
+a {
+  text-decoration:none;
+}
+
+@media(max-width:360px) {
+  .products {
+    grid-template-columns:1fr;
+  }
+}
 </style>
 </head>
 
 <body>
 
 <header>
-<h1>⚡ POWER STATION</h1>
-<p>Votre énergie, notre priorité</p>
-<button class="top-button" onclick="ouvrirInscription()">Inscription / Connexion</button>
+  <h1>⚡ POWER STATION</h1>
+  <p>Votre boutique d'équipements électriques</p>
 </header>
 
 <main class="container">
 
-<div class="carousel">
-<div class="slide active"><img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=900" alt="Panneaux solaires"></div>
-<div class="slide"><img src="https://images.unsplash.com/photo-1592833159155-c62df1b65634?w=900" alt="Équipement électrique"></div>
-<div class="slide"><img src="https://images.unsplash.com/photo-1497440001374-f26997328c1b?w=900" alt="Énergie"></div>
-<div class="slide"><img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=900" alt="Électricité"></div>
-<div class="slide"><img src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=900" alt="Énergie solaire"></div>
-</div>
+<!-- ACCUEIL -->
 
-<section class="welcome">
-<h2>Bienvenue chez POWER STATION</h2>
-<p>Achetez vos panneaux solaires, batteries, câbles, amplificateurs, télévisions, microphones, téléphones, groupes électrogènes et power banks.</p>
+<section id="home">
+
+  <div class="carousel">
+    <div class="slide active">
+      <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=900" alt="Panneaux solaires">
+    </div>
+
+    <div class="slide">
+      <img src="https://images.unsplash.com/photo-1592833159155-c62df1b65634?w=900" alt="Énergie">
+    </div>
+
+    <div class="slide">
+      <img src="https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?w=900" alt="Électricité">
+    </div>
+
+    <div class="slide">
+      <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=900" alt="Énergie électrique">
+    </div>
+
+    <div class="slide">
+      <img src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=900" alt="Énergie solaire">
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Bienvenue chez POWER STATION</h2>
+    <p>Achetez vos équipements électriques et solaires en toute simplicité.</p>
+
+    <div class="quick">
+      <button onclick="showPage('shop')">🛍 Boutique</button>
+      <button onclick="showPage('cart')">🛒 Panier</button>
+      <button onclick="showPage('orders')">📦 Commandes</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Nos communautés</h2>
+
+    <p>
+      <a href="https://chat.whatsapp.com/DzKHiqrdBbPI22W7afe9ps" target="_blank">
+        <button class="btn-red">Rejoindre WhatsApp</button>
+      </a>
+    </p>
+
+    <p>
+      <a href="https://t.me/francscongolais" target="_blank">
+        <button class="btn">Rejoindre Telegram</button>
+      </a>
+    </p>
+  </div>
+
 </section>
 
-<div class="social">
-<a class="whatsapp" href="https://chat.whatsapp.com/DzKHiqrdBbPI22W7afe9ps" target="_blank">WhatsApp</a>
-<a class="telegram" href="https://t.me/francscongolais" target="_blank">Telegram</a>
-<a class="service" href="https://wa.me/243000000000" target="_blank">Service client</a>
-</div>
+<!-- AUTHENTIFICATION -->
 
-<!-- INSCRIPTION -->
+<section id="auth" class="hidden">
 
-<section class="auth-box" id="inscription">
-<h2>Créer un compte</h2>
-<input id="nom" placeholder="Nom complet">
-<input id="numero" type="tel" placeholder="Numéro de téléphone (+243)">
-<input id="password" type="password" placeholder="Mot de passe">
-<input id="confirmation" type="password" placeholder="Confirmer le mot de passe">
-<input id="parrain" placeholder="Code parrain (facultatif)">
-<button class="main-button" onclick="inscrire()">S'INSCRIRE</button>
-<p class="switch" onclick="ouvrirConnexion()">Déjà membre ? Se connecter</p>
+  <div class="card">
+    <h2>Créer un compte</h2>
+
+    <form id="signupForm">
+
+      <input id="fullName"
+        type="text"
+        placeholder="Nom complet"
+        required>
+
+      <input id="signupPhone"
+        type="tel"
+        placeholder="Téléphone : +243..."
+        autocomplete="tel"
+        required>
+
+      <input id="signupPassword"
+        type="password"
+        placeholder="Mot de passe : 6 chiffres"
+        inputmode="numeric"
+        pattern="[0-9]{6}"
+        minlength="6"
+        maxlength="6"
+        required>
+
+      <input id="confirmPassword"
+        type="password"
+        placeholder="Confirmer les 6 chiffres"
+        inputmode="numeric"
+        pattern="[0-9]{6}"
+        minlength="6"
+        maxlength="6"
+        required>
+
+      <input id="referralCode"
+        type="text"
+        placeholder="Code parrain (facultatif)">
+
+      <button class="btn-red" type="submit">
+        Créer mon compte
+      </button>
+
+    </form>
+
+    <div id="signupMessage" class="status hidden"></div>
+  </div>
+
+  <div class="card">
+    <h2>Se connecter</h2>
+
+    <form id="loginForm">
+
+      <input id="loginPhone"
+        type="tel"
+        placeholder="Numéro de téléphone"
+        autocomplete="tel"
+        required>
+
+      <input id="loginPassword"
+        type="password"
+        placeholder="Mot de passe à 6 chiffres"
+        inputmode="numeric"
+        pattern="[0-9]{6}"
+        minlength="6"
+        maxlength="6"
+        required>
+
+      <button class="btn" type="submit">
+        Se connecter
+      </button>
+
+    </form>
+
+    <div id="loginMessage" class="status hidden"></div>
+  </div>
+
 </section>
 
-<!-- CONNEXION -->
+<!-- BOUTIQUE -->
 
-<section class="auth-box" id="connexion">
-<h2>Connexion</h2>
-<input id="numeroConnexion" type="tel" placeholder="Numéro de téléphone (+243)">
-<input id="passwordConnexion" type="password" placeholder="Mot de passe">
-<button class="main-button" onclick="connecter()">SE CONNECTER</button>
-<p class="switch" onclick="ouvrirInscription()">Créer un compte</p>
+<section id="shop" class="hidden">
+
+  <div class="card">
+    <h2>Notre boutique</h2>
+    <p>Découvrez nos équipements disponibles.</p>
+
+    <input id="searchProduct"
+      type="search"
+      placeholder="Rechercher un produit...">
+
+    <div id="categories" class="categories"></div>
+
+    <div id="products" class="products">
+      Chargement des produits...
+    </div>
+
+    <div id="productMessage" class="status hidden"></div>
+  </div>
+
 </section>
-
-<h2 class="section-title">Nos services</h2>
-
-<div class="shortcuts">
-<div class="shortcut" onclick="voirProduits()">🛒 Boutique</div>
-<div class="shortcut" onclick="voirPanier()">🧺 Mon panier</div>
-<div class="shortcut" onclick="voirCommandes()">📦 Mes commandes</div>
-<div class="shortcut" onclick="voirCompte()">👤 Mon compte</div>
-</div>
-
-<h2 class="section-title" id="titreProduits">Nos produits</h2>
-<div class="products" id="listeProduits">Chargement des produits...</div>
 
 <!-- PANIER -->
 
-<section class="panel" id="panier">
-<h2>🧺 Mon panier</h2>
-<div id="contenuPanier"></div>
-<p class="price" id="totalPanier">Total : 0 FC</p>
-<button class="main-button" onclick="ouvrirCommande()">PASSER LA COMMANDE</button>
-</section>
+<section id="cart" class="hidden">
 
-<!-- COMMANDE -->
+  <div class="card">
+    <h2>Mon panier</h2>
 
-<section class="panel" id="commande">
-<h2>📦 Informations de livraison</h2>
-<input id="clientNom" placeholder="Nom complet">
-<input id="clientPhone" placeholder="Téléphone">
-<textarea id="adresse" placeholder="Adresse de livraison"></textarea>
-<textarea id="note" placeholder="Note supplémentaire (facultatif)"></textarea>
-<button class="main-button" onclick="creerCommande()">CONFIRMER MA COMMANDE</button>
+    <div id="cartItems">Votre panier est vide.</div>
+
+    <h3 id="cartTotal">Total : 0 FC</h3>
+
+    <hr>
+
+    <h2>Informations de livraison</h2>
+
+    <input id="customerName"
+      placeholder="Nom du client"
+      required>
+
+    <input id="customerPhone"
+      placeholder="Téléphone"
+      required>
+
+    <textarea id="customerAddress"
+      placeholder="Adresse de livraison"></textarea>
+
+    <textarea id="customerNote"
+      placeholder="Message complémentaire"></textarea>
+
+    <button class="btn-red"
+      onclick="createOrder()">
+      Confirmer ma commande
+    </button>
+
+    <div id="orderMessage" class="status hidden"></div>
+  </div>
+
 </section>
 
 <!-- PAIEMENT -->
 
-<section class="panel" id="paiement">
-<h2>💳 Paiement Mobile Money</h2>
+<section id="payment" class="hidden">
 
-<div class="payment-info">
-<strong>Airtel Money</strong><br>
-973087965 — BASHANGWA<br><br>
-<strong>Orange Money</strong><br>
-899532643 — JEANCQUELINE<br><br>
-<strong>M-Pesa</strong><br>
-0861823718 — REGINA
-</div>
+  <div class="card">
 
-<p id="montantPaiement" class="price"></p>
+    <h2>Déclaration du paiement</h2>
 
-<select id="methodePaiement">
-<option value="Airtel Money">Airtel Money</option>
-<option value="Orange Money">Orange Money</option>
-<option value="M-Pesa">M-Pesa</option>
-</select>
+    <p>Effectuez votre paiement sur l'un des numéros ci-dessous.</p>
 
-<input id="telephonePayeur" placeholder="Numéro ayant effectué le transfert">
-<input id="referencePaiement" placeholder="Référence de transaction">
-<input id="preuvePaiement" placeholder="Lien de preuve de paiement (facultatif)">
+    <div class="payment-box">
+      <strong>Airtel Money</strong><br>
+      973087965<br>
+      Nom : BASHANGWA
+    </div>
 
-<button class="main-button" onclick="envoyerPaiement()">ENVOYER MON PAIEMENT</button>
-<p>Votre paiement sera vérifié par l'administration avant confirmation.</p>
+    <div class="payment-box">
+      <strong>Orange Money</strong><br>
+      899532643<br>
+      Nom : JEANCQUELINE
+    </div>
+
+    <div class="payment-box">
+      <strong>M-Pesa</strong><br>
+      0861823718<br>
+      Nom : REGINA
+    </div>
+
+    <input id="paymentOrderId"
+      type="text"
+      placeholder="Numéro de commande"
+      readonly>
+
+    <select id="paymentMethod">
+      <option value="">Choisir le moyen de paiement</option>
+      <option value="Airtel Money">Airtel Money</option>
+      <option value="Orange Money">Orange Money</option>
+      <option value="M-Pesa">M-Pesa</option>
+    </select>
+
+    <input id="senderPhone"
+      placeholder="Numéro ayant envoyé l'argent">
+
+    <input id="transactionReference"
+      placeholder="Référence de transaction">
+
+    <input id="proofUrl"
+      type="url"
+      placeholder="Lien de preuve de paiement (facultatif)">
+
+    <button class="btn-red"
+      onclick="submitPayment()">
+      Envoyer ma déclaration
+    </button>
+
+    <div id="paymentMessage" class="status hidden"></div>
+
+    <p>
+      Attention : votre paiement doit être vérifié avant validation de la commande.
+    </p>
+
+  </div>
+
 </section>
 
-<!-- HISTORIQUE -->
+<!-- COMMANDES -->
 
-<section class="panel" id="historique">
-<h2>📋 Mes commandes</h2>
-<div id="listeCommandes"></div>
+<section id="orders" class="hidden">
+
+  <div class="card">
+    <h2>Mes commandes</h2>
+    <button class="btn" onclick="loadOrders()">Actualiser</button>
+    <div id="ordersList">Connectez-vous pour consulter vos commandes.</div>
+  </div>
+
 </section>
 
-<!-- COMPTE -->
+<!-- MON COMPTE -->
 
-<section class="account" id="monCompte">
-<h2>👤 Mon compte</h2>
-<p id="nomCompte"></p>
-<p id="telephoneCompte"></p>
-<button class="main-button" onclick="deconnecter()">SE DÉCONNECTER</button>
-</section>
+<section id="account" class="hidden">
 
-<!-- ADMINISTRATION -->
+  <div class="card">
+    <h2>Mon compte</h2>
 
-<section class="panel" id="administration">
-<h2>🔐 Administration</h2>
-<p>Paiements en attente de vérification :</p>
-<button class="main-button" onclick="chargerPaiementsAdmin()">ACTUALISER LES PAIEMENTS</button>
-<div id="listePaiementsAdmin"></div>
+    <div id="accountInfo">
+      Vous n'êtes pas connecté.
+    </div>
+
+    <button class="btn-red" onclick="logout()">
+      Se déconnecter
+    </button>
+  </div>
+
 </section>
 
 </main>
 
 <footer>
-POWER STATION © 2026<br>
-Boutique en ligne - République démocratique du Congo
+  POWER STATION © 2026<br>
+  Tous droits réservés.
 </footer>
 
-<nav>
-<button onclick="allerAccueil()">🏠<br>Accueil</button>
-<button onclick="voirProduits()">🛒<br>Boutique</button>
-<button onclick="voirCommandes()">📦<br>Commandes</button>
-<button onclick="voirCompte()">👤<br>Moi</button>
+<nav class="bottom-nav">
+  <button class="active" onclick="showPage('home',this)">🏠<br>Accueil</button>
+  <button onclick="showPage('shop',this)">🛍<br>Boutique</button>
+  <button onclick="showPage('orders',this)">📦<br>Commandes</button>
+  <button onclick="showPage('account',this)">👤<br>Moi</button>
 </nav>
 
 <script>
 
-/* CONFIGURATION SUPABASE */
+// =======================================
+// CONFIGURATION SUPABASE
+// =======================================
 
-const SUPABASE_URL = "https://ggmsnwsetemhijfybiux.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_M1LJ_gItIR_FbuK6oTPLKA_dZgvFRw6";
+const SUPABASE_URL =
+"https://ggmsnwsetemhijfybiux.supabase.co";
 
-const supabaseClient = window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_ANON_KEY
+const SUPABASE_ANON_KEY =
+"sb_publishable_M1LJ_gItIR_FbuK6oTPLKA_dZgvFRw6";
+
+const db = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
 );
 
-/* VARIABLES */
+// =======================================
+// VARIABLES
+// =======================================
 
-let panier = [];
-let derniereCommande = null;
-let utilisateur = null;
+let currentUser = null;
+let cart = [];
+let allProducts = [];
+let selectedCategory = "Tous";
+let currentOrderId = null;
 
-/* OUTILS */
+const categoryNames = [
+  "Panneaux solaires",
+  "Batteries",
+  "Câbles",
+  "Amplificateurs",
+  "Télévisions",
+  "Microphones",
+  "Téléphones",
+  "Groupes électrogènes",
+  "Power banks"
+];
 
-function formatPhone(numero){
-let n = numero.replace(/\D/g,"");
-if(n.startsWith("243")) return "+"+n;
-if(n.startsWith("0")) n=n.substring(1);
-return "+243"+n;
+// =======================================
+// NAVIGATION
+// =======================================
+
+function showPage(page,button) {
+
+  const pages = [
+    "home","auth","shop","cart",
+    "payment","orders","account"
+  ];
+
+  pages.forEach(id => {
+    document.getElementById(id).classList.add("hidden");
+  });
+
+  document.getElementById(page).classList.remove("hidden");
+
+  document.querySelectorAll(".bottom-nav button")
+    .forEach(b => b.classList.remove("active"));
+
+  if(button) button.classList.add("active");
+
+  if(page === "shop") loadProducts();
+  if(page === "orders") loadOrders();
+  if(page === "account") loadAccount();
+  if(page === "cart") renderCart();
 }
 
-function fc(nombre){
-return Number(nombre).toLocaleString("fr-FR")+" FC";
+// =======================================
+// AFFICHAGE DES MESSAGES
+// =======================================
+
+function message(id,text,type="") {
+
+  const el = document.getElementById(id);
+
+  el.textContent = text;
+  el.className = "status";
+
+  if(type === "success") el.classList.add("success");
+  if(type === "error") el.classList.add("error");
 }
 
-function cacherSections(){
-[
-"inscription","connexion","panier","commande",
-"paiement","historique","monCompte","administration"
-].forEach(id=>{
-document.getElementById(id).style.display="none";
-});
+// =======================================
+// FORMAT DU TELEPHONE
+// =======================================
+
+function formatPhone(value) {
+
+  let phone = value.trim().replace(/[\s()-]/g,"");
+
+  if(phone.startsWith("00")) {
+    phone = "+" + phone.substring(2);
+  }
+
+  if(phone.startsWith("0")) {
+    phone = "+243" + phone.substring(1);
+  }
+
+  if(/^\d/.test(phone)) {
+    phone = "+" + phone;
+  }
+
+  return phone;
 }
 
-function allerVers(id){
-document.getElementById(id).scrollIntoView({behavior:"smooth"});
-}
+// =======================================
+// INSCRIPTION
+// =======================================
 
-function ouvrirInscription(){
-cacherSections();
-document.getElementById("inscription").style.display="block";
-allerVers("inscription");
-}
+document.getElementById("signupForm")
+.addEventListener("submit", async function(e) {
 
-function ouvrirConnexion(){
-cacherSections();
-document.getElementById("connexion").style.display="block";
-allerVers("connexion");
-}
+  e.preventDefault();
 
-/* INSCRIPTION */
+  const name =
+    document.getElementById("fullName").value.trim();
 
-async function inscrire(){
+  const phone =
+    formatPhone(document.getElementById("signupPhone").value);
 
-const nom=document.getElementById("nom").value.trim();
-const numero=document.getElementById("numero").value.trim();
-const password=document.getElementById("password").value;
-const confirmation=document.getElementById("confirmation").value;
-const parrain=document.getElementById("parrain").value.trim();
+  const password =
+    document.getElementById("signupPassword").value;
 
-if(!nom || !numero || !password || !confirmation){
-alert("Remplissez les champs obligatoires.");
-return;
-}
+  const confirmation =
+    document.getElementById("confirmPassword").value;
 
-if(password.length<8){
-alert("Le mot de passe doit contenir au moins 8 caractères.");
-return;
-}
+  const referral =
+    document.getElementById("referralCode").value.trim().toUpperCase();
 
-if(password!==confirmation){
-alert("Les mots de passe ne correspondent pas.");
-return;
-}
+  if(!name) {
+    return message("signupMessage","Veuillez saisir votre nom.","error");
+  }
 
-const {data,error}=await supabaseClient.auth.signUp({
-phone:formatPhone(numero),
-password:password,
-options:{
-data:{
-full_name:nom,
-referral_code:parrain.toUpperCase()
-}
-}
-});
+  if(!/^[0-9]{6}$/.test(password)) {
+    return message("signupMessage","Le mot de passe doit contenir exactement 6 chiffres.","error");
+  }
 
-if(error){
-alert("Erreur : "+error.message);
-return;
-}
+  if(password !== confirmation) {
+    return message("signupMessage","Les mots de passe ne correspondent pas.","error");
+  }
 
-alert("Inscription envoyée. Une confirmation SMS peut être nécessaire.");
-}
+  message("signupMessage","Création du compte en cours...");
 
-/* CONNEXION */
+  const {data,error} = await db.auth.signUp({
 
-async function connecter(){
+    phone: phone,
+    password: password,
 
-const numero=document.getElementById("numeroConnexion").value.trim();
-const password=document.getElementById("passwordConnexion").value;
+    options: {
+      data: {
+        full_name: name,
+        referral_code: referral
+      }
+    }
 
-if(!numero || !password){
-alert("Entrez votre numéro et votre mot de passe.");
-return;
-}
+  });
 
-const {data,error}=await supabaseClient.auth.signInWithPassword({
-phone:formatPhone(numero),
-password:password
-});
+  if(error) {
+    return message("signupMessage",error.message,"error");
+  }
 
-if(error){
-alert("Erreur : "+error.message);
-return;
-}
-
-utilisateur=data.user;
-alert("Connexion réussie !");
-await afficherCompte();
-}
-
-/* COMPTE */
-
-async function afficherCompte(){
-
-const {data,error}=await supabaseClient.auth.getUser();
-
-if(error || !data.user)return;
-
-utilisateur=data.user;
-
-cacherSections();
-
-document.getElementById("monCompte").style.display="block";
-
-document.getElementById("nomCompte").textContent=
-"Nom : "+(utilisateur.user_metadata.full_name || "Client");
-
-document.getElementById("telephoneCompte").textContent=
-"Téléphone : "+(utilisateur.phone || "");
-
-if(utilisateur.app_metadata?.role==="admin"){
-document.getElementById("administration").style.display="block";
-chargerPaiementsAdmin();
-}
-
-allerVers("monCompte");
-}
-
-async function deconnecter(){
-
-const {error}=await supabaseClient.auth.signOut();
-
-if(error){
-alert(error.message);
-return;
-}
-
-utilisateur=null;
-cacherSections();
-alert("Déconnexion réussie.");
-allerAccueil();
-}
-
-/* PRODUITS */
-
-async function chargerProduits(){
-
-const zone=document.getElementById("listeProduits");
-
-const {data,error}=await supabaseClient
-.from("power_station_products")
-.select("id,name,description,image_url,price_fc,stock")
-.eq("is_active",true)
-.order("created_at",{ascending:false});
-
-if(error){
-zone.textContent="Impossible de charger les produits. Vérifiez votre configuration.";
-console.error(error);
-return;
-}
-
-zone.innerHTML="";
-
-if(!data || data.length===0){
-zone.textContent="Aucun produit disponible pour le moment.";
-return;
-}
-
-data.forEach(produit=>{
-
-const carte=document.createElement("div");
-carte.className="product";
-
-const image=document.createElement("img");
-image.src=produit.image_url ||
-"https://images.unsplash.com/photo-1497440001374-f26997328c1b?w=600";
-image.alt=produit.name;
-
-const info=document.createElement("div");
-info.className="product-info";
-
-const titre=document.createElement("h3");
-titre.textContent=produit.name;
-
-const description=document.createElement("p");
-description.textContent=produit.description || "";
-
-const prix=document.createElement("p");
-prix.className="price";
-prix.textContent=fc(produit.price_fc);
-
-const stock=document.createElement("p");
-stock.textContent="Stock : "+produit.stock;
-
-const bouton=document.createElement("button");
-bouton.textContent=produit.stock>0?"Ajouter au panier":"Rupture de stock";
-bouton.disabled=produit.stock<=0;
-
-bouton.onclick=()=>ajouterPanier(produit);
-
-info.append(titre,description,prix,stock,bouton);
-carte.append(image,info);
-zone.appendChild(carte);
-
-});
-}
-
-/* PANIER */
-
-function ajouterPanier(produit){
-
-const existant=panier.find(p=>p.id===produit.id);
-
-if(existant){
-if(existant.quantity>=produit.stock){
-alert("Stock insuffisant.");
-return;
-}
-existant.quantity++;
-}else{
-panier.push({
-id:produit.id,
-name:produit.name,
-price:Number(produit.price_fc),
-stock:produit.stock,
-quantity:1
-});
-}
-
-afficherPanier();
-alert("Produit ajouté au panier !");
-}
-
-function afficherPanier(){
-
-const zone=document.getElementById("contenuPanier");
-zone.innerHTML="";
-
-let total=0;
-
-if(panier.length===0){
-zone.textContent="Votre panier est vide.";
-}
-
-panier.forEach((item,index)=>{
-
-total+=item.price*item.quantity;
-
-const div=document.createElement("div");
-div.className="cart-item";
-
-const titre=document.createElement("strong");
-titre.textContent=item.name;
-
-const montant=document.createElement("p");
-montant.textContent=fc(item.price)+" × "+item.quantity;
-
-const moins=document.createElement("button");
-moins.textContent="-";
-moins.onclick=()=>modifierQuantite(index,-1);
-
-const plus=document.createElement("button");
-plus.textContent="+";
-plus.onclick=()=>modifierQuantite(index,1);
-
-const supprimer=document.createElement("button");
-supprimer.textContent="Supprimer";
-supprimer.onclick=()=>{
-panier.splice(index,1);
-afficherPanier();
-};
-
-div.append(titre,montant,moins,plus,supprimer);
-zone.appendChild(div);
+  if(data.session) {
+    currentUser = data.user;
+    message("signupMessage","Compte créé avec succès !","success");
+    loadAccount();
+  } else {
+    message(
+      "signupMessage",
+      "Demande envoyée. Vérifiez votre téléphone si une confirmation SMS est demandée.",
+      "success"
+    );
+  }
 
 });
 
-document.getElementById("totalPanier").textContent="Total : "+fc(total);
-}
+// =======================================
+// CONNEXION
+// =======================================
 
-function modifierQuantite(index,variation){
+document.getElementById("loginForm")
+.addEventListener("submit", async function(e) {
 
-const item=panier[index];
+  e.preventDefault();
 
-if(item.quantity+variation<=0){
-panier.splice(index,1);
-}else if(item.quantity+variation>item.stock){
-alert("Stock insuffisant.");
-return;
-}else{
-item.quantity+=variation;
-}
+  const phone =
+    formatPhone(document.getElementById("loginPhone").value);
 
-afficherPanier();
-}
+  const password =
+    document.getElementById("loginPassword").value;
 
-function voirPanier(){
-cacherSections();
-document.getElementById("panier").style.display="block";
-afficherPanier();
-allerVers("panier");
-}
+  if(!/^[0-9]{6}$/.test(password)) {
+    return message("loginMessage","Entrez exactement 6 chiffres.","error");
+  }
 
-/* COMMANDE */
+  message("loginMessage","Connexion en cours...");
 
-function ouvrirCommande(){
+  const {data,error} = await db.auth.signInWithPassword({
+    phone,
+    password
+  });
 
-if(panier.length===0){
-alert("Votre panier est vide.");
-return;
-}
+  if(error) {
+    return message("loginMessage",error.message,"error");
+  }
 
-cacherSections();
-document.getElementById("commande").style.display="block";
-allerVers("commande");
-}
+  currentUser = data.user;
 
-async function creerCommande(){
+  message("loginMessage","Connexion réussie !","success");
 
-const {data:{user}}=await supabaseClient.auth.getUser();
+  loadAccount();
 
-if(!user){
-alert("Connectez-vous avant de commander.");
-ouvrirConnexion();
-return;
-}
-
-const nom=document.getElementById("clientNom").value.trim();
-const phone=document.getElementById("clientPhone").value.trim();
-const adresse=document.getElementById("adresse").value.trim();
-const note=document.getElementById("note").value.trim();
-
-if(!nom || !phone || !adresse){
-alert("Remplissez les informations de livraison.");
-return;
-}
-
-const articles=panier.map(item=>({
-product_id:item.id,
-quantity:item.quantity
-}));
-
-const {data,error}=await supabaseClient.rpc(
-"power_station_create_order",
-{
-p_customer_name:nom,
-p_phone:formatPhone(phone),
-p_address:adresse,
-p_note:note,
-p_items:articles
-}
-);
-
-if(error){
-alert("Erreur commande : "+error.message);
-return;
-}
-
-derniereCommande=data;
-
-const total=panier.reduce(
-(sum,item)=>sum+item.price*item.quantity,0
-);
-
-document.getElementById("montantPaiement").textContent=
-"Montant à payer : "+fc(total);
-
-panier=[];
-
-cacherSections();
-document.getElementById("paiement").style.display="block";
-allerVers("paiement");
-}
-
-/* PAIEMENT */
-
-async function envoyerPaiement(){
-
-if(!derniereCommande){
-alert("Aucune commande en attente.");
-return;
-}
-
-const methode=document.getElementById("methodePaiement").value;
-const telephone=document.getElementById("telephonePayeur").value.trim();
-const reference=document.getElementById("referencePaiement").value.trim();
-const preuve=document.getElementById("preuvePaiement").value.trim();
-
-if(!telephone || !reference){
-alert("Entrez le numéro payeur et la référence.");
-return;
-}
-
-const {data,error}=await supabaseClient.rpc(
-"power_station_submit_payment",
-{
-p_order_id:derniereCommande,
-p_method:methode,
-p_sender_phone:formatPhone(telephone),
-p_reference:reference,
-p_proof_path:preuve || null
-}
-);
-
-if(error){
-alert("Erreur paiement : "+error.message);
-return;
-}
-
-alert("Votre déclaration de paiement a été envoyée. Attendez la vérification de l'administrateur.");
-
-derniereCommande=null;
-
-document.getElementById("telephonePayeur").value="";
-document.getElementById("referencePaiement").value="";
-document.getElementById("preuvePaiement").value="";
-
-}
-
-/* HISTORIQUE */
-
-async function chargerCommandes(){
-
-const zone=document.getElementById("listeCommandes");
-
-const {data,error}=await supabaseClient
-.from("power_station_orders")
-.select("*")
-.order("created_at",{ascending:false});
-
-if(error){
-zone.textContent="Impossible de charger les commandes.";
-return;
-}
-
-zone.innerHTML="";
-
-if(!data || data.length===0){
-zone.textContent="Aucune commande.";
-return;
-}
-
-data.forEach(order=>{
-
-const div=document.createElement("div");
-div.className="order-card";
-
-const titre=document.createElement("strong");
-titre.textContent="Commande : "+order.id;
-
-const montant=document.createElement("p");
-montant.textContent="Montant : "+fc(order.total_fc);
-
-const statut=document.createElement("p");
-statut.textContent="Statut : "+order.status;
-
-const date=document.createElement("p");
-date.textContent=new Date(order.created_at).toLocaleString("fr-FR");
-
-div.append(titre,montant,statut,date);
-zone.appendChild(div);
+  setTimeout(() => showPage("account"),700);
 
 });
+
+// =======================================
+// SESSION
+// =======================================
+
+async function checkSession() {
+
+  const {data} = await db.auth.getSession();
+
+  if(data.session) {
+    currentUser = data.session.user;
+  } else {
+    currentUser = null;
+  }
+
 }
 
-async function voirCommandes(){
+db.auth.onAuthStateChange((event,session) => {
 
-const {data:{user}}=await supabaseClient.auth.getUser();
-
-if(!user){
-ouvrirConnexion();
-return;
-}
-
-cacherSections();
-document.getElementById("historique").style.display="block";
-
-await chargerCommandes();
-allerVers("historique");
-}
-
-/* ADMINISTRATION */
-
-async function chargerPaiementsAdmin(){
-
-const {data:{user}}=await supabaseClient.auth.getUser();
-
-if(!user || user.app_metadata?.role!=="admin"){
-alert("Accès administrateur refusé.");
-return;
-}
-
-const zone=document.getElementById("listePaiementsAdmin");
-
-const {data,error}=await supabaseClient
-.from("power_station_payments")
-.select("*")
-.eq("status","pending")
-.order("created_at",{ascending:true});
-
-if(error){
-zone.textContent="Erreur : "+error.message;
-return;
-}
-
-zone.innerHTML="";
-
-if(!data || data.length===0){
-zone.textContent="Aucun paiement en attente.";
-return;
-}
-
-data.forEach(payment=>{
-
-const div=document.createElement("div");
-div.className="payment-card";
-
-const titre=document.createElement("strong");
-titre.textContent="Paiement : "+payment.id;
-
-const montant=document.createElement("p");
-montant.textContent="Montant : "+fc(payment.amount_fc);
-
-const methode=document.createElement("p");
-methode.textContent="Moyen : "+payment.payment_method;
-
-const telephone=document.createElement("p");
-telephone.textContent="Téléphone : "+payment.sender_phone;
-
-const reference=document.createElement("p");
-reference.textContent="Référence : "+(payment.transaction_reference || "Non fournie");
-
-const valider=document.createElement("button");
-valider.className="main-button";
-valider.textContent="VALIDER LE PAIEMENT";
-valider.onclick=()=>traiterPaiement(payment.id,true);
-
-const refuser=document.createElement("button");
-refuser.className="main-button";
-refuser.style.background="#555";
-refuser.textContent="REFUSER LE PAIEMENT";
-refuser.onclick=()=>traiterPaiement(payment.id,false);
-
-div.append(titre,montant,methode,telephone,reference,valider,refuser);
-zone.appendChild(div);
+  currentUser = session ? session.user : null;
 
 });
-}
 
-async function traiterPaiement(id,approuver){
+// =======================================
+// DECONNEXION
+// =======================================
 
-if(!confirm(
-approuver
-?"Confirmer que l'argent a réellement été reçu ?"
-:"Confirmer le refus de ce paiement ?"
-)){
-return;
-}
+async function logout() {
 
-const {data,error}=await supabaseClient.rpc(
-"power_station_review_payment",
-{
-p_payment_id:id,
-p_approve:approuver
-}
-);
+  const {error} = await db.auth.signOut();
 
-if(error){
-alert("Erreur : "+error.message);
-return;
-}
+  if(error) {
+    alert(error.message);
+    return;
+  }
 
-alert(data);
+  currentUser = null;
+  alert("Déconnexion réussie.");
 
-await chargerPaiementsAdmin();
-await chargerProduits();
+  showPage("home");
 
 }
 
-/* NAVIGATION */
+// =======================================
+// COMPTE
+// =======================================
 
-function voirProduits(){
-allerVers("titreProduits");
+async function loadAccount() {
+
+  await checkSession();
+
+  const box = document.getElementById("accountInfo");
+
+  if(!currentUser) {
+    box.textContent = "Veuillez vous connecter.";
+    return;
+  }
+
+  const {data,error} = await db
+    .from("power_station_profiles")
+    .select("full_name,phone")
+    .eq("user_id",currentUser.id)
+    .maybeSingle();
+
+  if(error) {
+    box.textContent = "Impossible de charger votre profil : " + error.message;
+    return;
+  }
+
+  box.innerHTML = `
+    <p><strong>Nom :</strong> ${escapeHTML(data?.full_name || "")}</p>
+    <p><strong>Téléphone :</strong> ${escapeHTML(data?.phone || currentUser.phone || "")}</p>
+    <p><strong>Statut :</strong> Connecté</p>
+  `;
+
 }
 
-async function voirCompte(){
+// =======================================
+// SECURISER LE TEXTE HTML
+// =======================================
 
-const {data:{user}}=await supabaseClient.auth.getUser();
+function escapeHTML(value) {
 
-if(!user){
-ouvrirConnexion();
-return;
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  })[char]);
+
 }
 
-await afficherCompte();
+// =======================================
+// CATEGORIES
+// =======================================
+
+function renderCategories() {
+
+  const box = document.getElementById("categories");
+
+  box.innerHTML = "";
+
+  ["Tous",...categoryNames].forEach(name => {
+
+    const button = document.createElement("button");
+
+    button.textContent = name;
+
+    button.onclick = () => {
+
+      selectedCategory = name;
+
+      renderCategories();
+      renderProducts();
+
+    };
+
+    if(selectedCategory === name) {
+      button.style.background = "#d71920";
+      button.style.color = "white";
+    }
+
+    box.appendChild(button);
+
+  });
+
 }
 
-function allerAccueil(){
-window.scrollTo({top:0,behavior:"smooth"});
+// =======================================
+// CHARGER LES PRODUITS
+// =======================================
+
+async function loadProducts() {
+
+  const box = document.getElementById("products");
+
+  box.textContent = "Chargement des produits...";
+
+  const {data,error} = await db
+    .from("power_station_products")
+    .select("id,name,description,image_url,price_fc,stock")
+    .eq("is_active",true)
+    .order("name");
+
+  if(error) {
+
+    box.textContent = "Erreur de chargement : " + error.message;
+
+    return;
+  }
+
+  allProducts = data || [];
+
+  renderCategories();
+  renderProducts();
+
 }
 
-/* CARROUSEL */
+// =======================================
+// AFFICHER LES PRODUITS
+// =======================================
 
-let slideIndex=0;
+function renderProducts() {
 
-function defilerImages(){
+  const box = document.getElementById("products");
 
-const slides=document.querySelectorAll(".slide");
+  box.innerHTML = "";
 
-slides.forEach(slide=>slide.classList.remove("active"));
+  const search =
+    document.getElementById("searchProduct").value.toLowerCase();
 
-slideIndex++;
+  const filtered = allProducts.filter(product => {
 
-if(slideIndex>=slides.length){
-slideIndex=0;
+    const name = (product.name || "").toLowerCase();
+
+    const description = (product.description || "").toLowerCase();
+
+    const matchesSearch =
+      name.includes(search) || description.includes(search);
+
+    return matchesSearch;
+
+  });
+
+  if(filtered.length === 0) {
+
+    box.textContent =
+      "Aucun produit disponible dans cette sélection. Ajoutez vos produits dans Supabase.";
+
+    return;
+  }
+
+  filtered.forEach(product => {
+
+    const card = document.createElement("div");
+
+    card.className = "product";
+
+    const image = document.createElement("img");
+
+    image.src = product.image_url ||
+      "https://placehold.co/400x300?text=POWER+STATION";
+
+    image.alt = product.name || "Produit";
+
+    image.onerror = () => {
+      image.src = "https://placehold.co/400x300?text=POWER+STATION";
+    };
+
+    const info = document.createElement("div");
+
+    info.className = "product-info";
+
+    const title = document.createElement("h3");
+    title.textContent = product.name;
+
+    const description = document.createElement("p");
+    description.textContent = product.description || "";
+
+    const price = document.createElement("div");
+    price.className = "price";
+    price.textContent =
+      Number(product.price_fc).toLocaleString("fr-FR") + " FC";
+
+    const stock = document.createElement("p");
+    stock.textContent = "Stock : " + product.stock;
+
+    const button = document.createElement("button");
+    button.className = "btn-red";
+    button.textContent = "Ajouter au panier";
+
+    button.disabled = Number(product.stock) <= 0;
+
+    button.onclick = () => addToCart(product);
+
+    info.append(title,description,price,stock,button);
+
+    card.append(image,info);
+
+    box.appendChild(card);
+
+  });
+
 }
 
-slides[slideIndex].classList.add("active");
+document.getElementById("searchProduct")
+.addEventListener("input",renderProducts);
+
+// =======================================
+// PANIER
+// =======================================
+
+function addToCart(product) {
+
+  const existing = cart.find(item => item.id === product.id);
+
+  if(existing) {
+
+    if(existing.quantity >= Number(product.stock)) {
+      alert("Stock insuffisant.");
+      return;
+    }
+
+    existing.quantity++;
+
+  } else {
+
+    if(Number(product.stock) <= 0) {
+      alert("Produit indisponible.");
+      return;
+    }
+
+    cart.push({
+      id:product.id,
+      name:product.name,
+      price:Number(product.price_fc),
+      quantity:1,
+      stock:Number(product.stock)
+    });
+
+  }
+
+  renderCart();
+
+  alert("Produit ajouté au panier.");
+
 }
 
-setInterval(defilerImages,6000);
+function renderCart() {
 
-/* DEMARRAGE */
+  const box = document.getElementById("cartItems");
 
-chargerProduits();
+  box.innerHTML = "";
 
-supabaseClient.auth.getSession().then(async result=>{
-if(result.data.session){
-await afficherCompte();
+  if(cart.length === 0) {
+
+    box.textContent = "Votre panier est vide.";
+
+    document.getElementById("cartTotal").textContent = "Total : 0 FC";
+
+    return;
+  }
+
+  let total = 0;
+
+  cart.forEach(item => {
+
+    const subtotal = item.price * item.quantity;
+
+    total += subtotal;
+
+    const row = document.createElement("div");
+
+    row.className = "payment-box";
+
+    const text = document.createElement("p");
+
+    text.textContent =
+      item.name + " × " + item.quantity + " = " +
+      subtotal.toLocaleString("fr-FR") + " FC";
+
+    const remove = document.createElement("button");
+
+    remove.className = "btn-red";
+    remove.textContent = "Retirer";
+
+    remove.onclick = () => {
+
+      cart = cart.filter(p => p.id !== item.id);
+
+      renderCart();
+
+    };
+
+    row.append(text,remove);
+
+    box.appendChild(row);
+
+  });
+
+  document.getElementById("cartTotal").textContent =
+    "Total : " + total.toLocaleString("fr-FR") + " FC";
+
 }
-});
+
+// =======================================
+// CREER UNE COMMANDE
+// =======================================
+
+async function createOrder() {
+
+  await checkSession();
+
+  if(!currentUser) {
+    alert("Connectez-vous avant de commander.");
+    showPage("auth");
+    return;
+  }
+
+  if(cart.length === 0) {
+    alert("Votre panier est vide.");
+    return;
+  }
+
+  const customerName =
+    document.getElementById("customerName").value.trim();
+
+  const phone =
+    formatPhone(document.getElementById("customerPhone").value);
+
+  const address =
+    document.getElementById("customerAddress").value.trim();
+
+  const note =
+    document.getElementById("customerNote").value.trim();
+
+  if(!customerName || !phone || !address) {
+    alert("Veuillez remplir le nom, téléphone et adresse.");
+    return;
+  }
+
+  const items = cart.map(item => ({
+    product_id:item.id,
+    quantity:item.quantity
+  }));
+
+  message("orderMessage","Enregistrement de la commande...");
+
+  const {data,error} = await db.rpc(
+    "power_station_create_order",
+    {
+      p_customer_name:customerName,
+      p_phone:phone,
+      p_address:address,
+      p_note:note,
+      p_items:items
+    }
+  );
+
+  if(error) {
+
+    return message(
+      "orderMessage",
+      "Erreur de commande : " + error.message,
+      "error"
+    );
+
+  }
+
+  const orderId =
+    typeof data === "string" ? data :
+    data?.id || data?.order_id || data?.orderId;
+
+  if(!orderId) {
+
+    return message(
+      "orderMessage",
+      "Commande envoyée, mais identifiant introuvable. Contactez le service client.",
+      "error"
+    );
+
+  }
+
+  currentOrderId = orderId;
+
+  document.getElementById("paymentOrderId").value = orderId;
+
+  cart = [];
+
+  renderCart();
+
+  message(
+    "orderMessage",
+    "Commande enregistrée. Vous pouvez maintenant déclarer votre paiement.",
+    "success"
+  );
+
+  setTimeout(() => showPage("payment"),1000);
+
+}
+
+// =======================================
+// DECLARER UN PAIEMENT
+// =======================================
+
+async function submitPayment() {
+
+  await checkSession();
+
+  if(!currentUser) {
+    alert("Connectez-vous.");
+    showPage("auth");
+    return;
+  }
+
+  const orderId =
+    document.getElementById("paymentOrderId").value.trim();
+
+  const method =
+    document.getElementById("paymentMethod").value;
+
+  const sender =
+    formatPhone(document.getElementById("senderPhone").value);
+
+  const reference =
+    document.getElementById("transactionReference").value.trim();
+
+  const proof =
+    document.getElementById("proofUrl").value.trim();
+
+  if(!orderId || !method || !sender || !reference) {
+
+    return message(
+      "paymentMessage",
+      "Veuillez remplir tous les champs obligatoires.",
+      "error"
+    );
+
+  }
+
+  const {error} = await db.rpc(
+    "power_station_submit_payment",
+    {
+      p_order_id:orderId,
+      p_method:method,
+      p_sender_phone:sender,
+      p_reference:reference,
+      p_proof_path:proof || null
+    }
+  );
+
+  if(error) {
+
+    return message(
+      "paymentMessage",
+      "Erreur : " + error.message,
+      "error"
+    );
+
+  }
+
+  message(
+    "paymentMessage",
+    "Déclaration envoyée. Votre paiement attend une vérification.",
+    "success"
+  );
+
+}
+
+// =======================================
+// HISTORIQUE COMMANDES
+// =======================================
+
+async function loadOrders() {
+
+  await checkSession();
+
+  const box = document.getElementById("ordersList");
+
+  if(!currentUser) {
+
+    box.textContent = "Connectez-vous pour voir vos commandes.";
+
+    return;
+  }
+
+  box.textContent = "Chargement...";
+
+  const {data,error} = await db
+    .from("power_station_orders")
+    .select("id,total_fc,status,created_at")
+    .eq("user_id",currentUser.id)
+    .order("created_at",{ascending:false});
+
+  if(error) {
+
+    box.textContent = "Erreur : " + error.message;
+
+    return;
+  }
+
+  box.innerHTML = "";
+
+  if(!data || data.length === 0) {
+
+    box.textContent = "Aucune commande pour le moment.";
+
+    return;
+  }
+
+  data.forEach(order => {
+
+    const row = document.createElement("div");
+
+    row.className = "payment-box";
+
+    const title = document.createElement("strong");
+
+    title.textContent = "Commande : " + order.id;
+
+    const total = document.createElement("p");
+
+    total.textContent =
+      "Total : " + Number(order.total_fc).toLocaleString("fr-FR") + " FC";
+
+    const status = document.createElement("p");
+
+    status.textContent = "Statut : " + order.status;
+
+    row.append(title,total,status);
+
+    box.appendChild(row);
+
+  });
+
+}
+
+// =======================================
+// CARROUSEL AUTOMATIQUE
+// =======================================
+
+let slideIndex = 0;
+
+function nextSlide() {
+
+  const slides = document.querySelectorAll(".slide");
+
+  slides.forEach(slide => slide.classList.remove("active"));
+
+  slideIndex++;
+
+  if(slideIndex >= slides.length) {
+    slideIndex = 0;
+  }
+
+  slides[slideIndex].classList.add("active");
+
+}
+
+setInterval(nextSlide,6000);
+
+// =======================================
+// DEMARRAGE
+// =======================================
+
+checkSession();
+
+renderCategories();
 
 </script>
 
