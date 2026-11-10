@@ -9,42 +9,195 @@
 
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#fff8ed;color:#292929;font-family:Arial,sans-serif;padding-bottom:75px}
-header{background:#d71920;color:white;text-align:center;padding:16px;position:sticky;top:0;z-index:10}
+body{
+ margin:0;
+ background:#fff8ed;
+ color:#292929;
+ font-family:Arial,sans-serif;
+ padding-bottom:75px
+}
+header{
+ background:#d71920;
+ color:white;
+ text-align:center;
+ padding:16px;
+ position:sticky;
+ top:0;
+ z-index:10
+}
 header h1{margin:0;font-size:25px}
 header p{margin:5px}
-button{border:0;border-radius:8px;padding:12px;cursor:pointer;font-weight:bold}
+button{
+ border:0;
+ border-radius:8px;
+ padding:12px;
+ cursor:pointer;
+ font-weight:bold
+}
+button:disabled{opacity:.5;cursor:not-allowed}
 .btn{background:#ffcc00;color:#222}
 .red{background:#d71920;color:white}
-.auth-top{width:100%;margin-top:12px;background:#ffcc00;color:#222;font-size:17px;padding:14px}
+.auth-top{
+ width:100%;
+ margin-top:12px;
+ background:#ffcc00;
+ color:#222;
+ font-size:17px;
+ padding:14px
+}
 .container{max-width:850px;margin:auto;padding:12px}
-.card{background:white;padding:15px;border-radius:12px;margin:12px 0;box-shadow:0 2px 8px #0001}
+.card{
+ background:white;
+ padding:15px;
+ border-radius:12px;
+ margin:12px 0;
+ box-shadow:0 2px 8px #0001
+}
 h2{color:#d71920;font-size:21px}
-input,textarea,select{width:100%;padding:13px;margin:7px 0;border:1px solid #ddd;border-radius:7px;font-size:15px}
+input,textarea,select{
+ width:100%;
+ padding:13px;
+ margin:7px 0;
+ border:1px solid #ddd;
+ border-radius:7px;
+ font-size:15px
+}
 .hidden{display:none!important}
-.carousel{height:190px;overflow:hidden;border-radius:12px;background:#ddd}
+.carousel{
+ height:190px;
+ overflow:hidden;
+ border-radius:12px;
+ background:#ddd
+}
 .slide{display:none;height:190px}
 .slide.active{display:block}
 .slide img{width:100%;height:190px;object-fit:cover}
-.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.quick button{background:#ffcc00;min-height:60px}
-.products{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.product{background:white;border-radius:10px;overflow:hidden;box-shadow:0 2px 7px #0002}
-.product img{width:100%;height:125px;object-fit:cover}
+
+.quick{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:10px
+}
+.quick button{
+ background:#ffcc00;
+ min-height:75px;
+ font-size:14px
+}
+.products{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:10px
+}
+.product{
+ background:white;
+ border-radius:10px;
+ overflow:hidden;
+ box-shadow:0 2px 7px #0002
+}
+.product img{
+ width:100%;
+ height:125px;
+ object-fit:cover
+}
 .product-info{padding:10px}
 .product h3{font-size:15px}
 .price{color:#d71920;font-weight:bold}
-.categories{display:flex;gap:8px;overflow-x:auto;padding:8px 0}
-.categories button{white-space:nowrap;background:#ffe7a0}
-.status{padding:10px;border-radius:7px;margin:8px 0;background:#eee;overflow-wrap:anywhere}
+.categories{
+ display:flex;
+ gap:8px;
+ overflow-x:auto;
+ padding:8px 0
+}
+.categories button{
+ white-space:nowrap;
+ background:#ffe7a0
+}
+.status{
+ padding:10px;
+ border-radius:7px;
+ margin:8px 0;
+ background:#eee;
+ overflow-wrap:anywhere
+}
 .success{background:#d9f8df;color:#145b22}
 .error{background:#ffe0e0;color:#9b0000}
-.payment-box{background:#fff4cc;padding:12px;border-radius:8px;margin:8px 0}
-.bottom-nav{position:fixed;bottom:0;left:0;width:100%;background:white;display:grid;grid-template-columns:repeat(4,1fr);box-shadow:0 -2px 10px #0002;z-index:20}
-.bottom-nav button{background:white;padding:12px 2px;font-size:12px}
-.bottom-nav button.active{color:#d71920;background:#fff2c5}
+.payment-box{
+ background:#fff4cc;
+ padding:12px;
+ border-radius:8px;
+ margin:8px 0
+}
+.copy-row{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:8px;
+ background:white;
+ padding:10px;
+ border-radius:8px;
+ margin-top:8px
+}
+.copy-number{
+ font-size:19px;
+ font-weight:bold;
+ color:#d71920;
+ overflow-wrap:anywhere
+}
+.copy-button{
+ background:#d71920;
+ color:white;
+ min-width:90px
+}
+.referral-link{
+ background:#fff4cc;
+ padding:12px;
+ border-radius:8px;
+ overflow-wrap:anywhere;
+ margin:10px 0
+}
+.stat-grid{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:10px
+}
+.stat{
+ background:#fff4cc;
+ padding:15px;
+ border-radius:9px;
+ text-align:center
+}
+.stat strong{
+ display:block;
+ font-size:21px;
+ color:#d71920;
+ margin-top:6px
+}
+.bottom-nav{
+ position:fixed;
+ bottom:0;
+ left:0;
+ width:100%;
+ background:white;
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ box-shadow:0 -2px 10px #0002;
+ z-index:20
+}
+.bottom-nav button{
+ background:white;
+ padding:12px 2px;
+ font-size:12px;
+ border-radius:0
+}
+.bottom-nav button.active{
+ color:#d71920;
+ background:#fff2c5
+}
 footer{text-align:center;padding:20px;color:#666}
-@media(max-width:360px){.products{grid-template-columns:1fr}}
+@media(max-width:360px){
+ .products{grid-template-columns:1fr}
+ .copy-number{font-size:16px}
+}
 </style>
 </head>
 
@@ -54,7 +207,6 @@ footer{text-align:center;padding:20px;color:#666}
 <h1>⚡ POWER STATION</h1>
 <p>Votre boutique d'équipements électriques</p>
 
-<!-- BOUTON INSCRIPTION VISIBLE -->
 <button class="auth-top" onclick="showPage('auth')">
 INSCRIPTION / CONNEXION
 </button>
@@ -90,30 +242,51 @@ INSCRIPTION / CONNEXION
 <button class="red" style="width:100%" onclick="showPage('auth')">
 Créer un compte / Se connecter
 </button>
+</div>
 
-<div class="quick" style="margin-top:12px">
-<button onclick="showPage('shop')">🛍 Boutique</button>
-<button onclick="showPage('cart')">🛒 Panier</button>
-<button onclick="showPage('orders')">📦 Commandes</button>
+<div class="card">
+<h2>Nos services</h2>
+
+<div class="quick">
+
+<button onclick="showPage('shop')">
+🛍️<br>PRODUIT / RECHARGÉ
+</button>
+
+<button onclick="showPage('withdraw')">
+💸<br>RETRAIT
+</button>
+
+<button onclick="showPage('orders')">
+📜<br>HISTORIQUE DE TRANSACTION
+</button>
+
+<button onclick="showPage('active')">
+📦<br>PRODUIT ACTIF
+</button>
+
 </div>
 </div>
 
 <div class="card">
 <h2>Nos communautés</h2>
+
 <p>
 <a href="https://chat.whatsapp.com/DzKHiqrdBbPI22W7afe9ps" target="_blank">
 <button class="red">Rejoindre WhatsApp</button>
 </a>
 </p>
+
 <p>
 <a href="https://t.me/francscongolais" target="_blank">
 <button class="btn">Rejoindre Telegram</button>
 </a>
 </p>
 </div>
+
 </section>
 
-<!-- INSCRIPTION ET CONNEXION -->
+<!-- INSCRIPTION / CONNEXION -->
 <section id="auth" class="hidden">
 
 <div class="card">
@@ -123,7 +296,7 @@ Créer un compte / Se connecter
 
 <input id="fullName" type="text" placeholder="Nom complet" required>
 
-<input id="signupPhone" type="tel" placeholder="Téléphone : +243..." autocomplete="tel" required>
+<input id="signupPhone" type="tel" placeholder="Téléphone : +243..." required>
 
 <input id="signupPassword" type="password"
 placeholder="Mot de passe : 6 chiffres"
@@ -169,29 +342,28 @@ SE CONNECTER
 
 </section>
 
-<!-- BOUTIQUE -->
+<!-- PRODUIT / RECHARGÉ -->
 <section id="shop" class="hidden">
 
 <div class="card">
-<h2>Notre boutique</h2>
-<p>Découvrez nos produits disponibles.</p>
+<h2>Produit / Rechargé</h2>
+
+<p>Découvrez les produits disponibles dans notre boutique.</p>
 
 <input id="searchProduct" type="search" placeholder="Rechercher un produit...">
 
 <div id="categories" class="categories"></div>
 
 <div id="products" class="products">Chargement...</div>
+
 <div id="productMessage" class="status hidden"></div>
 </div>
 
-</section>
-
-<!-- PANIER -->
-<section id="cart" class="hidden">
-
 <div class="card">
 <h2>Mon panier</h2>
+
 <div id="cartItems">Votre panier est vide.</div>
+
 <h3 id="cartTotal">Total : 0 FC</h3>
 
 <hr>
@@ -217,24 +389,34 @@ CONFIRMER MA COMMANDE
 
 <div class="card">
 <h2>Déclaration du paiement</h2>
+
 <p>Effectuez votre paiement sur l'un des numéros suivants.</p>
 
 <div class="payment-box">
-<strong>Airtel Money</strong><br>
-973087965<br>
-BASHANGWA
+<strong>🔴 Airtel Money</strong>
+<div class="copy-row">
+<span class="copy-number">973087965</span>
+<button class="copy-button" onclick="copyText('973087965',this)">COPIER</button>
+</div>
+<p>Nom : BASHANGWA</p>
 </div>
 
 <div class="payment-box">
-<strong>Orange Money</strong><br>
-899532643<br>
-JEANCQUELINE
+<strong>🟠 Orange Money</strong>
+<div class="copy-row">
+<span class="copy-number">899532643</span>
+<button class="copy-button" onclick="copyText('899532643',this)">COPIER</button>
+</div>
+<p>Nom : JEANCQUELINE</p>
 </div>
 
 <div class="payment-box">
-<strong>M-Pesa</strong><br>
-0861823718<br>
-REGINA
+<strong>🟢 M-Pesa</strong>
+<div class="copy-row">
+<span class="copy-number">0861823718</span>
+<button class="copy-button" onclick="copyText('0861823718',this)">COPIER</button>
+</div>
+<p>Nom : REGINA</p>
 </div>
 
 <input id="paymentOrderId" placeholder="Numéro de commande" readonly>
@@ -255,27 +437,158 @@ ENVOYER MA DÉCLARATION
 </button>
 
 <div id="paymentMessage" class="status hidden"></div>
+
 <p>Le paiement sera vérifié avant validation de la commande.</p>
 </div>
 
 </section>
 
-<!-- COMMANDES -->
-<section id="orders" class="hidden">
+<!-- RETRAIT -->
+<section id="withdraw" class="hidden">
+
 <div class="card">
-<h2>Mes commandes</h2>
-<button class="btn" onclick="loadOrders()">Actualiser</button>
-<div id="ordersList">Connectez-vous pour consulter vos commandes.</div>
+<h2>Demande de retrait</h2>
+
+<p>Veuillez vérifier les informations avant toute demande.</p>
+
+<input id="withdrawName" placeholder="Nom du bénéficiaire">
+
+<input id="withdrawPhone" placeholder="Numéro Mobile Money">
+
+<select id="withdrawMethod">
+<option value="">Choisir le moyen de réception</option>
+<option value="Airtel Money">Airtel Money</option>
+<option value="Orange Money">Orange Money</option>
+<option value="M-Pesa">M-Pesa</option>
+</select>
+
+<input id="withdrawAmount" type="number" min="1" placeholder="Montant à retirer en FC">
+
+<div class="status">
+La demande de retrait sera disponible après configuration du traitement des retraits dans Supabase.
 </div>
+
+<button class="red" style="width:100%" onclick="withdrawNotConfigured()">
+ENVOYER MA DEMANDE
+</button>
+
+<div id="withdrawMessage" class="status hidden"></div>
+</div>
+
 </section>
 
-<!-- COMPTE -->
+<!-- HISTORIQUE -->
+<section id="orders" class="hidden">
+
+<div class="card">
+<h2>Historique de transaction</h2>
+
+<button class="btn" onclick="loadOrders()">ACTUALISER</button>
+
+<div id="ordersList">
+Connectez-vous pour consulter vos transactions.
+</div>
+</div>
+
+</section>
+
+<!-- PRODUIT ACTIF -->
+<section id="active" class="hidden">
+
+<div class="card">
+<h2>Mes produits actifs</h2>
+
+<p>Retrouvez ici vos commandes et leurs statuts.</p>
+
+<button class="btn" onclick="loadActiveProducts()">ACTUALISER</button>
+
+<div id="activeProducts">
+Connectez-vous pour consulter vos produits.
+</div>
+</div>
+
+</section>
+
+<!-- EQUIPE -->
+<section id="team" class="hidden">
+
+<div class="card">
+<h2>👥 Mon équipe</h2>
+
+<p>Invitez vos amis avec votre lien personnel d'inscription.</p>
+
+<div class="payment-box">
+<strong>Mon code de parrainage</strong>
+
+<div id="myReferralCode" class="copy-number">
+Chargement...
+</div>
+
+<button class="red" style="width:100%;margin-top:8px"
+onclick="copyReferralCode()">
+COPIER MON CODE
+</button>
+</div>
+
+<div class="payment-box">
+<strong>Mon lien d'inscription</strong>
+
+<div id="myReferralLink" class="referral-link">
+Chargement...
+</div>
+
+<button class="red" style="width:100%"
+onclick="copyReferralLink()">
+COPIER LE LIEN D'INSCRIPTION
+</button>
+
+</div>
+
+<div class="stat-grid">
+
+<div class="stat">
+Membres inscrits
+<strong id="teamRegistered">0</strong>
+</div>
+
+<div class="stat">
+Membres validés
+<strong id="teamValidated">À configurer</strong>
+</div>
+
+<div class="stat">
+Commissions gagnées
+<strong id="teamCommission">À configurer</strong>
+</div>
+
+<div class="stat">
+Mon équipe
+<strong id="teamTotal">0</strong>
+</div>
+
+</div>
+
+<div id="teamMessage" class="status"></div>
+
+</div>
+
+</section>
+
+<!-- MON COMPTE -->
 <section id="account" class="hidden">
+
 <div class="card">
 <h2>Mon compte</h2>
-<div id="accountInfo">Vous n'êtes pas connecté.</div>
-<button class="red" onclick="logout()">SE DÉCONNECTER</button>
+
+<div id="accountInfo">
+Vous n'êtes pas connecté.
 </div>
+
+<button class="red" onclick="logout()" style="width:100%">
+SE DÉCONNECTER
+</button>
+</div>
+
 </section>
 
 </main>
@@ -285,11 +598,25 @@ POWER STATION © 2026<br>
 Tous droits réservés.
 </footer>
 
+<!-- NAVIGATION DU BAS -->
 <nav class="bottom-nav">
-<button class="active" onclick="showPage('home',this)">🏠<br>Accueil</button>
-<button onclick="showPage('shop',this)">🛍<br>Boutique</button>
-<button onclick="showPage('orders',this)">📦<br>Commandes</button>
-<button onclick="showPage('account',this)">👤<br>Moi</button>
+
+<button class="active" onclick="showPage('home',this)">
+🏠<br>Accueil
+</button>
+
+<button onclick="showPage('shop',this)">
+🛍️<br>Produit / Rechargé
+</button>
+
+<button onclick="showPage('team',this)">
+👥<br>Équipe
+</button>
+
+<button onclick="showPage('account',this)">
+👤<br>Moi
+</button>
+
 </nav>
 
 <script>
@@ -313,6 +640,8 @@ let currentUser = null;
 let cart = [];
 let allProducts = [];
 let selectedCategory = "Tous";
+let myReferralCode = "";
+let myReferralLink = "";
 
 const categoryNames = [
 "Panneaux solaires",
@@ -330,44 +659,133 @@ const categoryNames = [
 // NAVIGATION
 // ==================================
 
-function showPage(page,button) {
+function showPage(page,button){
 
 const pages = [
-"home","auth","shop","cart",
-"payment","orders","account"
+"home","auth","shop","payment",
+"orders","active","withdraw","team","account"
 ];
 
-pages.forEach(id => {
+pages.forEach(id=>{
 document.getElementById(id).classList.add("hidden");
 });
 
 document.getElementById(page).classList.remove("hidden");
 
 document.querySelectorAll(".bottom-nav button")
-.forEach(b => b.classList.remove("active"));
+.forEach(b=>b.classList.remove("active"));
 
-if(button) button.classList.add("active");
+if(button){
+button.classList.add("active");
+}else{
+const map={
+home:0,
+shop:1,
+team:2,
+account:3
+};
+const index=map[page];
 
-if(page === "shop") loadProducts();
-if(page === "orders") loadOrders();
-if(page === "account") loadAccount();
-if(page === "cart") renderCart();
+if(index!==undefined){
+document.querySelectorAll(".bottom-nav button")[index]
+.classList.add("active");
+}
+}
+
+if(page==="shop")loadProducts();
+if(page==="orders")loadOrders();
+if(page==="active")loadActiveProducts();
+if(page==="account")loadAccount();
+if(page==="team")loadTeam();
+if(page==="shop")renderCart();
 
 window.scrollTo(0,0);
+
 }
 
 // ==================================
 // MESSAGES
 // ==================================
 
-function message(id,text,type="") {
+function message(id,text,type=""){
 
-const el = document.getElementById(id);
-el.textContent = text;
-el.className = "status";
+const el=document.getElementById(id);
 
-if(type === "success") el.classList.add("success");
-if(type === "error") el.classList.add("error");
+el.textContent=text;
+el.className="status";
+
+if(type==="success")el.classList.add("success");
+if(type==="error")el.classList.add("error");
+
+}
+
+// ==================================
+// COPIER UN TEXTE
+// ==================================
+
+async function copyText(text,button){
+
+try{
+
+if(navigator.clipboard && window.isSecureContext){
+await navigator.clipboard.writeText(text);
+}else{
+
+const input=document.createElement("textarea");
+input.value=text;
+document.body.appendChild(input);
+input.select();
+document.execCommand("copy");
+input.remove();
+
+}
+
+const old=button.textContent;
+button.textContent="COPIÉ !";
+
+setTimeout(()=>{
+button.textContent=old;
+},1800);
+
+}catch(error){
+alert("Impossible de copier. Sélectionnez le numéro manuellement.");
+}
+
+}
+
+function copyReferralCode(){
+
+if(!myReferralCode){
+alert("Code parrain indisponible.");
+return;
+}
+
+copyText(myReferralCode,{
+set textContent(value){
+this._text=value;
+},
+get textContent(){
+return this._text||"COPIER";
+}
+});
+
+}
+
+function copyReferralLink(){
+
+if(!myReferralLink){
+alert("Lien indisponible.");
+return;
+}
+
+const fakeButton={
+_text:"COPIER",
+set textContent(v){this._text=v;},
+get textContent(){return this._text;}
+};
+
+copyText(myReferralLink,fakeButton);
+alert("Lien de parrainage copié si votre navigateur autorise la copie.");
 
 }
 
@@ -375,23 +793,32 @@ if(type === "error") el.classList.add("error");
 // TELEPHONE
 // ==================================
 
-function formatPhone(value) {
+function formatPhone(value){
 
-let phone = value.trim().replace(/[\s()-]/g,"");
+let phone=value.trim().replace(/[\s()-]/g,"");
 
-if(phone.startsWith("00")) {
-phone = "+" + phone.substring(2);
+if(phone.startsWith("00")){
+phone="+"+phone.substring(2);
 }
 
-if(phone.startsWith("0")) {
-phone = "+243" + phone.substring(1);
-}
-
-if(/^\d/.test(phone)) {
-phone = "+" + phone;
-}
-
+if(phone.startsWith("+243")){
 return phone;
+}
+
+if(phone.startsWith("243")){
+return "+"+phone;
+}
+
+if(phone.startsWith("0")){
+return "+243"+phone.substring(1);
+}
+
+if(/^[89]\d{8}$/.test(phone)){
+return "+243"+phone;
+}
+
+return phone.startsWith("+")?phone:"+"+phone;
+
 }
 
 // ==================================
@@ -399,31 +826,33 @@ return phone;
 // ==================================
 
 document.getElementById("signupForm")
-.addEventListener("submit",async function(e) {
+.addEventListener("submit",async function(e){
 
 e.preventDefault();
 
-const name = document.getElementById("fullName").value.trim();
-const phone = formatPhone(document.getElementById("signupPhone").value);
-const password = document.getElementById("signupPassword").value;
-const confirmation = document.getElementById("confirmPassword").value;
-const referral = document.getElementById("referralCode").value.trim().toUpperCase();
+const name=document.getElementById("fullName").value.trim();
+const phone=formatPhone(document.getElementById("signupPhone").value);
+const password=document.getElementById("signupPassword").value;
+const confirmation=document.getElementById("confirmPassword").value;
 
-if(!name) {
+const referral=document.getElementById("referralCode").value
+.trim().toUpperCase();
+
+if(!name){
 return message("signupMessage","Veuillez saisir votre nom.","error");
 }
 
-if(!/^[0-9]{6}$/.test(password)) {
+if(!/^[0-9]{6}$/.test(password)){
 return message("signupMessage","Le mot de passe doit contenir exactement 6 chiffres.","error");
 }
 
-if(password !== confirmation) {
+if(password!==confirmation){
 return message("signupMessage","Les mots de passe ne correspondent pas.","error");
 }
 
 message("signupMessage","Création du compte en cours...");
 
-const {data,error} = await db.auth.signUp({
+const {data,error}=await db.auth.signUp({
 
 phone:phone,
 password:password,
@@ -437,16 +866,22 @@ referral_code:referral
 
 });
 
-if(error) {
+if(error){
 return message("signupMessage",error.message,"error");
 }
 
-if(data.session) {
-currentUser = data.user;
+if(data.session){
+
+currentUser=data.user;
+
 message("signupMessage","Compte créé avec succès !","success");
-loadAccount();
-} else {
-message("signupMessage","Demande envoyée. Vérifiez votre téléphone si une confirmation SMS est demandée.","success");
+
+}else{
+
+message("signupMessage",
+"Inscription envoyée. Vérifiez votre téléphone si un SMS de confirmation est demandé.",
+"success");
+
 }
 
 });
@@ -456,33 +891,36 @@ message("signupMessage","Demande envoyée. Vérifiez votre téléphone si une co
 // ==================================
 
 document.getElementById("loginForm")
-.addEventListener("submit",async function(e) {
+.addEventListener("submit",async function(e){
 
 e.preventDefault();
 
-const phone = formatPhone(document.getElementById("loginPhone").value);
-const password = document.getElementById("loginPassword").value;
+const phone=formatPhone(
+document.getElementById("loginPhone").value
+);
 
-if(!/^[0-9]{6}$/.test(password)) {
+const password=document.getElementById("loginPassword").value;
+
+if(!/^[0-9]{6}$/.test(password)){
 return message("loginMessage","Entrez exactement 6 chiffres.","error");
 }
 
 message("loginMessage","Connexion en cours...");
 
-const {data,error} = await db.auth.signInWithPassword({
+const {data,error}=await db.auth.signInWithPassword({
 phone:phone,
 password:password
 });
 
-if(error) {
+if(error){
 return message("loginMessage",error.message,"error");
 }
 
-currentUser = data.user;
+currentUser=data.user;
 
 message("loginMessage","Connexion réussie !","success");
 
-setTimeout(() => showPage("account"),700);
+setTimeout(()=>showPage("account"),700);
 
 });
 
@@ -490,33 +928,37 @@ setTimeout(() => showPage("account"),700);
 // SESSION
 // ==================================
 
-async function checkSession() {
+async function checkSession(){
 
-const {data} = await db.auth.getSession();
+const {data}=await db.auth.getSession();
 
-currentUser = data.session ? data.session.user : null;
+currentUser=data.session?data.session.user:null;
+
+return currentUser;
 
 }
 
-db.auth.onAuthStateChange((event,session) => {
-currentUser = session ? session.user : null;
+db.auth.onAuthStateChange((event,session)=>{
+currentUser=session?session.user:null;
 });
 
 // ==================================
 // DECONNEXION
 // ==================================
 
-async function logout() {
+async function logout(){
 
-const {error} = await db.auth.signOut();
+const {error}=await db.auth.signOut();
 
-if(error) {
+if(error){
 alert(error.message);
 return;
 }
 
-currentUser = null;
+currentUser=null;
+
 alert("Déconnexion réussie.");
+
 showPage("home");
 
 }
@@ -525,9 +967,9 @@ showPage("home");
 // COMPTE
 // ==================================
 
-function escapeHTML(value) {
+function escapeHTML(value){
 
-return String(value ?? "").replace(/[&<>"']/g,char => ({
+return String(value??"").replace(/[&<>"']/g,char=>({
 "&":"&amp;",
 "<":"&lt;",
 ">":"&gt;",
@@ -537,57 +979,164 @@ return String(value ?? "").replace(/[&<>"']/g,char => ({
 
 }
 
-async function loadAccount() {
+async function loadAccount(){
 
 await checkSession();
 
-const box = document.getElementById("accountInfo");
+const box=document.getElementById("accountInfo");
 
-if(!currentUser) {
-box.textContent = "Veuillez vous connecter.";
+if(!currentUser){
+box.textContent="Veuillez vous connecter.";
 return;
 }
 
-const {data,error} = await db
+const {data,error}=await db
 .from("power_station_profiles")
 .select("full_name,phone")
 .eq("user_id",currentUser.id)
 .maybeSingle();
 
-if(error) {
-box.textContent = "Erreur profil : " + error.message;
+if(error){
+box.textContent="Erreur profil : "+error.message;
 return;
 }
 
-box.innerHTML = `
-<p><strong>Nom :</strong> ${escapeHTML(data?.full_name || "")}</p>
-<p><strong>Téléphone :</strong> ${escapeHTML(data?.phone || currentUser.phone || "")}</p>
+box.innerHTML=`
+<p><strong>Nom :</strong> ${escapeHTML(data?.full_name||"")}</p>
+<p><strong>Téléphone :</strong> ${escapeHTML(data?.phone||currentUser.phone||"")}</p>
 <p><strong>Statut :</strong> Connecté</p>
 `;
 
 }
 
 // ==================================
+// EQUIPE / PARRAINAGE
+// ==================================
+
+async function loadTeam(){
+
+await checkSession();
+
+const codeBox=document.getElementById("myReferralCode");
+const linkBox=document.getElementById("myReferralLink");
+
+if(!currentUser){
+
+codeBox.textContent="Connectez-vous";
+linkBox.textContent="Connectez-vous";
+message("teamMessage","Connectez-vous pour consulter votre équipe.","error");
+
+return;
+
+}
+
+message("teamMessage","Chargement de votre équipe...");
+
+const {data,error}=await db
+.from("power_station_referrals")
+.select("referral_code")
+.eq("user_id",currentUser.id)
+.maybeSingle();
+
+if(error){
+
+codeBox.textContent="Indisponible";
+linkBox.textContent="Indisponible";
+
+message("teamMessage",
+"Erreur de chargement du parrainage : "+error.message,
+"error");
+
+return;
+
+}
+
+myReferralCode=data?.referral_code||"";
+
+if(!myReferralCode){
+
+codeBox.textContent="Aucun code trouvé";
+linkBox.textContent="Aucun lien trouvé";
+
+message("teamMessage",
+"Votre code de parrainage n'est pas encore disponible.",
+"error");
+
+return;
+
+}
+
+myReferralLink=
+window.location.origin+
+window.location.pathname+
+"?ref="+encodeURIComponent(myReferralCode);
+
+codeBox.textContent=myReferralCode;
+linkBox.textContent=myReferralLink;
+
+// Compter les membres inscrits directement parrainés
+
+const {count,countError}=await db
+.from("power_station_referrals")
+.select("user_id",{count:"exact",head:true})
+.eq("referred_by_user_id",currentUser.id);
+
+if(countError){
+
+document.getElementById("teamRegistered").textContent="Erreur";
+
+}else{
+
+document.getElementById("teamRegistered").textContent=count??0;
+document.getElementById("teamTotal").textContent=count??0;
+
+}
+
+document.getElementById("teamValidated").textContent=
+"À configurer";
+
+document.getElementById("teamCommission").textContent=
+"À configurer";
+
+message("teamMessage",
+"Votre lien est prêt. Partagez-le avec vos amis pour les inviter.",
+"success");
+
+}
+
+// ==================================
+// REMPLIR AUTOMATIQUEMENT LE CODE PARRAIN
+// ==================================
+
+const urlParams=new URLSearchParams(window.location.search);
+const referralFromUrl=urlParams.get("ref");
+
+if(referralFromUrl){
+document.getElementById("referralCode").value=
+referralFromUrl.toUpperCase();
+}
+
+// ==================================
 // CATEGORIES
 // ==================================
 
-function renderCategories() {
+function renderCategories(){
 
-const box = document.getElementById("categories");
-box.innerHTML = "";
+const box=document.getElementById("categories");
+box.innerHTML="";
 
-["Tous",...categoryNames].forEach(name => {
+["Tous",...categoryNames].forEach(name=>{
 
-const button = document.createElement("button");
-button.textContent = name;
+const button=document.createElement("button");
+button.textContent=name;
 
-if(selectedCategory === name) {
-button.style.background = "#d71920";
-button.style.color = "white";
+if(selectedCategory===name){
+button.style.background="#d71920";
+button.style.color="white";
 }
 
-button.onclick = () => {
-selectedCategory = name;
+button.onclick=()=>{
+selectedCategory=name;
 renderCategories();
 renderProducts();
 };
@@ -602,89 +1151,96 @@ box.appendChild(button);
 // PRODUITS
 // ==================================
 
-async function loadProducts() {
+async function loadProducts(){
 
-const box = document.getElementById("products");
-box.textContent = "Chargement des produits...";
+const box=document.getElementById("products");
 
-const {data,error} = await db
+box.textContent="Chargement des produits...";
+
+const {data,error}=await db
 .from("power_station_products")
 .select("id,name,description,image_url,price_fc,stock")
 .eq("is_active",true)
 .order("name");
 
-if(error) {
-box.textContent = "Erreur : " + error.message;
+if(error){
+box.textContent="Erreur : "+error.message;
 return;
 }
 
-allProducts = data || [];
+allProducts=data||[];
 
 renderCategories();
 renderProducts();
 
 }
 
-function renderProducts() {
+function renderProducts(){
 
-const box = document.getElementById("products");
-box.innerHTML = "";
+const box=document.getElementById("products");
+box.innerHTML="";
 
-const search = document.getElementById("searchProduct").value.toLowerCase();
+const search=document.getElementById("searchProduct").value.toLowerCase();
 
-const filtered = allProducts.filter(product => {
+const filtered=allProducts.filter(product=>{
 
-const text = (
-(product.name || "") + " " +
-(product.description || "")
+const text=(
+(product.name||"")+" "+
+(product.description||"")
 ).toLowerCase();
 
 return text.includes(search);
 
 });
 
-if(filtered.length === 0) {
-box.textContent = "Aucun produit enregistré pour le moment.";
+if(filtered.length===0){
+box.textContent="Aucun produit disponible pour le moment.";
 return;
 }
 
-filtered.forEach(product => {
+filtered.forEach(product=>{
 
-const card = document.createElement("div");
-card.className = "product";
+const card=document.createElement("div");
+card.className="product";
 
-const image = document.createElement("img");
-image.src = product.image_url || "https://placehold.co/400x300?text=POWER+STATION";
-image.alt = product.name || "Produit";
-image.onerror = () => {
-image.src = "https://placehold.co/400x300?text=POWER+STATION";
+const image=document.createElement("img");
+
+image.src=product.image_url||
+"https://placehold.co/400x300?text=POWER+STATION";
+
+image.alt=product.name||"Produit";
+
+image.onerror=()=>{
+image.src="https://placehold.co/400x300?text=POWER+STATION";
 };
 
-const info = document.createElement("div");
-info.className = "product-info";
+const info=document.createElement("div");
+info.className="product-info";
 
-const title = document.createElement("h3");
-title.textContent = product.name;
+const title=document.createElement("h3");
+title.textContent=product.name;
 
-const description = document.createElement("p");
-description.textContent = product.description || "";
+const description=document.createElement("p");
+description.textContent=product.description||"";
 
-const price = document.createElement("p");
-price.className = "price";
-price.textContent = Number(product.price_fc).toLocaleString("fr-FR") + " FC";
+const price=document.createElement("p");
+price.className="price";
+price.textContent=
+Number(product.price_fc).toLocaleString("fr-FR")+" FC";
 
-const stock = document.createElement("p");
-stock.textContent = "Stock : " + product.stock;
+const stock=document.createElement("p");
+stock.textContent="Stock : "+product.stock;
 
-const button = document.createElement("button");
-button.className = "red";
-button.textContent = "Ajouter au panier";
-button.disabled = Number(product.stock) <= 0;
+const button=document.createElement("button");
+button.className="red";
+button.textContent="Ajouter au panier";
+button.disabled=Number(product.stock)<=0;
 
-button.onclick = () => addToCart(product);
+button.onclick=()=>addToCart(product);
 
 info.append(title,description,price,stock,button);
 card.append(image,info);
+
 box.appendChild(card);
 
 });
@@ -698,22 +1254,22 @@ document.getElementById("searchProduct")
 // PANIER
 // ==================================
 
-function addToCart(product) {
+function addToCart(product){
 
-const existing = cart.find(item => item.id === product.id);
+const existing=cart.find(item=>item.id===product.id);
 
-if(existing) {
+if(existing){
 
-if(existing.quantity >= Number(product.stock)) {
+if(existing.quantity>=Number(product.stock)){
 alert("Stock insuffisant.");
 return;
 }
 
 existing.quantity++;
 
-} else {
+}else{
 
-if(Number(product.stock) <= 0) {
+if(Number(product.stock)<=0){
 alert("Produit indisponible.");
 return;
 }
@@ -729,40 +1285,47 @@ stock:Number(product.stock)
 }
 
 renderCart();
+
 alert("Produit ajouté au panier.");
 
 }
 
-function renderCart() {
+function renderCart(){
 
-const box = document.getElementById("cartItems");
-box.innerHTML = "";
+const box=document.getElementById("cartItems");
+box.innerHTML="";
 
-if(cart.length === 0) {
-box.textContent = "Votre panier est vide.";
-document.getElementById("cartTotal").textContent = "Total : 0 FC";
+if(cart.length===0){
+
+box.textContent="Votre panier est vide.";
+document.getElementById("cartTotal").textContent="Total : 0 FC";
+
 return;
+
 }
 
-let total = 0;
+let total=0;
 
-cart.forEach(item => {
+cart.forEach(item=>{
 
-const subtotal = item.price * item.quantity;
-total += subtotal;
+const subtotal=item.price*item.quantity;
+total+=subtotal;
 
-const row = document.createElement("div");
-row.className = "payment-box";
+const row=document.createElement("div");
+row.className="payment-box";
 
-const text = document.createElement("p");
-text.textContent = item.name + " × " + item.quantity + " = " + subtotal.toLocaleString("fr-FR") + " FC";
+const text=document.createElement("p");
 
-const remove = document.createElement("button");
-remove.className = "red";
-remove.textContent = "Retirer";
+text.textContent=
+item.name+" × "+item.quantity+
+" = "+subtotal.toLocaleString("fr-FR")+" FC";
 
-remove.onclick = () => {
-cart = cart.filter(p => p.id !== item.id);
+const remove=document.createElement("button");
+remove.className="red";
+remove.textContent="Retirer";
+
+remove.onclick=()=>{
+cart=cart.filter(p=>p.id!==item.id);
 renderCart();
 };
 
@@ -771,168 +1334,202 @@ box.appendChild(row);
 
 });
 
-document.getElementById("cartTotal").textContent =
-"Total : " + total.toLocaleString("fr-FR") + " FC";
+document.getElementById("cartTotal").textContent=
+"Total : "+total.toLocaleString("fr-FR")+" FC";
 
 }
 
 // ==================================
-// COMMANDER
+// CREER UNE COMMANDE
 // ==================================
 
-async function createOrder() {
+async function createOrder(){
 
 await checkSession();
 
-if(!currentUser) {
+if(!currentUser){
 alert("Connectez-vous avant de commander.");
 showPage("auth");
 return;
 }
 
-if(cart.length === 0) {
+if(cart.length===0){
 alert("Votre panier est vide.");
 return;
 }
 
-const customerName = document.getElementById("customerName").value.trim();
-const phone = formatPhone(document.getElementById("customerPhone").value);
-const address = document.getElementById("customerAddress").value.trim();
-const note = document.getElementById("customerNote").value.trim();
+const customerName=
+document.getElementById("customerName").value.trim();
 
-if(!customerName || !phone || !address) {
+const phone=
+formatPhone(document.getElementById("customerPhone").value);
+
+const address=
+document.getElementById("customerAddress").value.trim();
+
+const note=
+document.getElementById("customerNote").value.trim();
+
+if(!customerName||!phone||!address){
 alert("Veuillez remplir le nom, le téléphone et l'adresse.");
 return;
 }
 
-const items = cart.map(item => ({
+const items=cart.map(item=>({
 product_id:item.id,
 quantity:item.quantity
 }));
 
 message("orderMessage","Enregistrement de la commande...");
 
-const {data,error} = await db.rpc("power_station_create_order",{
+const {data,error}=await db.rpc("power_station_create_order",{
+
 p_customer_name:customerName,
 p_phone:phone,
 p_address:address,
 p_note:note,
 p_items:items
+
 });
 
-if(error) {
-return message("orderMessage","Erreur : " + error.message,"error");
+if(error){
+return message("orderMessage","Erreur : "+error.message,"error");
 }
 
-const orderId = typeof data === "string"
-? data
-: data?.id || data?.order_id || data?.orderId;
+const orderId=typeof data==="string"
+?data
+:data?.id||data?.order_id||data?.orderId;
 
-if(!orderId) {
-return message("orderMessage","Commande créée, mais identifiant non reconnu. Contactez le service client.","error");
+if(!orderId){
+return message("orderMessage",
+"Commande créée, mais identifiant non reconnu.",
+"error");
 }
 
-document.getElementById("paymentOrderId").value = orderId;
+document.getElementById("paymentOrderId").value=orderId;
 
-cart = [];
+cart=[];
+
 renderCart();
 
-message("orderMessage","Commande enregistrée. Vous pouvez déclarer votre paiement.","success");
+message("orderMessage",
+"Commande enregistrée. Déclarez votre paiement.",
+"success");
 
-setTimeout(() => showPage("payment"),1000);
+setTimeout(()=>showPage("payment"),1000);
 
 }
 
 // ==================================
-// PAIEMENT
+// DECLARATION DU PAIEMENT
 // ==================================
 
-async function submitPayment() {
+async function submitPayment(){
 
 await checkSession();
 
-if(!currentUser) {
+if(!currentUser){
 alert("Connectez-vous.");
 showPage("auth");
 return;
 }
 
-const orderId = document.getElementById("paymentOrderId").value.trim();
-const method = document.getElementById("paymentMethod").value;
-const sender = formatPhone(document.getElementById("senderPhone").value);
-const reference = document.getElementById("transactionReference").value.trim();
-const proof = document.getElementById("proofUrl").value.trim();
+const orderId=
+document.getElementById("paymentOrderId").value.trim();
 
-if(!orderId || !method || !sender || !reference) {
-return message("paymentMessage","Veuillez remplir les champs obligatoires.","error");
+const method=
+document.getElementById("paymentMethod").value;
+
+const sender=
+formatPhone(document.getElementById("senderPhone").value);
+
+const reference=
+document.getElementById("transactionReference").value.trim();
+
+const proof=
+document.getElementById("proofUrl").value.trim();
+
+if(!orderId||!method||!sender||!reference){
+return message("paymentMessage",
+"Veuillez remplir les champs obligatoires.",
+"error");
 }
 
-const {error} = await db.rpc("power_station_submit_payment",{
+const {error}=await db.rpc("power_station_submit_payment",{
+
 p_order_id:orderId,
 p_method:method,
 p_sender_phone:sender,
 p_reference:reference,
-p_proof_path:proof || null
+p_proof_path:proof||null
+
 });
 
-if(error) {
-return message("paymentMessage","Erreur : " + error.message,"error");
+if(error){
+return message("paymentMessage","Erreur : "+error.message,"error");
 }
 
-message("paymentMessage","Déclaration envoyée. Votre paiement attend une vérification.","success");
+message("paymentMessage",
+"Déclaration envoyée. Votre paiement attend une vérification.",
+"success");
 
 }
 
 // ==================================
-// HISTORIQUE
+// HISTORIQUE DES TRANSACTIONS
 // ==================================
 
-async function loadOrders() {
+async function loadOrders(){
 
 await checkSession();
 
-const box = document.getElementById("ordersList");
+const box=document.getElementById("ordersList");
 
-if(!currentUser) {
-box.textContent = "Connectez-vous pour consulter vos commandes.";
+if(!currentUser){
+box.textContent="Connectez-vous pour consulter vos transactions.";
 return;
 }
 
-box.textContent = "Chargement...";
+box.textContent="Chargement...";
 
-const {data,error} = await db
+const {data,error}=await db
 .from("power_station_orders")
 .select("id,total_fc,status,created_at")
 .eq("user_id",currentUser.id)
 .order("created_at",{ascending:false});
 
-if(error) {
-box.textContent = "Erreur : " + error.message;
+if(error){
+box.textContent="Erreur : "+error.message;
 return;
 }
 
-box.innerHTML = "";
+box.innerHTML="";
 
-if(!data || data.length === 0) {
-box.textContent = "Aucune commande pour le moment.";
+if(!data||data.length===0){
+box.textContent="Aucune transaction pour le moment.";
 return;
 }
 
-data.forEach(order => {
+data.forEach(order=>{
 
-const row = document.createElement("div");
-row.className = "payment-box";
+const row=document.createElement("div");
+row.className="payment-box";
 
-const title = document.createElement("strong");
-title.textContent = "Commande : " + order.id;
+const title=document.createElement("strong");
+title.textContent="Commande : "+order.id;
 
-const total = document.createElement("p");
-total.textContent = "Total : " + Number(order.total_fc).toLocaleString("fr-FR") + " FC";
+const total=document.createElement("p");
+total.textContent=
+"Total : "+Number(order.total_fc).toLocaleString("fr-FR")+" FC";
 
-const status = document.createElement("p");
-status.textContent = "Statut : " + order.status;
+const status=document.createElement("p");
+status.textContent="Statut : "+order.status;
 
-row.append(title,total,status);
+const date=document.createElement("p");
+date.textContent=
+"Date : "+new Date(order.created_at).toLocaleString("fr-FR");
+
+row.append(title,total,status,date);
 box.appendChild(row);
 
 });
@@ -940,21 +1537,91 @@ box.appendChild(row);
 }
 
 // ==================================
+// PRODUITS ACTIFS
+// ==================================
+
+async function loadActiveProducts(){
+
+await checkSession();
+
+const box=document.getElementById("activeProducts");
+
+if(!currentUser){
+box.textContent="Connectez-vous pour consulter vos produits.";
+return;
+}
+
+box.textContent="Chargement...";
+
+const {data,error}=await db
+.from("power_station_orders")
+.select("id,total_fc,status,created_at")
+.eq("user_id",currentUser.id)
+.order("created_at",{ascending:false});
+
+if(error){
+box.textContent="Erreur : "+error.message;
+return;
+}
+
+box.innerHTML="";
+
+const activeOrders=(data||[]).filter(order=>
+["paid","approved","active","completed","validated"]
+.includes(String(order.status).toLowerCase())
+);
+
+if(activeOrders.length===0){
+box.textContent="Aucun produit validé ou actif pour le moment.";
+return;
+}
+
+activeOrders.forEach(order=>{
+
+const row=document.createElement("div");
+row.className="payment-box";
+
+row.innerHTML=`
+<strong>Commande validée</strong>
+<p>Numéro : ${escapeHTML(order.id)}</p>
+<p>Montant : ${Number(order.total_fc).toLocaleString("fr-FR")} FC</p>
+<p>Statut : ${escapeHTML(order.status)}</p>
+`;
+
+box.appendChild(row);
+
+});
+
+}
+
+// ==================================
+// RETRAIT
+// ==================================
+
+function withdrawNotConfigured(){
+
+message("withdrawMessage",
+"Le traitement des retraits n'est pas encore connecté à Supabase. Aucune demande ni aucun débit n'a été effectué.",
+"error");
+
+}
+
+// ==================================
 // CARROUSEL
 // ==================================
 
-let slideIndex = 0;
+let slideIndex=0;
 
-function nextSlide() {
+function nextSlide(){
 
-const slides = document.querySelectorAll(".slide");
+const slides=document.querySelectorAll(".slide");
 
-slides.forEach(slide => slide.classList.remove("active"));
+slides.forEach(slide=>slide.classList.remove("active"));
 
 slideIndex++;
 
-if(slideIndex >= slides.length) {
-slideIndex = 0;
+if(slideIndex>=slides.length){
+slideIndex=0;
 }
 
 slides[slideIndex].classList.add("active");
@@ -969,6 +1636,10 @@ setInterval(nextSlide,6000);
 
 checkSession();
 renderCategories();
+
+if(referralFromUrl){
+showPage("auth");
+}
 
 </script>
 
