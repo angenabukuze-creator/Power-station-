@@ -3,569 +3,300 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>POWER STATION - Boutique</title>
+<title>POWER STATION</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-:root {
-  --rouge:#d71920;
-  --jaune:#ffcc00;
-  --blanc:#ffffff;
-  --fond:#fff8ed;
-  --texte:#292929;
-}
-
-* {
-  box-sizing:border-box;
-}
-
-body {
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:var(--fond);
-  color:var(--texte);
-  padding-bottom:75px;
-}
-
-header {
-  background:var(--rouge);
-  color:white;
-  padding:16px;
-  text-align:center;
-  position:sticky;
-  top:0;
-  z-index:10;
-}
-
-header h1 {
-  margin:0;
-  font-size:25px;
-}
-
-header p {
-  margin:5px 0 0;
-}
-
-button {
-  border:none;
-  border-radius:7px;
-  padding:12px;
-  cursor:pointer;
-  font-weight:bold;
-}
-
-.btn {
-  background:var(--jaune);
-  color:#222;
-}
-
-.btn-red {
-  background:var(--rouge);
-  color:white;
-}
-
-.container {
-  padding:12px;
-  max-width:850px;
-  margin:auto;
-}
-
-.card {
-  background:white;
-  padding:15px;
-  border-radius:12px;
-  margin:12px 0;
-  box-shadow:0 2px 8px #00000012;
-}
-
-input,textarea,select {
-  width:100%;
-  padding:13px;
-  margin:7px 0;
-  border:1px solid #ddd;
-  border-radius:7px;
-  font-size:15px;
-}
-
-h2 {
-  color:var(--rouge);
-  font-size:21px;
-}
-
-.carousel {
-  position:relative;
-  overflow:hidden;
-  border-radius:12px;
-  height:190px;
-  background:#ddd;
-}
-
-.carousel img {
-  width:100%;
-  height:190px;
-  object-fit:cover;
-}
-
-.slide {
-  display:none;
-}
-
-.slide.active {
-  display:block;
-}
-
-.quick {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
-}
-
-.quick button {
-  background:var(--jaune);
-  min-height:65px;
-}
-
-.categories {
-  display:flex;
-  gap:8px;
-  overflow-x:auto;
-  padding:8px 0;
-}
-
-.categories button {
-  white-space:nowrap;
-  background:#ffe7a0;
-}
-
-.products {
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:10px;
-}
-
-.product {
-  background:white;
-  border-radius:10px;
-  overflow:hidden;
-  box-shadow:0 2px 7px #0002;
-}
-
-.product img {
-  width:100%;
-  height:125px;
-  object-fit:cover;
-  background:#eee;
-}
-
-.product-info {
-  padding:10px;
-}
-
-.product h3 {
-  font-size:15px;
-  margin:4px 0;
-}
-
-.price {
-  color:var(--rouge);
-  font-weight:bold;
-  margin:8px 0;
-}
-
-.hidden {
-  display:none !important;
-}
-
-.payment-box {
-  background:#fff4cc;
-  padding:12px;
-  border-radius:8px;
-  margin:8px 0;
-}
-
-.bottom-nav {
-  position:fixed;
-  bottom:0;
-  left:0;
-  width:100%;
-  background:white;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  box-shadow:0 -2px 10px #0002;
-  z-index:20;
-}
-
-.bottom-nav button {
-  background:white;
-  padding:12px 2px;
-  font-size:12px;
-}
-
-.bottom-nav button.active {
-  color:var(--rouge);
-  background:#fff2c5;
-}
-
-.status {
-  padding:10px;
-  border-radius:7px;
-  margin:8px 0;
-  background:#eee;
-  font-size:14px;
-  overflow-wrap:anywhere;
-}
-
-.success {
-  background:#d9f8df;
-  color:#145b22;
-}
-
-.error {
-  background:#ffe0e0;
-  color:#9b0000;
-}
-
-footer {
-  text-align:center;
-  padding:20px;
-  color:#666;
-}
-
-a {
-  text-decoration:none;
-}
-
-@media(max-width:360px) {
-  .products {
-    grid-template-columns:1fr;
-  }
-}
+*{box-sizing:border-box}
+body{margin:0;background:#fff8ed;color:#292929;font-family:Arial,sans-serif;padding-bottom:75px}
+header{background:#d71920;color:white;text-align:center;padding:16px;position:sticky;top:0;z-index:10}
+header h1{margin:0;font-size:25px}
+header p{margin:5px}
+button{border:0;border-radius:8px;padding:12px;cursor:pointer;font-weight:bold}
+.btn{background:#ffcc00;color:#222}
+.red{background:#d71920;color:white}
+.auth-top{width:100%;margin-top:12px;background:#ffcc00;color:#222;font-size:17px;padding:14px}
+.container{max-width:850px;margin:auto;padding:12px}
+.card{background:white;padding:15px;border-radius:12px;margin:12px 0;box-shadow:0 2px 8px #0001}
+h2{color:#d71920;font-size:21px}
+input,textarea,select{width:100%;padding:13px;margin:7px 0;border:1px solid #ddd;border-radius:7px;font-size:15px}
+.hidden{display:none!important}
+.carousel{height:190px;overflow:hidden;border-radius:12px;background:#ddd}
+.slide{display:none;height:190px}
+.slide.active{display:block}
+.slide img{width:100%;height:190px;object-fit:cover}
+.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.quick button{background:#ffcc00;min-height:60px}
+.products{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.product{background:white;border-radius:10px;overflow:hidden;box-shadow:0 2px 7px #0002}
+.product img{width:100%;height:125px;object-fit:cover}
+.product-info{padding:10px}
+.product h3{font-size:15px}
+.price{color:#d71920;font-weight:bold}
+.categories{display:flex;gap:8px;overflow-x:auto;padding:8px 0}
+.categories button{white-space:nowrap;background:#ffe7a0}
+.status{padding:10px;border-radius:7px;margin:8px 0;background:#eee;overflow-wrap:anywhere}
+.success{background:#d9f8df;color:#145b22}
+.error{background:#ffe0e0;color:#9b0000}
+.payment-box{background:#fff4cc;padding:12px;border-radius:8px;margin:8px 0}
+.bottom-nav{position:fixed;bottom:0;left:0;width:100%;background:white;display:grid;grid-template-columns:repeat(4,1fr);box-shadow:0 -2px 10px #0002;z-index:20}
+.bottom-nav button{background:white;padding:12px 2px;font-size:12px}
+.bottom-nav button.active{color:#d71920;background:#fff2c5}
+footer{text-align:center;padding:20px;color:#666}
+@media(max-width:360px){.products{grid-template-columns:1fr}}
 </style>
 </head>
 
 <body>
 
 <header>
-  <h1>⚡ POWER STATION</h1>
-  <p>Votre boutique d'équipements électriques</p>
+<h1>⚡ POWER STATION</h1>
+<p>Votre boutique d'équipements électriques</p>
+
+<!-- BOUTON INSCRIPTION VISIBLE -->
+<button class="auth-top" onclick="showPage('auth')">
+INSCRIPTION / CONNEXION
+</button>
 </header>
 
 <main class="container">
 
 <!-- ACCUEIL -->
-
 <section id="home">
 
-  <div class="carousel">
-    <div class="slide active">
-      <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=900" alt="Panneaux solaires">
-    </div>
+<div class="carousel">
+<div class="slide active">
+<img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=900" alt="Panneaux solaires">
+</div>
+<div class="slide">
+<img src="https://images.unsplash.com/photo-1592833159155-c62df1b65634?w=900" alt="Énergie">
+</div>
+<div class="slide">
+<img src="https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?w=900" alt="Électricité">
+</div>
+<div class="slide">
+<img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=900" alt="Énergie électrique">
+</div>
+<div class="slide">
+<img src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=900" alt="Solaire">
+</div>
+</div>
 
-    <div class="slide">
-      <img src="https://images.unsplash.com/photo-1592833159155-c62df1b65634?w=900" alt="Énergie">
-    </div>
+<div class="card">
+<h2>Bienvenue chez POWER STATION</h2>
+<p>Achetez vos équipements électriques et solaires en toute simplicité.</p>
 
-    <div class="slide">
-      <img src="https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?w=900" alt="Électricité">
-    </div>
+<button class="red" style="width:100%" onclick="showPage('auth')">
+Créer un compte / Se connecter
+</button>
 
-    <div class="slide">
-      <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=900" alt="Énergie électrique">
-    </div>
+<div class="quick" style="margin-top:12px">
+<button onclick="showPage('shop')">🛍 Boutique</button>
+<button onclick="showPage('cart')">🛒 Panier</button>
+<button onclick="showPage('orders')">📦 Commandes</button>
+</div>
+</div>
 
-    <div class="slide">
-      <img src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=900" alt="Énergie solaire">
-    </div>
-  </div>
-
-  <div class="card">
-    <h2>Bienvenue chez POWER STATION</h2>
-    <p>Achetez vos équipements électriques et solaires en toute simplicité.</p>
-
-    <div class="quick">
-      <button onclick="showPage('shop')">🛍 Boutique</button>
-      <button onclick="showPage('cart')">🛒 Panier</button>
-      <button onclick="showPage('orders')">📦 Commandes</button>
-    </div>
-  </div>
-
-  <div class="card">
-    <h2>Nos communautés</h2>
-
-    <p>
-      <a href="https://chat.whatsapp.com/DzKHiqrdBbPI22W7afe9ps" target="_blank">
-        <button class="btn-red">Rejoindre WhatsApp</button>
-      </a>
-    </p>
-
-    <p>
-      <a href="https://t.me/francscongolais" target="_blank">
-        <button class="btn">Rejoindre Telegram</button>
-      </a>
-    </p>
-  </div>
-
+<div class="card">
+<h2>Nos communautés</h2>
+<p>
+<a href="https://chat.whatsapp.com/DzKHiqrdBbPI22W7afe9ps" target="_blank">
+<button class="red">Rejoindre WhatsApp</button>
+</a>
+</p>
+<p>
+<a href="https://t.me/francscongolais" target="_blank">
+<button class="btn">Rejoindre Telegram</button>
+</a>
+</p>
+</div>
 </section>
 
-<!-- AUTHENTIFICATION -->
-
+<!-- INSCRIPTION ET CONNEXION -->
 <section id="auth" class="hidden">
 
-  <div class="card">
-    <h2>Créer un compte</h2>
+<div class="card">
+<h2>Créer un compte</h2>
 
-    <form id="signupForm">
+<form id="signupForm">
 
-      <input id="fullName"
-        type="text"
-        placeholder="Nom complet"
-        required>
+<input id="fullName" type="text" placeholder="Nom complet" required>
 
-      <input id="signupPhone"
-        type="tel"
-        placeholder="Téléphone : +243..."
-        autocomplete="tel"
-        required>
+<input id="signupPhone" type="tel" placeholder="Téléphone : +243..." autocomplete="tel" required>
 
-      <input id="signupPassword"
-        type="password"
-        placeholder="Mot de passe : 6 chiffres"
-        inputmode="numeric"
-        pattern="[0-9]{6}"
-        minlength="6"
-        maxlength="6"
-        required>
+<input id="signupPassword" type="password"
+placeholder="Mot de passe : 6 chiffres"
+inputmode="numeric" pattern="[0-9]{6}"
+minlength="6" maxlength="6" required>
 
-      <input id="confirmPassword"
-        type="password"
-        placeholder="Confirmer les 6 chiffres"
-        inputmode="numeric"
-        pattern="[0-9]{6}"
-        minlength="6"
-        maxlength="6"
-        required>
+<input id="confirmPassword" type="password"
+placeholder="Confirmer les 6 chiffres"
+inputmode="numeric" pattern="[0-9]{6}"
+minlength="6" maxlength="6" required>
 
-      <input id="referralCode"
-        type="text"
-        placeholder="Code parrain (facultatif)">
+<input id="referralCode" type="text" placeholder="Code parrain (facultatif)">
 
-      <button class="btn-red" type="submit">
-        Créer mon compte
-      </button>
+<button class="red" type="submit" style="width:100%">
+S'INSCRIRE
+</button>
 
-    </form>
+</form>
 
-    <div id="signupMessage" class="status hidden"></div>
-  </div>
+<div id="signupMessage" class="status hidden"></div>
+</div>
 
-  <div class="card">
-    <h2>Se connecter</h2>
+<div class="card">
+<h2>Se connecter</h2>
 
-    <form id="loginForm">
+<form id="loginForm">
 
-      <input id="loginPhone"
-        type="tel"
-        placeholder="Numéro de téléphone"
-        autocomplete="tel"
-        required>
+<input id="loginPhone" type="tel" placeholder="Numéro de téléphone" required>
 
-      <input id="loginPassword"
-        type="password"
-        placeholder="Mot de passe à 6 chiffres"
-        inputmode="numeric"
-        pattern="[0-9]{6}"
-        minlength="6"
-        maxlength="6"
-        required>
+<input id="loginPassword" type="password"
+placeholder="Mot de passe à 6 chiffres"
+inputmode="numeric" pattern="[0-9]{6}"
+minlength="6" maxlength="6" required>
 
-      <button class="btn" type="submit">
-        Se connecter
-      </button>
+<button class="btn" type="submit" style="width:100%">
+SE CONNECTER
+</button>
 
-    </form>
+</form>
 
-    <div id="loginMessage" class="status hidden"></div>
-  </div>
+<div id="loginMessage" class="status hidden"></div>
+</div>
 
 </section>
 
 <!-- BOUTIQUE -->
-
 <section id="shop" class="hidden">
 
-  <div class="card">
-    <h2>Notre boutique</h2>
-    <p>Découvrez nos équipements disponibles.</p>
+<div class="card">
+<h2>Notre boutique</h2>
+<p>Découvrez nos produits disponibles.</p>
 
-    <input id="searchProduct"
-      type="search"
-      placeholder="Rechercher un produit...">
+<input id="searchProduct" type="search" placeholder="Rechercher un produit...">
 
-    <div id="categories" class="categories"></div>
+<div id="categories" class="categories"></div>
 
-    <div id="products" class="products">
-      Chargement des produits...
-    </div>
-
-    <div id="productMessage" class="status hidden"></div>
-  </div>
+<div id="products" class="products">Chargement...</div>
+<div id="productMessage" class="status hidden"></div>
+</div>
 
 </section>
 
 <!-- PANIER -->
-
 <section id="cart" class="hidden">
 
-  <div class="card">
-    <h2>Mon panier</h2>
+<div class="card">
+<h2>Mon panier</h2>
+<div id="cartItems">Votre panier est vide.</div>
+<h3 id="cartTotal">Total : 0 FC</h3>
 
-    <div id="cartItems">Votre panier est vide.</div>
+<hr>
 
-    <h3 id="cartTotal">Total : 0 FC</h3>
+<h2>Informations de livraison</h2>
 
-    <hr>
+<input id="customerName" placeholder="Nom du client">
+<input id="customerPhone" placeholder="Téléphone">
+<textarea id="customerAddress" placeholder="Adresse de livraison"></textarea>
+<textarea id="customerNote" placeholder="Message complémentaire"></textarea>
 
-    <h2>Informations de livraison</h2>
+<button class="red" style="width:100%" onclick="createOrder()">
+CONFIRMER MA COMMANDE
+</button>
 
-    <input id="customerName"
-      placeholder="Nom du client"
-      required>
-
-    <input id="customerPhone"
-      placeholder="Téléphone"
-      required>
-
-    <textarea id="customerAddress"
-      placeholder="Adresse de livraison"></textarea>
-
-    <textarea id="customerNote"
-      placeholder="Message complémentaire"></textarea>
-
-    <button class="btn-red"
-      onclick="createOrder()">
-      Confirmer ma commande
-    </button>
-
-    <div id="orderMessage" class="status hidden"></div>
-  </div>
+<div id="orderMessage" class="status hidden"></div>
+</div>
 
 </section>
 
 <!-- PAIEMENT -->
-
 <section id="payment" class="hidden">
 
-  <div class="card">
+<div class="card">
+<h2>Déclaration du paiement</h2>
+<p>Effectuez votre paiement sur l'un des numéros suivants.</p>
 
-    <h2>Déclaration du paiement</h2>
+<div class="payment-box">
+<strong>Airtel Money</strong><br>
+973087965<br>
+BASHANGWA
+</div>
 
-    <p>Effectuez votre paiement sur l'un des numéros ci-dessous.</p>
+<div class="payment-box">
+<strong>Orange Money</strong><br>
+899532643<br>
+JEANCQUELINE
+</div>
 
-    <div class="payment-box">
-      <strong>Airtel Money</strong><br>
-      973087965<br>
-      Nom : BASHANGWA
-    </div>
+<div class="payment-box">
+<strong>M-Pesa</strong><br>
+0861823718<br>
+REGINA
+</div>
 
-    <div class="payment-box">
-      <strong>Orange Money</strong><br>
-      899532643<br>
-      Nom : JEANCQUELINE
-    </div>
+<input id="paymentOrderId" placeholder="Numéro de commande" readonly>
 
-    <div class="payment-box">
-      <strong>M-Pesa</strong><br>
-      0861823718<br>
-      Nom : REGINA
-    </div>
+<select id="paymentMethod">
+<option value="">Choisir le moyen de paiement</option>
+<option value="Airtel Money">Airtel Money</option>
+<option value="Orange Money">Orange Money</option>
+<option value="M-Pesa">M-Pesa</option>
+</select>
 
-    <input id="paymentOrderId"
-      type="text"
-      placeholder="Numéro de commande"
-      readonly>
+<input id="senderPhone" placeholder="Numéro ayant envoyé l'argent">
+<input id="transactionReference" placeholder="Référence de transaction">
+<input id="proofUrl" type="url" placeholder="Lien de preuve facultatif">
 
-    <select id="paymentMethod">
-      <option value="">Choisir le moyen de paiement</option>
-      <option value="Airtel Money">Airtel Money</option>
-      <option value="Orange Money">Orange Money</option>
-      <option value="M-Pesa">M-Pesa</option>
-    </select>
+<button class="red" style="width:100%" onclick="submitPayment()">
+ENVOYER MA DÉCLARATION
+</button>
 
-    <input id="senderPhone"
-      placeholder="Numéro ayant envoyé l'argent">
-
-    <input id="transactionReference"
-      placeholder="Référence de transaction">
-
-    <input id="proofUrl"
-      type="url"
-      placeholder="Lien de preuve de paiement (facultatif)">
-
-    <button class="btn-red"
-      onclick="submitPayment()">
-      Envoyer ma déclaration
-    </button>
-
-    <div id="paymentMessage" class="status hidden"></div>
-
-    <p>
-      Attention : votre paiement doit être vérifié avant validation de la commande.
-    </p>
-
-  </div>
+<div id="paymentMessage" class="status hidden"></div>
+<p>Le paiement sera vérifié avant validation de la commande.</p>
+</div>
 
 </section>
 
 <!-- COMMANDES -->
-
 <section id="orders" class="hidden">
-
-  <div class="card">
-    <h2>Mes commandes</h2>
-    <button class="btn" onclick="loadOrders()">Actualiser</button>
-    <div id="ordersList">Connectez-vous pour consulter vos commandes.</div>
-  </div>
-
+<div class="card">
+<h2>Mes commandes</h2>
+<button class="btn" onclick="loadOrders()">Actualiser</button>
+<div id="ordersList">Connectez-vous pour consulter vos commandes.</div>
+</div>
 </section>
 
-<!-- MON COMPTE -->
-
+<!-- COMPTE -->
 <section id="account" class="hidden">
-
-  <div class="card">
-    <h2>Mon compte</h2>
-
-    <div id="accountInfo">
-      Vous n'êtes pas connecté.
-    </div>
-
-    <button class="btn-red" onclick="logout()">
-      Se déconnecter
-    </button>
-  </div>
-
+<div class="card">
+<h2>Mon compte</h2>
+<div id="accountInfo">Vous n'êtes pas connecté.</div>
+<button class="red" onclick="logout()">SE DÉCONNECTER</button>
+</div>
 </section>
 
 </main>
 
 <footer>
-  POWER STATION © 2026<br>
-  Tous droits réservés.
+POWER STATION © 2026<br>
+Tous droits réservés.
 </footer>
 
 <nav class="bottom-nav">
-  <button class="active" onclick="showPage('home',this)">🏠<br>Accueil</button>
-  <button onclick="showPage('shop',this)">🛍<br>Boutique</button>
-  <button onclick="showPage('orders',this)">📦<br>Commandes</button>
-  <button onclick="showPage('account',this)">👤<br>Moi</button>
+<button class="active" onclick="showPage('home',this)">🏠<br>Accueil</button>
+<button onclick="showPage('shop',this)">🛍<br>Boutique</button>
+<button onclick="showPage('orders',this)">📦<br>Commandes</button>
+<button onclick="showPage('account',this)">👤<br>Moi</button>
 </nav>
 
 <script>
 
-// =======================================
+// ==================================
 // CONFIGURATION SUPABASE
-// =======================================
+// ==================================
 
 const SUPABASE_URL =
 "https://ggmsnwsetemhijfybiux.supabase.co";
@@ -574,815 +305,669 @@ const SUPABASE_ANON_KEY =
 "sb_publishable_M1LJ_gItIR_FbuK6oTPLKA_dZgvFRw6";
 
 const db = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_ANON_KEY
+SUPABASE_URL,
+SUPABASE_ANON_KEY
 );
-
-// =======================================
-// VARIABLES
-// =======================================
 
 let currentUser = null;
 let cart = [];
 let allProducts = [];
 let selectedCategory = "Tous";
-let currentOrderId = null;
 
 const categoryNames = [
-  "Panneaux solaires",
-  "Batteries",
-  "Câbles",
-  "Amplificateurs",
-  "Télévisions",
-  "Microphones",
-  "Téléphones",
-  "Groupes électrogènes",
-  "Power banks"
+"Panneaux solaires",
+"Batteries",
+"Câbles",
+"Amplificateurs",
+"Télévisions",
+"Microphones",
+"Téléphones",
+"Groupes électrogènes",
+"Power banks"
 ];
 
-// =======================================
+// ==================================
 // NAVIGATION
-// =======================================
+// ==================================
 
 function showPage(page,button) {
 
-  const pages = [
-    "home","auth","shop","cart",
-    "payment","orders","account"
-  ];
+const pages = [
+"home","auth","shop","cart",
+"payment","orders","account"
+];
 
-  pages.forEach(id => {
-    document.getElementById(id).classList.add("hidden");
-  });
+pages.forEach(id => {
+document.getElementById(id).classList.add("hidden");
+});
 
-  document.getElementById(page).classList.remove("hidden");
+document.getElementById(page).classList.remove("hidden");
 
-  document.querySelectorAll(".bottom-nav button")
-    .forEach(b => b.classList.remove("active"));
+document.querySelectorAll(".bottom-nav button")
+.forEach(b => b.classList.remove("active"));
 
-  if(button) button.classList.add("active");
+if(button) button.classList.add("active");
 
-  if(page === "shop") loadProducts();
-  if(page === "orders") loadOrders();
-  if(page === "account") loadAccount();
-  if(page === "cart") renderCart();
+if(page === "shop") loadProducts();
+if(page === "orders") loadOrders();
+if(page === "account") loadAccount();
+if(page === "cart") renderCart();
+
+window.scrollTo(0,0);
 }
 
-// =======================================
-// AFFICHAGE DES MESSAGES
-// =======================================
+// ==================================
+// MESSAGES
+// ==================================
 
 function message(id,text,type="") {
 
-  const el = document.getElementById(id);
+const el = document.getElementById(id);
+el.textContent = text;
+el.className = "status";
 
-  el.textContent = text;
-  el.className = "status";
+if(type === "success") el.classList.add("success");
+if(type === "error") el.classList.add("error");
 
-  if(type === "success") el.classList.add("success");
-  if(type === "error") el.classList.add("error");
 }
 
-// =======================================
-// FORMAT DU TELEPHONE
-// =======================================
+// ==================================
+// TELEPHONE
+// ==================================
 
 function formatPhone(value) {
 
-  let phone = value.trim().replace(/[\s()-]/g,"");
+let phone = value.trim().replace(/[\s()-]/g,"");
 
-  if(phone.startsWith("00")) {
-    phone = "+" + phone.substring(2);
-  }
-
-  if(phone.startsWith("0")) {
-    phone = "+243" + phone.substring(1);
-  }
-
-  if(/^\d/.test(phone)) {
-    phone = "+" + phone;
-  }
-
-  return phone;
+if(phone.startsWith("00")) {
+phone = "+" + phone.substring(2);
 }
 
-// =======================================
+if(phone.startsWith("0")) {
+phone = "+243" + phone.substring(1);
+}
+
+if(/^\d/.test(phone)) {
+phone = "+" + phone;
+}
+
+return phone;
+}
+
+// ==================================
 // INSCRIPTION
-// =======================================
+// ==================================
 
 document.getElementById("signupForm")
-.addEventListener("submit", async function(e) {
+.addEventListener("submit",async function(e) {
 
-  e.preventDefault();
+e.preventDefault();
 
-  const name =
-    document.getElementById("fullName").value.trim();
+const name = document.getElementById("fullName").value.trim();
+const phone = formatPhone(document.getElementById("signupPhone").value);
+const password = document.getElementById("signupPassword").value;
+const confirmation = document.getElementById("confirmPassword").value;
+const referral = document.getElementById("referralCode").value.trim().toUpperCase();
 
-  const phone =
-    formatPhone(document.getElementById("signupPhone").value);
+if(!name) {
+return message("signupMessage","Veuillez saisir votre nom.","error");
+}
 
-  const password =
-    document.getElementById("signupPassword").value;
+if(!/^[0-9]{6}$/.test(password)) {
+return message("signupMessage","Le mot de passe doit contenir exactement 6 chiffres.","error");
+}
 
-  const confirmation =
-    document.getElementById("confirmPassword").value;
+if(password !== confirmation) {
+return message("signupMessage","Les mots de passe ne correspondent pas.","error");
+}
 
-  const referral =
-    document.getElementById("referralCode").value.trim().toUpperCase();
+message("signupMessage","Création du compte en cours...");
 
-  if(!name) {
-    return message("signupMessage","Veuillez saisir votre nom.","error");
-  }
+const {data,error} = await db.auth.signUp({
 
-  if(!/^[0-9]{6}$/.test(password)) {
-    return message("signupMessage","Le mot de passe doit contenir exactement 6 chiffres.","error");
-  }
+phone:phone,
+password:password,
 
-  if(password !== confirmation) {
-    return message("signupMessage","Les mots de passe ne correspondent pas.","error");
-  }
-
-  message("signupMessage","Création du compte en cours...");
-
-  const {data,error} = await db.auth.signUp({
-
-    phone: phone,
-    password: password,
-
-    options: {
-      data: {
-        full_name: name,
-        referral_code: referral
-      }
-    }
-
-  });
-
-  if(error) {
-    return message("signupMessage",error.message,"error");
-  }
-
-  if(data.session) {
-    currentUser = data.user;
-    message("signupMessage","Compte créé avec succès !","success");
-    loadAccount();
-  } else {
-    message(
-      "signupMessage",
-      "Demande envoyée. Vérifiez votre téléphone si une confirmation SMS est demandée.",
-      "success"
-    );
-  }
+options:{
+data:{
+full_name:name,
+referral_code:referral
+}
+}
 
 });
 
-// =======================================
+if(error) {
+return message("signupMessage",error.message,"error");
+}
+
+if(data.session) {
+currentUser = data.user;
+message("signupMessage","Compte créé avec succès !","success");
+loadAccount();
+} else {
+message("signupMessage","Demande envoyée. Vérifiez votre téléphone si une confirmation SMS est demandée.","success");
+}
+
+});
+
+// ==================================
 // CONNEXION
-// =======================================
+// ==================================
 
 document.getElementById("loginForm")
-.addEventListener("submit", async function(e) {
+.addEventListener("submit",async function(e) {
 
-  e.preventDefault();
+e.preventDefault();
 
-  const phone =
-    formatPhone(document.getElementById("loginPhone").value);
+const phone = formatPhone(document.getElementById("loginPhone").value);
+const password = document.getElementById("loginPassword").value;
 
-  const password =
-    document.getElementById("loginPassword").value;
+if(!/^[0-9]{6}$/.test(password)) {
+return message("loginMessage","Entrez exactement 6 chiffres.","error");
+}
 
-  if(!/^[0-9]{6}$/.test(password)) {
-    return message("loginMessage","Entrez exactement 6 chiffres.","error");
-  }
+message("loginMessage","Connexion en cours...");
 
-  message("loginMessage","Connexion en cours...");
+const {data,error} = await db.auth.signInWithPassword({
+phone:phone,
+password:password
+});
 
-  const {data,error} = await db.auth.signInWithPassword({
-    phone,
-    password
-  });
+if(error) {
+return message("loginMessage",error.message,"error");
+}
 
-  if(error) {
-    return message("loginMessage",error.message,"error");
-  }
+currentUser = data.user;
 
-  currentUser = data.user;
+message("loginMessage","Connexion réussie !","success");
 
-  message("loginMessage","Connexion réussie !","success");
-
-  loadAccount();
-
-  setTimeout(() => showPage("account"),700);
+setTimeout(() => showPage("account"),700);
 
 });
 
-// =======================================
+// ==================================
 // SESSION
-// =======================================
+// ==================================
 
 async function checkSession() {
 
-  const {data} = await db.auth.getSession();
+const {data} = await db.auth.getSession();
 
-  if(data.session) {
-    currentUser = data.session.user;
-  } else {
-    currentUser = null;
-  }
+currentUser = data.session ? data.session.user : null;
 
 }
 
 db.auth.onAuthStateChange((event,session) => {
-
-  currentUser = session ? session.user : null;
-
+currentUser = session ? session.user : null;
 });
 
-// =======================================
+// ==================================
 // DECONNEXION
-// =======================================
+// ==================================
 
 async function logout() {
 
-  const {error} = await db.auth.signOut();
+const {error} = await db.auth.signOut();
 
-  if(error) {
-    alert(error.message);
-    return;
-  }
+if(error) {
+alert(error.message);
+return;
+}
 
-  currentUser = null;
-  alert("Déconnexion réussie.");
-
-  showPage("home");
+currentUser = null;
+alert("Déconnexion réussie.");
+showPage("home");
 
 }
 
-// =======================================
+// ==================================
 // COMPTE
-// =======================================
-
-async function loadAccount() {
-
-  await checkSession();
-
-  const box = document.getElementById("accountInfo");
-
-  if(!currentUser) {
-    box.textContent = "Veuillez vous connecter.";
-    return;
-  }
-
-  const {data,error} = await db
-    .from("power_station_profiles")
-    .select("full_name,phone")
-    .eq("user_id",currentUser.id)
-    .maybeSingle();
-
-  if(error) {
-    box.textContent = "Impossible de charger votre profil : " + error.message;
-    return;
-  }
-
-  box.innerHTML = `
-    <p><strong>Nom :</strong> ${escapeHTML(data?.full_name || "")}</p>
-    <p><strong>Téléphone :</strong> ${escapeHTML(data?.phone || currentUser.phone || "")}</p>
-    <p><strong>Statut :</strong> Connecté</p>
-  `;
-
-}
-
-// =======================================
-// SECURISER LE TEXTE HTML
-// =======================================
+// ==================================
 
 function escapeHTML(value) {
 
-  return String(value ?? "").replace(/[&<>"']/g, char => ({
-    "&":"&amp;",
-    "<":"&lt;",
-    ">":"&gt;",
-    '"':"&quot;",
-    "'":"&#39;"
-  })[char]);
+return String(value ?? "").replace(/[&<>"']/g,char => ({
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#39;"
+})[char]);
 
 }
 
-// =======================================
+async function loadAccount() {
+
+await checkSession();
+
+const box = document.getElementById("accountInfo");
+
+if(!currentUser) {
+box.textContent = "Veuillez vous connecter.";
+return;
+}
+
+const {data,error} = await db
+.from("power_station_profiles")
+.select("full_name,phone")
+.eq("user_id",currentUser.id)
+.maybeSingle();
+
+if(error) {
+box.textContent = "Erreur profil : " + error.message;
+return;
+}
+
+box.innerHTML = `
+<p><strong>Nom :</strong> ${escapeHTML(data?.full_name || "")}</p>
+<p><strong>Téléphone :</strong> ${escapeHTML(data?.phone || currentUser.phone || "")}</p>
+<p><strong>Statut :</strong> Connecté</p>
+`;
+
+}
+
+// ==================================
 // CATEGORIES
-// =======================================
+// ==================================
 
 function renderCategories() {
 
-  const box = document.getElementById("categories");
+const box = document.getElementById("categories");
+box.innerHTML = "";
 
-  box.innerHTML = "";
+["Tous",...categoryNames].forEach(name => {
 
-  ["Tous",...categoryNames].forEach(name => {
+const button = document.createElement("button");
+button.textContent = name;
 
-    const button = document.createElement("button");
+if(selectedCategory === name) {
+button.style.background = "#d71920";
+button.style.color = "white";
+}
 
-    button.textContent = name;
+button.onclick = () => {
+selectedCategory = name;
+renderCategories();
+renderProducts();
+};
 
-    button.onclick = () => {
+box.appendChild(button);
 
-      selectedCategory = name;
-
-      renderCategories();
-      renderProducts();
-
-    };
-
-    if(selectedCategory === name) {
-      button.style.background = "#d71920";
-      button.style.color = "white";
-    }
-
-    box.appendChild(button);
-
-  });
+});
 
 }
 
-// =======================================
-// CHARGER LES PRODUITS
-// =======================================
+// ==================================
+// PRODUITS
+// ==================================
 
 async function loadProducts() {
 
-  const box = document.getElementById("products");
+const box = document.getElementById("products");
+box.textContent = "Chargement des produits...";
 
-  box.textContent = "Chargement des produits...";
+const {data,error} = await db
+.from("power_station_products")
+.select("id,name,description,image_url,price_fc,stock")
+.eq("is_active",true)
+.order("name");
 
-  const {data,error} = await db
-    .from("power_station_products")
-    .select("id,name,description,image_url,price_fc,stock")
-    .eq("is_active",true)
-    .order("name");
+if(error) {
+box.textContent = "Erreur : " + error.message;
+return;
+}
 
-  if(error) {
+allProducts = data || [];
 
-    box.textContent = "Erreur de chargement : " + error.message;
-
-    return;
-  }
-
-  allProducts = data || [];
-
-  renderCategories();
-  renderProducts();
+renderCategories();
+renderProducts();
 
 }
 
-// =======================================
-// AFFICHER LES PRODUITS
-// =======================================
-
 function renderProducts() {
 
-  const box = document.getElementById("products");
+const box = document.getElementById("products");
+box.innerHTML = "";
 
-  box.innerHTML = "";
+const search = document.getElementById("searchProduct").value.toLowerCase();
 
-  const search =
-    document.getElementById("searchProduct").value.toLowerCase();
+const filtered = allProducts.filter(product => {
 
-  const filtered = allProducts.filter(product => {
+const text = (
+(product.name || "") + " " +
+(product.description || "")
+).toLowerCase();
 
-    const name = (product.name || "").toLowerCase();
+return text.includes(search);
 
-    const description = (product.description || "").toLowerCase();
+});
 
-    const matchesSearch =
-      name.includes(search) || description.includes(search);
+if(filtered.length === 0) {
+box.textContent = "Aucun produit enregistré pour le moment.";
+return;
+}
 
-    return matchesSearch;
+filtered.forEach(product => {
 
-  });
+const card = document.createElement("div");
+card.className = "product";
 
-  if(filtered.length === 0) {
+const image = document.createElement("img");
+image.src = product.image_url || "https://placehold.co/400x300?text=POWER+STATION";
+image.alt = product.name || "Produit";
+image.onerror = () => {
+image.src = "https://placehold.co/400x300?text=POWER+STATION";
+};
 
-    box.textContent =
-      "Aucun produit disponible dans cette sélection. Ajoutez vos produits dans Supabase.";
+const info = document.createElement("div");
+info.className = "product-info";
 
-    return;
-  }
+const title = document.createElement("h3");
+title.textContent = product.name;
 
-  filtered.forEach(product => {
+const description = document.createElement("p");
+description.textContent = product.description || "";
 
-    const card = document.createElement("div");
+const price = document.createElement("p");
+price.className = "price";
+price.textContent = Number(product.price_fc).toLocaleString("fr-FR") + " FC";
 
-    card.className = "product";
+const stock = document.createElement("p");
+stock.textContent = "Stock : " + product.stock;
 
-    const image = document.createElement("img");
+const button = document.createElement("button");
+button.className = "red";
+button.textContent = "Ajouter au panier";
+button.disabled = Number(product.stock) <= 0;
 
-    image.src = product.image_url ||
-      "https://placehold.co/400x300?text=POWER+STATION";
+button.onclick = () => addToCart(product);
 
-    image.alt = product.name || "Produit";
+info.append(title,description,price,stock,button);
+card.append(image,info);
+box.appendChild(card);
 
-    image.onerror = () => {
-      image.src = "https://placehold.co/400x300?text=POWER+STATION";
-    };
-
-    const info = document.createElement("div");
-
-    info.className = "product-info";
-
-    const title = document.createElement("h3");
-    title.textContent = product.name;
-
-    const description = document.createElement("p");
-    description.textContent = product.description || "";
-
-    const price = document.createElement("div");
-    price.className = "price";
-    price.textContent =
-      Number(product.price_fc).toLocaleString("fr-FR") + " FC";
-
-    const stock = document.createElement("p");
-    stock.textContent = "Stock : " + product.stock;
-
-    const button = document.createElement("button");
-    button.className = "btn-red";
-    button.textContent = "Ajouter au panier";
-
-    button.disabled = Number(product.stock) <= 0;
-
-    button.onclick = () => addToCart(product);
-
-    info.append(title,description,price,stock,button);
-
-    card.append(image,info);
-
-    box.appendChild(card);
-
-  });
+});
 
 }
 
 document.getElementById("searchProduct")
 .addEventListener("input",renderProducts);
 
-// =======================================
+// ==================================
 // PANIER
-// =======================================
+// ==================================
 
 function addToCart(product) {
 
-  const existing = cart.find(item => item.id === product.id);
+const existing = cart.find(item => item.id === product.id);
 
-  if(existing) {
+if(existing) {
 
-    if(existing.quantity >= Number(product.stock)) {
-      alert("Stock insuffisant.");
-      return;
-    }
+if(existing.quantity >= Number(product.stock)) {
+alert("Stock insuffisant.");
+return;
+}
 
-    existing.quantity++;
+existing.quantity++;
 
-  } else {
+} else {
 
-    if(Number(product.stock) <= 0) {
-      alert("Produit indisponible.");
-      return;
-    }
+if(Number(product.stock) <= 0) {
+alert("Produit indisponible.");
+return;
+}
 
-    cart.push({
-      id:product.id,
-      name:product.name,
-      price:Number(product.price_fc),
-      quantity:1,
-      stock:Number(product.stock)
-    });
+cart.push({
+id:product.id,
+name:product.name,
+price:Number(product.price_fc),
+quantity:1,
+stock:Number(product.stock)
+});
 
-  }
+}
 
-  renderCart();
-
-  alert("Produit ajouté au panier.");
+renderCart();
+alert("Produit ajouté au panier.");
 
 }
 
 function renderCart() {
 
-  const box = document.getElementById("cartItems");
+const box = document.getElementById("cartItems");
+box.innerHTML = "";
 
-  box.innerHTML = "";
+if(cart.length === 0) {
+box.textContent = "Votre panier est vide.";
+document.getElementById("cartTotal").textContent = "Total : 0 FC";
+return;
+}
 
-  if(cart.length === 0) {
+let total = 0;
 
-    box.textContent = "Votre panier est vide.";
+cart.forEach(item => {
 
-    document.getElementById("cartTotal").textContent = "Total : 0 FC";
+const subtotal = item.price * item.quantity;
+total += subtotal;
 
-    return;
-  }
+const row = document.createElement("div");
+row.className = "payment-box";
 
-  let total = 0;
+const text = document.createElement("p");
+text.textContent = item.name + " × " + item.quantity + " = " + subtotal.toLocaleString("fr-FR") + " FC";
 
-  cart.forEach(item => {
+const remove = document.createElement("button");
+remove.className = "red";
+remove.textContent = "Retirer";
 
-    const subtotal = item.price * item.quantity;
+remove.onclick = () => {
+cart = cart.filter(p => p.id !== item.id);
+renderCart();
+};
 
-    total += subtotal;
+row.append(text,remove);
+box.appendChild(row);
 
-    const row = document.createElement("div");
+});
 
-    row.className = "payment-box";
-
-    const text = document.createElement("p");
-
-    text.textContent =
-      item.name + " × " + item.quantity + " = " +
-      subtotal.toLocaleString("fr-FR") + " FC";
-
-    const remove = document.createElement("button");
-
-    remove.className = "btn-red";
-    remove.textContent = "Retirer";
-
-    remove.onclick = () => {
-
-      cart = cart.filter(p => p.id !== item.id);
-
-      renderCart();
-
-    };
-
-    row.append(text,remove);
-
-    box.appendChild(row);
-
-  });
-
-  document.getElementById("cartTotal").textContent =
-    "Total : " + total.toLocaleString("fr-FR") + " FC";
+document.getElementById("cartTotal").textContent =
+"Total : " + total.toLocaleString("fr-FR") + " FC";
 
 }
 
-// =======================================
-// CREER UNE COMMANDE
-// =======================================
+// ==================================
+// COMMANDER
+// ==================================
 
 async function createOrder() {
 
-  await checkSession();
+await checkSession();
 
-  if(!currentUser) {
-    alert("Connectez-vous avant de commander.");
-    showPage("auth");
-    return;
-  }
+if(!currentUser) {
+alert("Connectez-vous avant de commander.");
+showPage("auth");
+return;
+}
 
-  if(cart.length === 0) {
-    alert("Votre panier est vide.");
-    return;
-  }
+if(cart.length === 0) {
+alert("Votre panier est vide.");
+return;
+}
 
-  const customerName =
-    document.getElementById("customerName").value.trim();
+const customerName = document.getElementById("customerName").value.trim();
+const phone = formatPhone(document.getElementById("customerPhone").value);
+const address = document.getElementById("customerAddress").value.trim();
+const note = document.getElementById("customerNote").value.trim();
 
-  const phone =
-    formatPhone(document.getElementById("customerPhone").value);
+if(!customerName || !phone || !address) {
+alert("Veuillez remplir le nom, le téléphone et l'adresse.");
+return;
+}
 
-  const address =
-    document.getElementById("customerAddress").value.trim();
+const items = cart.map(item => ({
+product_id:item.id,
+quantity:item.quantity
+}));
 
-  const note =
-    document.getElementById("customerNote").value.trim();
+message("orderMessage","Enregistrement de la commande...");
 
-  if(!customerName || !phone || !address) {
-    alert("Veuillez remplir le nom, téléphone et adresse.");
-    return;
-  }
+const {data,error} = await db.rpc("power_station_create_order",{
+p_customer_name:customerName,
+p_phone:phone,
+p_address:address,
+p_note:note,
+p_items:items
+});
 
-  const items = cart.map(item => ({
-    product_id:item.id,
-    quantity:item.quantity
-  }));
+if(error) {
+return message("orderMessage","Erreur : " + error.message,"error");
+}
 
-  message("orderMessage","Enregistrement de la commande...");
+const orderId = typeof data === "string"
+? data
+: data?.id || data?.order_id || data?.orderId;
 
-  const {data,error} = await db.rpc(
-    "power_station_create_order",
-    {
-      p_customer_name:customerName,
-      p_phone:phone,
-      p_address:address,
-      p_note:note,
-      p_items:items
-    }
-  );
+if(!orderId) {
+return message("orderMessage","Commande créée, mais identifiant non reconnu. Contactez le service client.","error");
+}
 
-  if(error) {
+document.getElementById("paymentOrderId").value = orderId;
 
-    return message(
-      "orderMessage",
-      "Erreur de commande : " + error.message,
-      "error"
-    );
+cart = [];
+renderCart();
 
-  }
+message("orderMessage","Commande enregistrée. Vous pouvez déclarer votre paiement.","success");
 
-  const orderId =
-    typeof data === "string" ? data :
-    data?.id || data?.order_id || data?.orderId;
-
-  if(!orderId) {
-
-    return message(
-      "orderMessage",
-      "Commande envoyée, mais identifiant introuvable. Contactez le service client.",
-      "error"
-    );
-
-  }
-
-  currentOrderId = orderId;
-
-  document.getElementById("paymentOrderId").value = orderId;
-
-  cart = [];
-
-  renderCart();
-
-  message(
-    "orderMessage",
-    "Commande enregistrée. Vous pouvez maintenant déclarer votre paiement.",
-    "success"
-  );
-
-  setTimeout(() => showPage("payment"),1000);
+setTimeout(() => showPage("payment"),1000);
 
 }
 
-// =======================================
-// DECLARER UN PAIEMENT
-// =======================================
+// ==================================
+// PAIEMENT
+// ==================================
 
 async function submitPayment() {
 
-  await checkSession();
+await checkSession();
 
-  if(!currentUser) {
-    alert("Connectez-vous.");
-    showPage("auth");
-    return;
-  }
+if(!currentUser) {
+alert("Connectez-vous.");
+showPage("auth");
+return;
+}
 
-  const orderId =
-    document.getElementById("paymentOrderId").value.trim();
+const orderId = document.getElementById("paymentOrderId").value.trim();
+const method = document.getElementById("paymentMethod").value;
+const sender = formatPhone(document.getElementById("senderPhone").value);
+const reference = document.getElementById("transactionReference").value.trim();
+const proof = document.getElementById("proofUrl").value.trim();
 
-  const method =
-    document.getElementById("paymentMethod").value;
+if(!orderId || !method || !sender || !reference) {
+return message("paymentMessage","Veuillez remplir les champs obligatoires.","error");
+}
 
-  const sender =
-    formatPhone(document.getElementById("senderPhone").value);
+const {error} = await db.rpc("power_station_submit_payment",{
+p_order_id:orderId,
+p_method:method,
+p_sender_phone:sender,
+p_reference:reference,
+p_proof_path:proof || null
+});
 
-  const reference =
-    document.getElementById("transactionReference").value.trim();
+if(error) {
+return message("paymentMessage","Erreur : " + error.message,"error");
+}
 
-  const proof =
-    document.getElementById("proofUrl").value.trim();
-
-  if(!orderId || !method || !sender || !reference) {
-
-    return message(
-      "paymentMessage",
-      "Veuillez remplir tous les champs obligatoires.",
-      "error"
-    );
-
-  }
-
-  const {error} = await db.rpc(
-    "power_station_submit_payment",
-    {
-      p_order_id:orderId,
-      p_method:method,
-      p_sender_phone:sender,
-      p_reference:reference,
-      p_proof_path:proof || null
-    }
-  );
-
-  if(error) {
-
-    return message(
-      "paymentMessage",
-      "Erreur : " + error.message,
-      "error"
-    );
-
-  }
-
-  message(
-    "paymentMessage",
-    "Déclaration envoyée. Votre paiement attend une vérification.",
-    "success"
-  );
+message("paymentMessage","Déclaration envoyée. Votre paiement attend une vérification.","success");
 
 }
 
-// =======================================
-// HISTORIQUE COMMANDES
-// =======================================
+// ==================================
+// HISTORIQUE
+// ==================================
 
 async function loadOrders() {
 
-  await checkSession();
+await checkSession();
 
-  const box = document.getElementById("ordersList");
+const box = document.getElementById("ordersList");
 
-  if(!currentUser) {
+if(!currentUser) {
+box.textContent = "Connectez-vous pour consulter vos commandes.";
+return;
+}
 
-    box.textContent = "Connectez-vous pour voir vos commandes.";
+box.textContent = "Chargement...";
 
-    return;
-  }
+const {data,error} = await db
+.from("power_station_orders")
+.select("id,total_fc,status,created_at")
+.eq("user_id",currentUser.id)
+.order("created_at",{ascending:false});
 
-  box.textContent = "Chargement...";
+if(error) {
+box.textContent = "Erreur : " + error.message;
+return;
+}
 
-  const {data,error} = await db
-    .from("power_station_orders")
-    .select("id,total_fc,status,created_at")
-    .eq("user_id",currentUser.id)
-    .order("created_at",{ascending:false});
+box.innerHTML = "";
 
-  if(error) {
+if(!data || data.length === 0) {
+box.textContent = "Aucune commande pour le moment.";
+return;
+}
 
-    box.textContent = "Erreur : " + error.message;
+data.forEach(order => {
 
-    return;
-  }
+const row = document.createElement("div");
+row.className = "payment-box";
 
-  box.innerHTML = "";
+const title = document.createElement("strong");
+title.textContent = "Commande : " + order.id;
 
-  if(!data || data.length === 0) {
+const total = document.createElement("p");
+total.textContent = "Total : " + Number(order.total_fc).toLocaleString("fr-FR") + " FC";
 
-    box.textContent = "Aucune commande pour le moment.";
+const status = document.createElement("p");
+status.textContent = "Statut : " + order.status;
 
-    return;
-  }
+row.append(title,total,status);
+box.appendChild(row);
 
-  data.forEach(order => {
-
-    const row = document.createElement("div");
-
-    row.className = "payment-box";
-
-    const title = document.createElement("strong");
-
-    title.textContent = "Commande : " + order.id;
-
-    const total = document.createElement("p");
-
-    total.textContent =
-      "Total : " + Number(order.total_fc).toLocaleString("fr-FR") + " FC";
-
-    const status = document.createElement("p");
-
-    status.textContent = "Statut : " + order.status;
-
-    row.append(title,total,status);
-
-    box.appendChild(row);
-
-  });
+});
 
 }
 
-// =======================================
-// CARROUSEL AUTOMATIQUE
-// =======================================
+// ==================================
+// CARROUSEL
+// ==================================
 
 let slideIndex = 0;
 
 function nextSlide() {
 
-  const slides = document.querySelectorAll(".slide");
+const slides = document.querySelectorAll(".slide");
 
-  slides.forEach(slide => slide.classList.remove("active"));
+slides.forEach(slide => slide.classList.remove("active"));
 
-  slideIndex++;
+slideIndex++;
 
-  if(slideIndex >= slides.length) {
-    slideIndex = 0;
-  }
+if(slideIndex >= slides.length) {
+slideIndex = 0;
+}
 
-  slides[slideIndex].classList.add("active");
+slides[slideIndex].classList.add("active");
 
 }
 
 setInterval(nextSlide,6000);
 
-// =======================================
+// ==================================
 // DEMARRAGE
-// =======================================
+// ==================================
 
 checkSession();
-
 renderCategories();
 
 </script>
