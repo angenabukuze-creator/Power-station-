@@ -83,7 +83,6 @@ th{background:#fff0c0}
 
 <div class="card">
 <h2>Bienvenue chez POWER STATION</h2>
-
 <p>
 POWER STATION est une plateforme dédiée à la promotion des solutions
 énergétiques, de l'innovation et du développement économique.
@@ -92,7 +91,6 @@ un espace numérique simple, accessible et organisé, dans lequel
 chaque membre peut consulter les informations de la plateforme,
 suivre ses opérations et accéder aux différents services proposés.
 </p>
-
 <p>
 Nous accordons une grande importance à la transparence, à la qualité
 du service et à la communication avec nos membres. Notre plateforme
@@ -100,7 +98,6 @@ permet de consulter les offres VIP disponibles, de déclarer les
 paiements, de suivre les demandes de retrait et de consulter
 l'historique des opérations réalisées sur son compte.
 </p>
-
 <p>
 POWER STATION souhaite construire une communauté active fondée
 sur la confiance, la responsabilité et le respect des procédures.
@@ -109,14 +106,12 @@ Les dépôts ne sont considérés comme confirmés qu'après vérification
 par l'administration. De même, un retrait n'est affiché comme
 réussi qu'après confirmation effective du paiement au bénéficiaire.
 </p>
-
 <p>
 Nous encourageons nos membres à consulter régulièrement leur espace
 personnel, à conserver leurs références de transaction et à contacter
 le service client en cas de difficulté. Notre objectif est de rendre
 l'utilisation de la plateforme claire et facile pour tous.
 </p>
-
 <p>
 Merci de faire partie de la communauté POWER STATION.
 Ensemble, construisons une communauté organisée, responsable
@@ -275,15 +270,12 @@ et tournée vers l'avenir.
 <section id="orders" class="hidden">
 <div class="card">
 <h2>Historique de transaction</h2>
-
 <div class="tabs">
 <button class="selected" onclick="historyTab('deposits',this)">DÉPÔTS</button>
 <button onclick="historyTab('withdrawals',this)">RETRAITS</button>
 <button onclick="historyTab('bonuses',this)">BONUS</button>
 </div>
-
 <button class="btn" onclick="loadOrders()">ACTUALISER L'HISTORIQUE</button>
-
 <div id="historyDeposits"></div>
 <div id="historyWithdrawals" class="hidden"></div>
 <div id="historyBonuses" class="hidden"></div>
@@ -292,7 +284,6 @@ et tournée vers l'avenir.
 
 <!-- PRODUITS ACTIFS ET RÉCOLTE -->
 <section id="active" class="hidden">
-
 <div class="card">
 <h2>Mes produits actifs</h2>
 <button class="btn" onclick="loadActiveProducts()">ACTUALISER</button>
@@ -308,7 +299,6 @@ et tournée vers l'avenir.
 <button class="btn" style="width:100%" onclick="loadEarnings()">ACTUALISER MES REVENUS</button>
 <div id="earningHistory"></div>
 </div>
-
 </section>
 
 <!-- ÉQUIPE -->
@@ -490,13 +480,20 @@ const vipFallback=[
 function escapeHTML(v){
 return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 }
-function money(v){return Number(v||0).toLocaleString("fr-FR")+" FC";}
+
+function money(v){
+return Number(v||0).toLocaleString("fr-FR")+" FC";
+}
+
 function message(id,text,type=""){
-const el=$(id);if(!el)return;
-el.textContent=text;el.className="status";
+const el=$(id);
+if(!el)return;
+el.textContent=text;
+el.className="status";
 if(type==="success")el.classList.add("success");
 if(type==="error")el.classList.add("error");
 }
+
 function formatPhone(v){
 let p=String(v||"").trim().replace(/[\s()-]/g,"");
 if(p.startsWith("00"))p="+"+p.substring(2);
@@ -516,7 +513,10 @@ return currentUser;
 
 async function checkAdmin(){
 await checkSession();
-if(!currentUser){isAdmin=false;return false;}
+if(!currentUser){
+isAdmin=false;
+return false;
+}
 const {data,error}=await db.rpc("power_station_is_admin");
 isAdmin=!error&&(data===true||data==="true");
 return isAdmin;
@@ -528,18 +528,27 @@ pages.forEach(id=>$(id).classList.add("hidden"));
 $(page).classList.remove("hidden");
 
 document.querySelectorAll(".bottom-nav button").forEach(b=>b.classList.remove("active"));
+
 if(button)button.classList.add("active");
 else{
 const map={home:0,shop:1,team:2,account:3};
-if(map[page]!==undefined)document.querySelectorAll(".bottom-nav button")[map[page]].classList.add("active");
+if(map[page]!==undefined){
+document.querySelectorAll(".bottom-nav button")[map[page]].classList.add("active");
+}
 }
 
 if(page==="shop")loadVIPProducts();
 if(page==="orders")loadOrders();
-if(page==="active"){loadActiveProducts();loadEarnings();}
+if(page==="active"){
+loadActiveProducts();
+loadEarnings();
+}
 if(page==="account")loadAccount();
 if(page==="team")loadTeam();
-if(page==="withdraw"){loadWallet();loadMyWithdrawals();}
+if(page==="withdraw"){
+loadWallet();
+loadMyWithdrawals();
+}
 if(page==="admin")openAdmin();
 
 window.scrollTo(0,0);
@@ -558,6 +567,7 @@ document.querySelectorAll(".admin-panel").forEach(p=>p.classList.add("hidden"));
 $("admin-"+tab).classList.remove("hidden");
 document.querySelectorAll(".admin-tabs button").forEach(b=>b.classList.remove("selected"));
 if(button)button.classList.add("selected");
+
 if(tab==="dashboard")loadAdminDashboard();
 if(tab==="deposits")loadAdminDeposits();
 if(tab==="withdrawals")loadAdminWithdrawals();
@@ -567,24 +577,42 @@ if(tab==="vip")loadAdminVIP();
 
 async function copyText(text,button){
 try{
-if(navigator.clipboard&&window.isSecureContext)await navigator.clipboard.writeText(text);
-else{
+if(navigator.clipboard&&window.isSecureContext){
+await navigator.clipboard.writeText(text);
+}else{
 const input=document.createElement("textarea");
-input.value=text;input.style.position="fixed";input.style.opacity="0";
-document.body.appendChild(input);input.select();document.execCommand("copy");input.remove();
+input.value=text;
+input.style.position="fixed";
+input.style.opacity="0";
+document.body.appendChild(input);
+input.select();
+document.execCommand("copy");
+input.remove();
 }
 if(button){
-const old=button.textContent;button.textContent="COPIÉ !";
+const old=button.textContent;
+button.textContent="COPIÉ !";
 setTimeout(()=>button.textContent=old,1500);
 }
-}catch(e){alert("Copiez manuellement : "+text);}
+}catch(e){
+alert("Copiez manuellement : "+text);
 }
-function copyReferralCode(){if(myReferralCode)copyText(myReferralCode);else alert("Code indisponible.");}
-function copyReferralLink(){if(myReferralLink)copyText(myReferralLink);else alert("Lien indisponible.");}
+}
+
+function copyReferralCode(){
+if(myReferralCode)copyText(myReferralCode);
+else alert("Code indisponible.");
+}
+
+function copyReferralLink(){
+if(myReferralLink)copyText(myReferralLink);
+else alert("Lien indisponible.");
+}
 
 /* INSCRIPTION */
 $("signupForm").addEventListener("submit",async e=>{
 e.preventDefault();
+
 const name=$("fullName").value.trim();
 const phone=formatPhone($("signupPhone").value);
 const password=$("signupPassword").value;
@@ -592,14 +620,23 @@ const confirmation=$("confirmPassword").value;
 const referral=$("referralCode").value.trim().toUpperCase();
 
 if(!name)return message("signupMessage","Veuillez saisir votre nom.","error");
-if(!/^[0-9]{6}$/.test(password))return message("signupMessage","Le mot de passe doit contenir exactement 6 chiffres.","error");
-if(password!==confirmation)return message("signupMessage","Les mots de passe ne correspondent pas.","error");
+
+if(!/^[0-9]{6}$/.test(password)){
+return message("signupMessage","Le mot de passe doit contenir exactement 6 chiffres.","error");
+}
+
+if(password!==confirmation){
+return message("signupMessage","Les mots de passe ne correspondent pas.","error");
+}
 
 message("signupMessage","Création du compte en cours...");
+
 const {data,error}=await db.auth.signUp({
-phone,password,
+phone,
+password,
 options:{data:{full_name:name,referral_code:referral}}
 });
+
 if(error)return message("signupMessage",error.message,"error");
 
 if(data.session){
@@ -611,38 +648,109 @@ message("signupMessage","Inscription envoyée. Si Supabase demande une confirmat
 }
 });
 
-/* CONNEXION */
+/* CONNEXION CORRIGÉE */
 $("loginForm").addEventListener("submit",async e=>{
 e.preventDefault();
-const phone=formatPhone($("loginPhone").value);
+
+const rawPhone=$("loginPhone").value.trim().replace(/[\s()-]/g,"");
 const password=$("loginPassword").value;
-if(!/^[0-9]{6}$/.test(password))return message("loginMessage","Entrez exactement 6 chiffres.","error");
+
+if(!rawPhone){
+return message("loginMessage","Veuillez saisir votre numéro de téléphone.","error");
+}
+
+if(!/^[0-9]{6}$/.test(password)){
+return message("loginMessage","Entrez exactement 6 chiffres.","error");
+}
+
 message("loginMessage","Connexion en cours...");
-const {data,error}=await db.auth.signInWithPassword({phone,password});
-if(error)return message("loginMessage",error.message,"error");
-currentUser=data.user;
-message("loginMessage","Connexion réussie !","success");
-setTimeout(()=>showPage("account"),500);
+
+const candidates=[];
+
+function addCandidate(value){
+if(value&&!candidates.includes(value))candidates.push(value);
+}
+
+/* Essayer le numéro exactement comme dans Supabase */
+addCandidate(rawPhone);
+
+/* Essayer aussi les formats internationaux */
+if(rawPhone.startsWith("+")){
+addCandidate(rawPhone.substring(1));
+}else if(rawPhone.startsWith("243")){
+addCandidate("+"+rawPhone);
+}else{
+addCandidate(formatPhone(rawPhone));
+}
+
+/* Essayer les identifiants un par un */
+let loginData=null;
+let loginError=null;
+
+for(const phone of candidates){
+const result=await db.auth.signInWithPassword({
+phone:phone,
+password:password
 });
 
+if(!result.error){
+loginData=result.data;
+loginError=null;
+break;
+}
+
+loginError=result.error;
+console.warn("Échec connexion pour le format :",phone,loginError.message);
+}
+
+if(!loginData){
+console.error("Connexion impossible :",loginError);
+return message(
+"loginMessage",
+"Connexion refusée : "+(loginError?.message||"Vérifiez vos identifiants."),
+"error"
+);
+}
+
+currentUser=loginData.user;
+
+message("loginMessage","Connexion réussie !","success");
+
+await checkAdmin();
+
+setTimeout(()=>{
+showPage("account");
+},500);
+});
+
+/* DÉCONNEXION */
 async function logout(){
 const {error}=await db.auth.signOut();
 if(error)return alert(error.message);
-currentUser=null;isAdmin=false;showPage("home");
+currentUser=null;
+isAdmin=false;
+showPage("home");
 }
 
 /* COMPTE */
 async function loadAccount(){
 await checkSession();
+
 if(!currentUser){
 $("accountInfo").textContent="Vous n'êtes pas connecté.";
 $("adminAccess").classList.add("hidden");
 return;
 }
+
 const {data,error}=await db.from("power_station_profiles")
-.select("full_name,phone").eq("user_id",currentUser.id).maybeSingle();
+.select("full_name,phone")
+.eq("user_id",currentUser.id)
+.maybeSingle();
+
 const {data:wallet}=await db.from("ps_wallets")
-.select("available_balance,reserved_balance").eq("user_id",currentUser.id).maybeSingle();
+.select("available_balance,reserved_balance")
+.eq("user_id",currentUser.id)
+.maybeSingle();
 
 $("accountInfo").innerHTML=`
 <p><strong>Nom :</strong> ${escapeHTML(data?.full_name||currentUser.user_metadata?.full_name||"")}</p>
@@ -651,19 +759,33 @@ $("accountInfo").innerHTML=`
 <p><strong>Solde disponible :</strong> ${wallet?money(wallet.available_balance):"Non disponible"}</p>
 <p><strong>Statut :</strong> Connecté</p>
 ${error?'<p class="small">Profil non chargé.</p>':''}`;
+
 $("adminAccess").classList.toggle("hidden",!await checkAdmin());
 }
 
 /* PORTEFEUILLE */
 async function loadWallet(){
 await checkSession();
-if(!currentUser){$("walletSummary").textContent="Connectez-vous.";return;}
+
+if(!currentUser){
+$("walletSummary").textContent="Connectez-vous.";
+return;
+}
+
 const {data,error}=await db.from("ps_wallets")
 .select("available_balance,reserved_balance,total_deposited,total_withdrawn,total_bonus")
-.eq("user_id",currentUser.id).maybeSingle();
+.eq("user_id",currentUser.id)
+.maybeSingle();
 
-if(error){$("walletSummary").textContent="Erreur : "+error.message;return;}
-if(!data){$("walletSummary").textContent="Portefeuille en cours de création.";return;}
+if(error){
+$("walletSummary").textContent="Erreur : "+error.message;
+return;
+}
+
+if(!data){
+$("walletSummary").textContent="Portefeuille en cours de création.";
+return;
+}
 
 $("walletSummary").innerHTML=`
 <strong>Solde disponible :</strong> ${money(data.available_balance)}<br>
@@ -683,50 +805,91 @@ if(!provider||!number||!name){
 message("withdrawMessage","Complétez le nom, le numéro et le moyen de paiement.","error");
 return false;
 }
+
 const {error}=await db.rpc("ps_save_payout_account",{
-p_provider:provider,p_number:number,p_name:name
+p_provider:provider,
+p_number:number,
+p_name:name
 });
-if(error){message("withdrawMessage",error.message,"error");return false;}
+
+if(error){
+message("withdrawMessage",error.message,"error");
+return false;
+}
+
 return true;
 }
 
 async function submitWithdrawal(){
 await checkSession();
-if(!currentUser){showPage("auth");return;}
+
+if(!currentUser){
+showPage("auth");
+return;
+}
+
 const amount=Number($("withdrawAmount").value);
-if(!Number.isFinite(amount)||amount<5000)
+
+if(!Number.isFinite(amount)||amount<5000){
 return message("withdrawMessage","Le retrait minimum est de 5 000 FC.","error");
+}
 
 if(!await savePayoutAccount())return;
+
 message("withdrawMessage","Enregistrement de votre demande...");
 
 const {error}=await db.rpc("ps_submit_withdrawal",{p_amount:amount});
+
 if(error)return message("withdrawMessage",error.message,"error");
 
 $("withdrawAmount").value="";
+
 message("withdrawMessage","Demande envoyée. Le statut deviendra Succès uniquement après confirmation du paiement par l'administration.","success");
+
 await loadWallet();
 await loadMyWithdrawals();
 }
 
 async function loadMyWithdrawals(){
 await checkSession();
+
 const box=$("myWithdrawals");
-if(!currentUser){box.textContent="Connectez-vous.";return;}
+
+if(!currentUser){
+box.textContent="Connectez-vous.";
+return;
+}
 
 const {data,error}=await db.from("ps_withdrawal_requests")
 .select("id,amount,net_amount,provider,mobile_money_number,status,admin_note,created_at,paid_at")
-.eq("user_id",currentUser.id).order("created_at",{ascending:false});
+.eq("user_id",currentUser.id)
+.order("created_at",{ascending:false});
 
-if(error){box.textContent="Historique indisponible : "+error.message;return;}
+if(error){
+box.textContent="Historique indisponible : "+error.message;
+return;
+}
+
 box.innerHTML="";
-if(!data?.length){box.textContent="Aucune demande de retrait.";return;}
+
+if(!data?.length){
+box.textContent="Aucune demande de retrait.";
+return;
+}
 
 data.forEach(r=>{
 const el=document.createElement("div");
 el.className="payment-box";
+
 const state=String(r.status||"").toLowerCase();
-const labels={pending:"En attente",processing:"En cours",success:"Succès",rejected:"Rejeté",paid:"Succès"};
+const labels={
+pending:"En attente",
+processing:"En cours",
+success:"Succès",
+rejected:"Rejeté",
+paid:"Succès"
+};
+
 el.innerHTML=`
 <strong>Retrait : ${money(r.amount)}</strong>
 <p>Montant à recevoir : ${money(r.net_amount)}</p>
@@ -735,6 +898,7 @@ el.innerHTML=`
 <p>Date : ${new Date(r.created_at).toLocaleString("fr-FR")}</p>
 ${r.paid_at?'<p>Paiement confirmé : '+new Date(r.paid_at).toLocaleString("fr-FR")+'</p>':''}
 ${r.admin_note?'<p>Note : '+escapeHTML(r.admin_note)+'</p>':''}`;
+
 box.appendChild(el);
 });
 }
@@ -742,6 +906,7 @@ box.appendChild(el);
 /* ÉQUIPE ET PARRAINAGE */
 async function loadTeam(){
 await checkSession();
+
 if(!currentUser){
 $("myReferralCode").textContent="Connectez-vous";
 $("myReferralLink").textContent="Connectez-vous";
@@ -750,8 +915,11 @@ return;
 }
 
 message("teamMessage","Chargement...");
+
 const {data,error}=await db.from("power_station_referrals")
-.select("referral_code").eq("user_id",currentUser.id).maybeSingle();
+.select("referral_code")
+.eq("user_id",currentUser.id)
+.maybeSingle();
 
 if(error){
 message("teamMessage","Code de parrainage indisponible : "+error.message,"error");
@@ -759,6 +927,7 @@ return;
 }
 
 myReferralCode=data?.referral_code||"";
+
 if(!myReferralCode){
 $("myReferralCode").textContent="Aucun code";
 $("myReferralLink").textContent="Aucun lien";
@@ -767,6 +936,7 @@ return;
 }
 
 myReferralLink=location.origin+location.pathname+"?ref="+encodeURIComponent(myReferralCode);
+
 $("myReferralCode").textContent=myReferralCode;
 $("myReferralLink").textContent=myReferralLink;
 
@@ -778,20 +948,26 @@ $("teamRegistered").textContent=countError?"—":(count??0);
 $("teamTotal").textContent=countError?"—":(count??0);
 $("teamValidated").textContent="—";
 $("teamCommission").textContent="À vérifier";
+
 message("teamMessage","Votre lien de parrainage est prêt.","success");
 }
 
 const urlParams=new URLSearchParams(location.search);
 const referralFromUrl=urlParams.get("ref");
-if(referralFromUrl)$("referralCode").value=referralFromUrl.toUpperCase();
+
+if(referralFromUrl){
+$("referralCode").value=referralFromUrl.toUpperCase();
+}
 
 /* VIP */
 function renderVIP(products){
 const box=$("shopVIP");
 box.innerHTML="";
+
 products.forEach(v=>{
 const el=document.createElement("div");
 el.className="vip-card";
+
 el.innerHTML=`
 <h3>${escapeHTML(v.code||"VIP")}</h3>
 <p>Prix : <strong>${money(v.price_fc)}</strong></p>
@@ -799,21 +975,25 @@ el.innerHTML=`
 <p>Durée : ${Number(v.duration_days||35)} jours</p>
 <p>Total indiqué : <strong>${money(v.total_revenue_fc)}</strong></p>
 <button class="red" style="width:100%" onclick="chooseVIP(${Number(v.id)||0},'${escapeHTML(v.code)}',${Number(v.price_fc)})">CHOISIR CE VIP</button>`;
+
 box.appendChild(el);
 });
 }
 
 async function loadVIPProducts(){
 $("shopVIP").textContent="Chargement...";
+
 const {data,error}=await db.from("power_station_vip_products")
 .select("id,code,price_fc,daily_revenue_fc,duration_days,total_revenue_fc,is_active")
-.eq("is_active",true).order("id");
+.eq("is_active",true)
+.order("id");
 
 if(error){
 console.warn(error.message);
 renderVIP(vipFallback);
 return;
 }
+
 renderVIP(data?.length?data:vipFallback);
 }
 
@@ -822,25 +1002,36 @@ if(!id){
 alert("Le catalogue VIP doit être chargé depuis Supabase pour choisir un produit.");
 return;
 }
+
 selectedVIP={id,code,price};
+
 $("chosenVIP").innerHTML=`
 <strong>${escapeHTML(code)}</strong>
 <p>Montant à payer : <strong>${money(price)}</strong></p>
 <p>Le VIP sera activé après validation du dépôt par le super administrateur.</p>`;
+
 showPage("vipDeposit");
 }
 
 async function submitVIPDeposit(){
 await checkSession();
-if(!currentUser){showPage("auth");return;}
-if(!selectedVIP)return message("vipDepositMessage","Choisissez d'abord un produit VIP.","error");
+
+if(!currentUser){
+showPage("auth");
+return;
+}
+
+if(!selectedVIP){
+return message("vipDepositMessage","Choisissez d'abord un produit VIP.","error");
+}
 
 const method=$("vipPaymentMethod").value;
 const sender=formatPhone($("vipSenderPhone").value);
 const reference=$("vipTransactionReference").value.trim();
 
-if(!method||!sender||!reference)
+if(!method||!sender||!reference){
 return message("vipDepositMessage","Complétez le moyen de paiement, le numéro expéditeur et la référence.","error");
+}
 
 message("vipDepositMessage","Envoi de votre demande...");
 
@@ -852,7 +1043,9 @@ p_reference:reference,
 p_proof_path:null
 });
 
-if(error)return message("vipDepositMessage",error.message,"error");
+if(error){
+return message("vipDepositMessage",error.message,"error");
+}
 
 message("vipDepositMessage","Demande envoyée. Votre VIP sera activé après vérification et validation du dépôt par l'administration. Référence : "+data,"success");
 
@@ -861,17 +1054,20 @@ $("vipSenderPhone").value="";
 $("vipTransactionReference").value="";
 }
 
-/* HISTORIQUE : 3 CATÉGORIES */
+/* HISTORIQUE */
 function historyTab(tab,button){
 $("historyDeposits").classList.toggle("hidden",tab!=="deposits");
 $("historyWithdrawals").classList.toggle("hidden",tab!=="withdrawals");
 $("historyBonuses").classList.toggle("hidden",tab!=="bonuses");
+
 document.querySelectorAll("#orders .tabs button").forEach(b=>b.classList.remove("selected"));
+
 if(button)button.classList.add("selected");
 }
 
 async function loadOrders(){
 await checkSession();
+
 if(!currentUser){
 $("historyDeposits").textContent="Connectez-vous.";
 $("historyWithdrawals").textContent="Connectez-vous.";
@@ -892,40 +1088,63 @@ loadBonusHistory()
 
 async function loadDepositHistory(){
 const box=$("historyDeposits");
+
 const {data,error}=await db.from("ps_deposit_requests")
 .select("id,amount,payment_method,sender_phone,transaction_reference,status,created_at")
-.eq("user_id",currentUser.id).order("created_at",{ascending:false});
+.eq("user_id",currentUser.id)
+.order("created_at",{ascending:false});
 
-if(error){box.textContent="Dépôts indisponibles : "+error.message;return;}
+if(error){
+box.textContent="Dépôts indisponibles : "+error.message;
+return;
+}
+
 box.innerHTML="";
-if(!data?.length){box.textContent="Aucun dépôt.";return;}
+
+if(!data?.length){
+box.textContent="Aucun dépôt.";
+return;
+}
 
 data.forEach(r=>{
 const el=document.createElement("div");
 el.className="payment-box transaction-card";
+
 el.innerHTML=`
 <strong>Dépôt : ${money(r.amount)}</strong>
 <p>Moyen : ${escapeHTML(r.payment_method||"-")}</p>
 <p>Référence : ${escapeHTML(r.transaction_reference||"-")}</p>
 <p>Statut : <strong>${escapeHTML(r.status)}</strong></p>
 <p>Date : ${new Date(r.created_at).toLocaleString("fr-FR")}</p>`;
+
 box.appendChild(el);
 });
 }
 
 async function loadWithdrawalHistory(){
 const box=$("historyWithdrawals");
+
 const {data,error}=await db.from("ps_withdrawal_requests")
 .select("id,amount,net_amount,provider,mobile_money_number,status,created_at,paid_at")
-.eq("user_id",currentUser.id).order("created_at",{ascending:false});
+.eq("user_id",currentUser.id)
+.order("created_at",{ascending:false});
 
-if(error){box.textContent="Retraits indisponibles : "+error.message;return;}
+if(error){
+box.textContent="Retraits indisponibles : "+error.message;
+return;
+}
+
 box.innerHTML="";
-if(!data?.length){box.textContent="Aucun retrait.";return;}
+
+if(!data?.length){
+box.textContent="Aucun retrait.";
+return;
+}
 
 data.forEach(r=>{
 const el=document.createElement("div");
 el.className="payment-box transaction-card";
+
 el.innerHTML=`
 <strong>Retrait : ${money(r.amount)}</strong>
 <p>Montant à recevoir : ${money(r.net_amount)}</p>
@@ -934,33 +1153,46 @@ el.innerHTML=`
 <p>Statut : <strong>${escapeHTML(r.status)}</strong></p>
 <p>Date : ${new Date(r.created_at).toLocaleString("fr-FR")}</p>
 ${r.paid_at?'<p>Paiement confirmé : '+new Date(r.paid_at).toLocaleString("fr-FR")+'</p>':''}`;
+
 box.appendChild(el);
 });
 }
 
 async function loadBonusHistory(){
 const box=$("historyBonuses");
+
 const {data,error}=await db.from("ps_wallet_transactions")
 .select("id,transaction_type,amount,status,description,created_at")
 .eq("user_id",currentUser.id)
 .order("created_at",{ascending:false});
 
-if(error){box.textContent="Bonus indisponibles : "+error.message;return;}
+if(error){
+box.textContent="Bonus indisponibles : "+error.message;
+return;
+}
+
 const bonuses=(data||[]).filter(r=>
 String(r.transaction_type||"").toLowerCase().includes("bonus")
 );
+
 box.innerHTML="";
-if(!bonuses.length){box.textContent="Aucun bonus reçu.";return;}
+
+if(!bonuses.length){
+box.textContent="Aucun bonus reçu.";
+return;
+}
 
 bonuses.forEach(r=>{
 const el=document.createElement("div");
 el.className="payment-box transaction-card";
+
 el.innerHTML=`
 <strong>Bonus : ${money(r.amount)}</strong>
 <p>Type : ${escapeHTML(r.transaction_type)}</p>
 <p>Statut : ${escapeHTML(r.status||"-")}</p>
 <p>Description : ${escapeHTML(r.description||"-")}</p>
 <p>Date : ${new Date(r.created_at).toLocaleString("fr-FR")}</p>`;
+
 box.appendChild(el);
 });
 }
@@ -968,26 +1200,44 @@ box.appendChild(el);
 /* VIP ACTIFS */
 async function loadActiveProducts(){
 await checkSession();
+
 const box=$("activeProducts");
-if(!currentUser){box.textContent="Connectez-vous.";return;}
+
+if(!currentUser){
+box.textContent="Connectez-vous.";
+return;
+}
 
 const {data,error}=await db.from("ps_vip_activations")
 .select("id,status,activated_at,expires_at,vip_product_id")
-.eq("user_id",currentUser.id).order("activated_at",{ascending:false});
+.eq("user_id",currentUser.id)
+.order("activated_at",{ascending:false});
 
-if(error){box.textContent="Produits actifs indisponibles : "+error.message;return;}
+if(error){
+box.textContent="Produits actifs indisponibles : "+error.message;
+return;
+}
+
 box.innerHTML="";
-if(!data?.length){box.textContent="Aucun VIP attribué pour le moment.";return;}
+
+if(!data?.length){
+box.textContent="Aucun VIP attribué pour le moment.";
+return;
+}
 
 const ids=[...new Set(data.map(x=>x.vip_product_id))];
+
 const {data:vips}=await db.from("power_station_vip_products")
-.select("id,code,price_fc,daily_revenue_fc,duration_days").in("id",ids);
+.select("id,code,price_fc,daily_revenue_fc,duration_days")
+.in("id",ids);
+
 const map=Object.fromEntries((vips||[]).map(v=>[v.id,v]));
 
 data.forEach(a=>{
 const v=map[a.vip_product_id]||{};
 const el=document.createElement("div");
 el.className="payment-box";
+
 el.innerHTML=`
 <strong>${escapeHTML(v.code||"VIP")}</strong>
 <p>Prix : ${money(v.price_fc)}</p>
@@ -995,7 +1245,8 @@ el.innerHTML=`
 <p>Statut : ${escapeHTML(a.status)}</p>
 <p>Activation : ${a.activated_at?new Date(a.activated_at).toLocaleString("fr-FR"):"-"}</p>
 <p>Expiration : ${a.expires_at?new Date(a.expires_at).toLocaleString("fr-FR"):"-"}</p>
-<p class="small">Identifiant activation : ${escapeHTML(a.id)}</p>`;
+<p>Identifiant activation : ${escapeHTML(a.id)}</p>`;
+
 box.appendChild(el);
 });
 }
@@ -1003,6 +1254,7 @@ box.appendChild(el);
 /* RÉCOLTE DES REVENUS */
 async function loadEarnings(){
 await checkSession();
+
 const summary=$("earningSummary");
 const history=$("earningHistory");
 
@@ -1013,9 +1265,11 @@ return;
 }
 
 summary.textContent="Chargement...";
+
 const {data,error}=await db.from("ps_member_earnings")
 .select("id,vip_code,amount,status,created_at,available_at,claimed_at,description")
-.eq("user_id",currentUser.id).order("created_at",{ascending:false});
+.eq("user_id",currentUser.id)
+.order("created_at",{ascending:false});
 
 if(error){
 summary.textContent="Revenus indisponibles : "+error.message;
@@ -1027,8 +1281,11 @@ const now=Date.now();
 let ready=0,waiting=0;
 
 (data||[]).forEach(r=>{
-if(r.status==="pending"&&new Date(r.available_at).getTime()<=now)ready+=Number(r.amount);
-else if(r.status==="pending")waiting+=Number(r.amount);
+if(r.status==="pending"&&new Date(r.available_at).getTime()<=now){
+ready+=Number(r.amount);
+}else if(r.status==="pending"){
+waiting+=Number(r.amount);
+}
 });
 
 summary.innerHTML=`
@@ -1036,32 +1293,46 @@ summary.innerHTML=`
 <strong>En attente des 24 heures :</strong> ${money(waiting)}`;
 
 history.innerHTML="";
-if(!data?.length){history.textContent="Aucun revenu enregistré pour le moment.";return;}
+
+if(!data?.length){
+history.textContent="Aucun revenu enregistré pour le moment.";
+return;
+}
 
 data.forEach(r=>{
 const el=document.createElement("div");
 el.className="payment-box";
+
 const status=r.status==="claimed"?"Récolté":
 new Date(r.available_at).getTime()<=now?"Prêt à récolter":"En attente des 24 heures";
+
 el.innerHTML=`
 <strong>${escapeHTML(r.vip_code)} — ${money(r.amount)}</strong>
 <p>Statut : ${status}</p>
 <p>Disponible : ${new Date(r.available_at).toLocaleString("fr-FR")}</p>
 ${r.claimed_at?'<p>Récolté le : '+new Date(r.claimed_at).toLocaleString("fr-FR")+'</p>':''}
 ${r.description?'<p>'+escapeHTML(r.description)+'</p>':''}`;
+
 history.appendChild(el);
 });
 }
 
 async function claimVIPEarnings(){
 await checkSession();
-if(!currentUser){showPage("auth");return;}
+
+if(!currentUser){
+showPage("auth");
+return;
+}
 
 const btn=document.querySelector("#active button.green");
+
 if(btn)btn.disabled=true;
 
 message("earningMessage","Vérification des revenus disponibles...");
+
 const {data,error}=await db.rpc("ps_claim_vip_earnings");
+
 if(btn)btn.disabled=false;
 
 if(error){
@@ -1070,7 +1341,8 @@ await loadEarnings();
 return;
 }
 
-message("earningMessage","Récolte réussie : "+money(data)+". Votre portefeuille a été crédité.","success");
+message("earningMessage","Récolte effectuée : "+money(data)+". Vérifiez votre portefeuille.","success");
+
 await loadWallet();
 await loadEarnings();
 }
@@ -1084,49 +1356,79 @@ $("admin").classList.add("hidden");
 showPage("account");
 return;
 }
+
 $("adminStatus").textContent="Accès SUPER ADMIN autorisé.";
 $("adminStatus").className="status success";
+
 adminTab("dashboard",document.querySelector(".admin-tabs button"));
 }
 
 async function adminReady(){
-if(!await checkAdmin()){alert("Accès SUPER ADMIN refusé.");return false;}
+if(!await checkAdmin()){
+alert("Accès SUPER ADMIN refusé.");
+return false;
+}
 return true;
 }
 
 async function loadAdminDashboard(){
 if(!await adminReady())return;
+
 const [members,deposits,withdrawals,wallets]=await Promise.all([
 db.rpc("ps_admin_list_members"),
 db.from("ps_deposit_requests").select("id",{count:"exact",head:true}).eq("status","pending"),
 db.from("ps_withdrawal_requests").select("id",{count:"exact",head:true}).in("status",["pending","processing"]),
 db.from("ps_wallets").select("reserved_balance")
 ]);
-if(!members.error)$("adminMemberCount").textContent=members.data?.length||0;
+
+if(!members.error){
+$("adminMemberCount").textContent=members.data?.length||0;
+}
+
 $("adminDepositCount").textContent=deposits.count??"—";
 $("adminWithdrawalCount").textContent=withdrawals.count??"—";
-$("adminReserved").textContent=wallets.error?"—":money((wallets.data||[]).reduce((s,w)=>s+Number(w.reserved_balance||0),0));
+
+$("adminReserved").textContent=wallets.error?"—":
+money((wallets.data||[]).reduce((s,w)=>s+Number(w.reserved_balance||0),0));
 }
 
 async function loadAdminDeposits(){
 if(!await adminReady())return;
+
 const box=$("adminDepositsList");
 box.textContent="Chargement...";
-const {data,error}=await db.from("ps_deposit_requests").select("*").order("created_at",{ascending:false});
-if(error){box.textContent="Impossible de charger les dépôts : "+error.message;return;}
+
+const {data,error}=await db.from("ps_deposit_requests")
+.select("*")
+.order("created_at",{ascending:false});
+
+if(error){
+box.textContent="Impossible de charger les dépôts : "+error.message;
+return;
+}
+
 box.innerHTML="";
-if(!data?.length){box.textContent="Aucune demande de dépôt.";return;}
+
+if(!data?.length){
+box.textContent="Aucune demande de dépôt.";
+return;
+}
 
 const vipIds=[...new Set(data.map(d=>d.vip_product_id).filter(Boolean))];
 let vipMap={};
+
 if(vipIds.length){
-const {data:vips}=await db.from("power_station_vip_products").select("id,code").in("id",vipIds);
+const {data:vips}=await db.from("power_station_vip_products")
+.select("id,code")
+.in("id",vipIds);
+
 vipMap=Object.fromEntries((vips||[]).map(v=>[v.id,v.code]));
 }
 
 data.forEach(d=>{
 const el=document.createElement("div");
 el.className="admin-card";
+
 el.innerHTML=`
 <strong>Dépôt ${money(d.amount)}</strong>
 <p>ID membre : ${escapeHTML(d.user_id)}</p>
@@ -1140,43 +1442,72 @@ el.innerHTML=`
 if(d.status==="pending"){
 const actions=document.createElement("div");
 actions.className="actions";
+
 const approve=document.createElement("button");
 approve.className="green";
 approve.textContent="VALIDER LE DÉPÔT";
 approve.onclick=()=>reviewDeposit(d.id,true);
+
 const reject=document.createElement("button");
 reject.className="red";
 reject.textContent="REJETER";
 reject.onclick=()=>reviewDeposit(d.id,false);
+
 actions.append(approve,reject);
 el.appendChild(actions);
 }
+
 box.appendChild(el);
 });
 }
 
 async function reviewDeposit(id,approve){
 if(!await adminReady())return;
+
 if(!confirm(approve?"Confirmer que l'argent est réellement reçu ?":"Confirmer le rejet de ce dépôt ?"))return;
-const {data,error}=await db.rpc("ps_admin_review_deposit",{p_deposit_id:id,p_approve:approve});
-if(error){alert("Opération impossible : "+error.message);return;}
+
+const {data,error}=await db.rpc("ps_admin_review_deposit",{
+p_deposit_id:id,
+p_approve:approve
+});
+
+if(error){
+alert("Opération impossible : "+error.message);
+return;
+}
+
 alert(data||"Opération effectuée.");
+
 loadAdminDeposits();
 loadAdminDashboard();
 }
 
 async function loadAdminWithdrawals(){
 if(!await adminReady())return;
+
 const box=$("adminWithdrawalsList");
 box.textContent="Chargement...";
-const {data,error}=await db.from("ps_withdrawal_requests").select("*").order("created_at",{ascending:false});
-if(error){box.textContent="Impossible de charger les retraits : "+error.message;return;}
+
+const {data,error}=await db.from("ps_withdrawal_requests")
+.select("*")
+.order("created_at",{ascending:false});
+
+if(error){
+box.textContent="Impossible de charger les retraits : "+error.message;
+return;
+}
+
 box.innerHTML="";
-if(!data?.length){box.textContent="Aucune demande de retrait.";return;}
+
+if(!data?.length){
+box.textContent="Aucune demande de retrait.";
+return;
+}
 
 data.forEach(r=>{
 const el=document.createElement("div");
 el.className="admin-card";
+
 el.innerHTML=`
 <strong>Retrait demandé : ${money(r.amount)}</strong>
 <p>ID membre : ${escapeHTML(r.user_id)}</p>
@@ -1191,54 +1522,86 @@ ${r.admin_note?'<p>Note : '+escapeHTML(r.admin_note)+'</p>':''}`;
 if(["pending","processing"].includes(String(r.status).toLowerCase())){
 const actions=document.createElement("div");
 actions.className="actions";
+
 const paid=document.createElement("button");
 paid.className="green";
 paid.textContent="PAIEMENT EFFECTUÉ — CONFIRMER SUCCÈS";
 paid.onclick=()=>confirmWithdrawal(r.id);
+
 const reject=document.createElement("button");
 reject.className="red";
 reject.textContent="REJETER";
 reject.onclick=()=>rejectWithdrawal(r.id);
+
 actions.append(paid,reject);
 el.appendChild(actions);
 }
+
 box.appendChild(el);
 });
 }
 
 async function confirmWithdrawal(id){
 if(!await adminReady())return;
+
 if(!confirm("As-tu réellement envoyé l'argent au client ?"))return;
+
 const note=prompt("Référence du paiement ou note administrative :");
+
 if(note===null)return;
+
 const {data,error}=await db.rpc("ps_admin_confirm_withdrawal",{
-p_withdrawal_id:id,p_admin_note:note||"Paiement confirmé par administration"
+p_withdrawal_id:id,
+p_admin_note:note||"Paiement confirmé par administration"
 });
-if(error){alert("Erreur : "+error.message);return;}
+
+if(error){
+alert("Erreur : "+error.message);
+return;
+}
+
 alert(data||"Retrait confirmé.");
+
 loadAdminWithdrawals();
 loadAdminDashboard();
 }
 
 async function rejectWithdrawal(id){
 if(!await adminReady())return;
+
 const reason=prompt("Motif du rejet :");
+
 if(reason===null)return;
+
 const {data,error}=await db.rpc("ps_admin_reject_withdrawal",{
-p_withdrawal_id:id,p_reason:reason
+p_withdrawal_id:id,
+p_reason:reason
 });
-if(error){alert("Erreur : "+error.message);return;}
+
+if(error){
+alert("Erreur : "+error.message);
+return;
+}
+
 alert(data||"Retrait rejeté.");
+
 loadAdminWithdrawals();
 loadAdminDashboard();
 }
 
 async function loadAdminMembers(){
 if(!await adminReady())return;
+
 const box=$("adminMembersList");
 box.textContent="Chargement...";
+
 const {data,error}=await db.rpc("ps_admin_list_members");
-if(error){box.textContent="Liste indisponible : "+error.message;return;}
+
+if(error){
+box.textContent="Liste indisponible : "+error.message;
+return;
+}
+
 allMembers=data||[];
 renderAdminMembers(allMembers);
 }
@@ -1246,36 +1609,49 @@ renderAdminMembers(allMembers);
 function renderAdminMembers(list){
 const box=$("adminMembersList");
 box.innerHTML="";
-if(!list.length){box.textContent="Aucun membre trouvé.";return;}
+
+if(!list.length){
+box.textContent="Aucun membre trouvé.";
+return;
+}
 
 const wrap=document.createElement("div");
 wrap.className="table-wrap";
+
 const table=document.createElement("table");
+
 table.innerHTML="<thead><tr><th>Nom</th><th>Téléphone</th><th>ID</th><th>Code</th><th>Solde</th><th>Action</th></tr></thead>";
+
 const body=document.createElement("tbody");
 
 list.forEach(m=>{
 const tr=document.createElement("tr");
+
 [m.full_name||"-",m.phone||"-",m.user_id,m.referral_code||"-",money(m.available_balance)]
 .forEach(v=>{
 const td=document.createElement("td");
 td.textContent=v;
 tr.appendChild(td);
 });
+
 const td=document.createElement("td");
 const b=document.createElement("button");
+
 b.className="btn";
 b.textContent="Choisir";
+
 b.onclick=()=>{
 $("bonusUserId").value=m.user_id;
 $("vipUserId").value=m.user_id;
 $("earningUserId").value=m.user_id;
 alert("Membre sélectionné.");
 };
+
 td.appendChild(b);
 tr.appendChild(td);
 body.appendChild(tr);
 });
+
 table.appendChild(body);
 wrap.appendChild(table);
 box.appendChild(wrap);
@@ -1283,6 +1659,7 @@ box.appendChild(wrap);
 
 function filterMembers(){
 const q=$("memberSearch").value.toLowerCase();
+
 renderAdminMembers(allMembers.filter(m=>
 [m.full_name,m.phone,m.user_id,m.email,m.referral_code]
 .some(v=>String(v||"").toLowerCase().includes(q))
@@ -1291,31 +1668,50 @@ renderAdminMembers(allMembers.filter(m=>
 
 async function giveBonus(){
 if(!await adminReady())return;
+
 const userId=$("bonusUserId").value.trim();
 const amount=Number($("bonusAmount").value);
 const reason=$("bonusReason").value.trim();
 
-if(!userId||!amount||amount<=0)
+if(!userId||!amount||amount<=0){
 return message("bonusMessage","ID et montant valides obligatoires.","error");
+}
 
 const {data,error}=await db.rpc("ps_admin_give_bonus",{
-p_user_id:userId,p_amount:amount,p_reason:reason||"Bonus administrateur"
+p_user_id:userId,
+p_amount:amount,
+p_reason:reason||"Bonus administrateur"
 });
-if(error)return message("bonusMessage",error.message,"error");
+
+if(error){
+return message("bonusMessage",error.message,"error");
+}
+
 message("bonusMessage",data||"Bonus attribué.","success");
+
 $("bonusAmount").value="";
 loadAdminMembers();
 }
 
 async function loadAdminVIP(){
 if(!await adminReady())return;
+
 const box=$("adminVIPList");
 box.textContent="Chargement...";
-const {data,error}=await db.from("power_station_vip_products").select("*").order("id");
-if(error){box.textContent="Catalogue VIP indisponible : "+error.message;return;}
+
+const {data,error}=await db.from("power_station_vip_products")
+.select("*")
+.order("id");
+
+if(error){
+box.textContent="Catalogue VIP indisponible : "+error.message;
+return;
+}
 
 allVIP=data||[];
+
 $("vipProductSelect").innerHTML='<option value="">Choisir un VIP</option>';
+box.innerHTML="";
 
 allVIP.forEach(v=>{
 const option=document.createElement("option");
@@ -1325,6 +1721,7 @@ $("vipProductSelect").appendChild(option);
 
 const el=document.createElement("div");
 el.className="payment-box";
+
 el.innerHTML=`
 <strong>${escapeHTML(v.code)}</strong>
 <p>Prix : ${money(v.price_fc)}</p>
@@ -1332,35 +1729,46 @@ el.innerHTML=`
 <p>Durée : ${v.duration_days} jours</p>
 <p>Total indiqué : ${money(v.total_revenue_fc)}</p>
 <p>Statut : ${v.is_active?"Actif":"Inactif"}</p>`;
+
 box.appendChild(el);
 });
 }
 
 async function assignVIP(){
 if(!await adminReady())return;
+
 const userId=$("vipUserId").value.trim();
 const vipId=Number($("vipProductSelect").value);
 const note=$("vipNote").value.trim();
 
-if(!userId||!vipId)
+if(!userId||!vipId){
 return message("vipMessage","ID du membre et VIP obligatoires.","error");
+}
 
 const {data,error}=await db.rpc("ps_admin_assign_vip",{
-p_user_id:userId,p_vip_product_id:vipId,p_note:note||null
+p_user_id:userId,
+p_vip_product_id:vipId,
+p_note:note||null
 });
-if(error)return message("vipMessage",error.message,"error");
+
+if(error){
+return message("vipMessage",error.message,"error");
+}
+
 message("vipMessage","VIP attribué. Identifiant : "+data,"success");
 }
 
 async function adminAddEarning(){
 if(!await adminReady())return;
+
 const userId=$("earningUserId").value.trim();
 const activationId=$("earningActivationId").value.trim();
 const amount=Number($("earningAmount").value);
 const description=$("earningDescription").value.trim();
 
-if(!userId||!activationId||!amount||amount<=0)
+if(!userId||!activationId||!amount||amount<=0){
 return message("adminEarningMessage","ID membre, ID activation et montant obligatoires.","error");
+}
 
 const {data,error}=await db.rpc("ps_admin_add_vip_earning",{
 p_user_id:userId,
@@ -1369,8 +1777,12 @@ p_amount:amount,
 p_description:description||null
 });
 
-if(error)return message("adminEarningMessage",error.message,"error");
+if(error){
+return message("adminEarningMessage",error.message,"error");
+}
+
 message("adminEarningMessage","Revenu enregistré. Il pourra être récolté après 24 heures. ID : "+data,"success");
+
 $("earningAmount").value="";
 }
 
@@ -1383,8 +1795,12 @@ if(referralFromUrl){
 authMode("signup");
 showPage("auth");
 }
-if(currentUser)await checkAdmin();
+
+if(currentUser){
+await checkAdmin();
+}
 })();
+
 </script>
 
 </body>
