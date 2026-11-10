@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#b80000">
+
+<title>POWER STATION</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  font-family:Arial,sans-serif;
+  background:#fff8f0;
+  color:#292020;
+  padding-bottom:75px;
+}
+
+header{
+  background:#b80000;
+  color:white;
+  text-align:center;
+  padding:20px;
+}
+
+header h1{color:#ffd700;font-size:27px}
+header p{margin-top:7px}
+
+button{cursor:pointer}
+
+.top-button{
+  background:#ffd700;
+  color:#8b0000;
+  border:0;
+  padding:12px 20px;
+  border-radius:7px;
+  margin-top:12px;
+  font-weight:bold;
+}
+
+.container{
+  max-width:650px;
+  margin:auto;
+  padding:15px;
+}
+
+.carousel{
+  height:210px;
+  overflow:hidden;
+  border-radius:12px;
+  margin-bottom:18px;
+  background:#ddd;
+}
+
+.slide{display:none;width:100%;height:100%}
+.slide.active{display:block}
+.slide img{width:100%;height:100%;object-fit:cover}
+
+.welcome{
+  background:#b80000;
+  color:white;
+  padding:22px;
+  text-align:center;
+  border-radius:12px;
+  margin-bottom:18px;
+}
+
+.welcome h2{color:#ffd700;margin-bottom:10px}
+
+.social{display:flex;gap:8px;margin-bottom:20px}
+.social a{
+  flex:1;
+  padding:12px 4px;
+  text-align:center;
+  color:white;
+  text-decoration:none;
+  border-radius:7px;
+  font-size:12px;
+  font-weight:bold;
+}
+.whatsapp{background:#128c45}
+.telegram{background:#168ac7}
+.service{background:#8b0000}
+
+.section-title{
+  color:#a00000;
+  margin:20px 0 12px;
+}
+
+.shortcuts,.products{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.shortcut{
+  background:white;
+  border:1px solid #e6c7a2;
+  padding:18px 8px;
+  text-align:center;
+  border-radius:10px;
+  font-weight:bold;
+}
+
+.auth-box{
+  display:none;
+  background:white;
+  border:1px solid #e5c9a9;
+  border-radius:12px;
+  padding:18px;
+  margin:18px 0;
+}
+
+.auth-box h2{
+  color:#a00000;
+  text-align:center;
+  margin-bottom:15px;
+}
+
+.auth-box input{
+  width:100%;
+  padding:13px;
+  border:1px solid #ccc;
+  border-radius:7px;
+  margin-bottom:12px;
+  font-size:15px;
+}
+
+.main-button{
+  width:100%;
+  padding:13px;
+  background:#b80000;
+  color:white;
+  border:0;
+  border-radius:7px;
+  font-weight:bold;
+  margin-bottom:10px;
+}
+
+.switch{
+  text-align:center;
+  color:#a00000;
+  margin-top:10px;
+  cursor:pointer;
+}
+
+.product{
+  background:white;
+  border-radius:10px;
+  overflow:hidden;
+  border:1px solid #e5d2bd;
+}
+
+.product img{
+  width:100%;
+  height:120px;
+  object-fit:cover;
+}
+
+.product-info{padding:10px}
+.product h3{font-size:15px;margin-bottom:8px}
+.product p{font-size:13px;margin-bottom:8px}
+
+.product button{
+  width:100%;
+  background:#b80000;
+  color:white;
+  border:0;
+  padding:10px;
+  border-radius:6px;
+}
+
+.account{
+  display:none;
+  background:white;
+  padding:18px;
+  margin-top:18px;
+  border-radius:10px;
+}
+
+.account p{margin:12px 0}
+
+footer{
+  text-align:center;
+  padding:20px;
+  color:#777;
+  font-size:12px;
+}
+
+nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  background:#b80000;
+  display:flex;
+  justify-content:space-around;
+  padding:12px 2px;
+  z-index:10;
+}
+
+nav button{
+  color:white;
+  background:none;
+  border:0;
+  font-size:12px;
+  font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>⚡ POWER STATION</h1>
+<p>Votre énergie, notre priorité</p>
+<button class="top-button" onclick="ouvrirInscription()">
+Inscription / Connexion
+</button>
+</header>
+
+<main class="container">
+
+<div class="carousel">
+<div class="slide active">
+<img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=900" alt="Panneaux solaires">
+</div>
+<div class="slide">
+<img src="https://images.unsplash.com/photo-1592833159155-c62df1b65634?w=900" alt="Installation électrique">
+</div>
+<div class="slide">
+<img src="https://images.unsplash.com/photo-1497440001374-f26997328c1b?w=900" alt="Énergie">
+</div>
+<div class="slide">
+<img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=900" alt="Électricité">
+</div>
+<div class="slide">
+<img src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=900" alt="Énergie solaire">
+</div>
+</div>
+
+<section class="welcome">
+<h2>Bienvenue chez POWER STATION</h2>
+<p>
+Découvrez nos équipements électriques et énergétiques.
+Achetez vos panneaux solaires, batteries, câbles,
+télévisions, téléphones et bien plus encore.
+</p>
+</section>
+
+<div class="social">
+<a class="whatsapp" href="https://chat.whatsapp.com/DzKHiqrdBbPI22W7afe9ps" target="_blank">WhatsApp</a>
+<a class="telegram" href="https://t.me/francscongolais" target="_blank">Telegram</a>
+<a class="service" href="https://wa.me/243000000000" target="_blank">Service client</a>
+</div>
+
+<section class="auth-box" id="inscription">
+<h2>Créer un compte</h2>
+
+<input id="nom" type="text" placeholder="Nom complet">
+<input id="numero" type="tel" placeholder="Numéro de téléphone (+243)">
+<input id="password" type="password" placeholder="Mot de passe">
+<input id="confirmation" type="password" placeholder="Confirmer le mot de passe">
+<input id="parrain" type="text" placeholder="Code parrain (facultatif)">
+
+<button class="main-button" onclick="inscrire()">S'INSCRIRE</button>
+
+<p class="switch" onclick="ouvrirConnexion()">
+Vous avez déjà un compte ? Se connecter
+</p>
+</section>
+
+<section class="auth-box" id="connexion">
+<h2>Se connecter</h2>
+
+<input id="numeroConnexion" type="tel" placeholder="Numéro de téléphone (+243)">
+<input id="passwordConnexion" type="password" placeholder="Mot de passe">
+
+<button class="main-button" onclick="connecter()">SE CONNECTER</button>
+
+<p class="switch" onclick="ouvrirInscription()">
+Créer un nouveau compte
+</p>
+</section>
+
+<h2 class="section-title">Nos services</h2>
+
+<div class="shortcuts">
+<div class="shortcut" onclick="voirProduits()">🛒 Boutique</div>
+<div class="shortcut" onclick="ouvrirConnexion()">💳 Mes commandes</div>
+<div class="shortcut" onclick="ouvrirConnexion()">👥 Parrainage</div>
+<div class="shortcut" onclick="ouvrirConnexion()">👤 Mon compte</div>
+</div>
+
+<h2 class="section-title" id="titreProduits">Nos produits</h2>
+
+<div class="products" id="listeProduits">
+<p>Chargement des produits...</p>
+</div>
+
+<section class="account" id="monCompte">
+<h2>Mon compte POWER STATION</h2>
+<p id="nomCompte"></p>
+<p id="telephoneCompte"></p>
+<button class="main-button" onclick="deconnecter()">Se déconnecter</button>
+</section>
+
+</main>
+
+<footer>
+POWER STATION © 2026<br>
+Boutique en ligne - République démocratique du Congo
+</footer>
+
+<nav>
+<button onclick="allerAccueil()">🏠<br>Accueil</button>
+<button onclick="voirProduits()">🛒<br>Plan/Rechargé</button>
+<button onclick="ouvrirConnexion()">👥<br>Équipe</button>
+<button onclick="ouvrirConnexion()">👤<br>Moi</button>
+</nav>
+
+<script>
+
+/* =====================================
+   CONFIGURATION SUPABASE
+   REMPLACER LES DEUX VALEURS CI-DESSOUS
+===================================== */
+
+const SUPABASE_URL = "COLLE_ICI_URL_DE_TON_PROJET";
+const SUPABASE_ANON_KEY = "COLLE_ICI_TA_CLE_PUBLIQUE_ANON";
+
+/* =====================================
+   CONNEXION SUPABASE
+===================================== */
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
+
+/* FORMAT NUMERO CONGOLAIS */
+
+function formatPhone(numero){
+  let n = numero.replace(/\D/g,"");
+
+  if(n.startsWith("243")) return "+" + n;
+
+  if(n.startsWith("0")) n = n.substring(1);
+
+  return "+243" + n;
+}
+
+/* FORMULAIRES */
+
+function ouvrirInscription(){
+  document.getElementById("inscription").style.display="block";
+  document.getElementById("connexion").style.display="none";
+  document.getElementById("inscription").scrollIntoView({behavior:"smooth"});
+}
+
+function ouvrirConnexion(){
+  document.getElementById("connexion").style.display="block";
+  document.getElementById("inscription").style.display="none";
+  document.getElementById("connexion").scrollIntoView({behavior:"smooth"});
+}
+
+/* INSCRIPTION */
+
+async function inscrire(){
+
+  const nom=document.getElementById("nom").value.trim();
+  const numero=document.getElementById("numero").value.trim();
+  const password=document.getElementById("password").value;
+  const confirmation=document.getElementById("confirmation").value;
+  const parrain=document.getElementById("parrain").value.trim();
+
+  if(!nom || !numero || !password || !confirmation){
+    alert("Remplissez tous les champs obligatoires.");
+    return;
+  }
+
+  if(password.length<8){
+    alert("Le mot de passe doit avoir au moins 8 caractères.");
+    return;
+  }
+
+  if(password!==confirmation){
+    alert("Les mots de passe ne correspondent pas.");
+    return;
+  }
+
+  const {data,error}=await supabaseClient.auth.signUp({
+    phone:formatPhone(numero),
+    password:password,
+    options:{
+      data:{
+        full_name:nom,
+        referral_code:parrain.toUpperCase()
+      }
+    }
+  });
+
+  if(error){
+    alert("Erreur inscription : "+error.message);
+    return;
+  }
+
+  alert("Inscription envoyée. Vérifiez votre téléphone si un SMS de confirmation est demandé.");
+}
+
+/* CONNEXION */
+
+async function connecter(){
+
+  const numero=document.getElementById("numeroConnexion").value.trim();
+  const password=document.getElementById("passwordConnexion").value;
+
+  if(!numero || !password){
+    alert("Entrez votre numéro et votre mot de passe.");
+    return;
+  }
+
+  const {data,error}=await supabaseClient.auth.signInWithPassword({
+    phone:formatPhone(numero),
+    password:password
+  });
+
+  if(error){
+    alert("Erreur connexion : "+error.message);
+    return;
+  }
+
+  alert("Connexion réussie !");
+  afficherCompte();
+}
+
+/* AFFICHER COMPTE */
+
+async function afficherCompte(){
+
+  const {data,error}=await supabaseClient.auth.getUser();
+
+  if(error || !data.user) return;
+
+  document.getElementById("inscription").style.display="none";
+  document.getElementById("connexion").style.display="none";
+  document.getElementById("monCompte").style.display="block";
+
+  document.getElementById("nomCompte").textContent=
+    "Nom : "+(data.user.user_metadata.full_name || "Client");
+
+  document.getElementById("telephoneCompte").textContent=
+    "Téléphone : "+(data.user.phone || "");
+
+  document.getElementById("monCompte").scrollIntoView({behavior:"smooth"});
+}
+
+/* DECONNEXION */
+
+async function deconnecter(){
+
+  const {error}=await supabaseClient.auth.signOut();
+
+  if(error){
+    alert(error.message);
+    return;
+  }
+
+  document.getElementById("monCompte").style.display="none";
+  alert("Déconnexion réussie.");
+  allerAccueil();
+}
+
+/* PRODUITS */
+
+async function chargerProduits(){
+
+  const zone=document.getElementById("listeProduits");
+
+  const {data,error}=await supabaseClient
+    .from("power_station_products")
+    .select("id,name,description,image_url,price_fc")
+    .eq("is_active",true)
+    .order("created_at",{ascending:false});
+
+  if(error){
+    zone.innerHTML="<p>Impossible de charger les produits pour le moment.</p>";
+    console.error(error.message);
+    return;
+  }
+
+  if(!data || data.length===0){
+    zone.innerHTML="<p>Aucun produit disponible pour le moment.</p>";
+    return;
+  }
+
+  zone.innerHTML="";
+
+  data.forEach(function(produit){
+
+    const carte=document.createElement("div");
+    carte.className="product";
+
+    const image=document.createElement("img");
+    image.src=produit.image_url ||
+      "https://images.unsplash.com/photo-1497440001374-f26997328c1b?w=600";
+    image.alt=produit.name;
+
+    const info=document.createElement("div");
+    info.className="product-info";
+
+    const nom=document.createElement("h3");
+    nom.textContent=produit.name;
+
+    const description=document.createElement("p");
+    description.textContent=produit.description || "";
+
+    const prix=document.createElement("p");
+    prix.textContent=Number(produit.price_fc).toLocaleString("fr-FR")+" FC";
+
+    const bouton=document.createElement("button");
+    bouton.textContent="Commander";
+
+    bouton.onclick=function(){
+      commander(produit.name);
+    };
+
+    info.append(nom,description,prix,bouton);
+    carte.append(image,info);
+    zone.appendChild(carte);
+
+  });
+}
+
+/* COMMANDER */
+
+async function commander(nomProduit){
+
+  const {data}=await supabaseClient.auth.getUser();
+
+  if(!data.user){
+    alert("Connectez-vous pour commander.");
+    ouvrirConnexion();
+    return;
+  }
+
+  alert("Produit sélectionné : "+nomProduit+
+  ". Contactez le service client pour finaliser votre achat.");
+}
+
+/* NAVIGATION */
+
+function voirProduits(){
+  document.getElementById("titreProduits").scrollIntoView({behavior:"smooth"});
+}
+
+function allerAccueil(){
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+/* CARROUSEL */
+
+let slideIndex=0;
+
+function defilerImages(){
+
+  const slides=document.querySelectorAll(".slide");
+
+  slides.forEach(function(slide){
+    slide.classList.remove("active");
+  });
+
+  slideIndex++;
+
+  if(slideIndex>=slides.length) slideIndex=0;
+
+  slides[slideIndex].classList.add("active");
+}
+
+setInterval(defilerImages,6000);
+
+/* DEMARRAGE */
+
+chargerProduits();
+
+supabaseClient.auth.getSession().then(function(result){
+  if(result.data.session){
+    afficherCompte();
+  }
+});
+
+</script>
+
+</body>
+</html>
