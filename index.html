@@ -11,12 +11,13 @@
 body{margin:0;background:#fff8ed;color:#292929;font-family:Arial,sans-serif;padding-bottom:75px}
 header{background:#d71920;color:white;text-align:center;padding:16px;position:sticky;top:0;z-index:10}
 header h1{margin:0;font-size:25px}
+header p{margin:6px 0}
 button{border:0;border-radius:8px;padding:12px;cursor:pointer;font-weight:bold}
 button:disabled{opacity:.5;cursor:not-allowed}
 .btn{background:#ffcc00;color:#222}
 .red{background:#d71920;color:white}
 .green{background:#16833a;color:white}
-.auth-top{width:100%;margin-top:12px;background:#ffcc00;color:#222;font-size:17px;padding:14px}
+.auth-top{width:100%;margin-top:12px;background:#ffcc00;color:#222;font-size:16px;padding:13px}
 .container{max-width:900px;margin:auto;padding:12px}
 .card{background:white;padding:15px;border-radius:12px;margin:12px 0;box-shadow:0 2px 8px #0001}
 h2{color:#d71920;font-size:21px}
@@ -32,9 +33,9 @@ input,textarea,select{width:100%;padding:13px;margin:7px 0;border:1px solid #ddd
 .product img{width:100%;height:125px;object-fit:cover}
 .product-info{padding:10px}
 .price{color:#d71920;font-weight:bold}
-.categories,.admin-tabs{display:flex;gap:8px;overflow-x:auto;padding:8px 0}
-.categories button,.admin-tabs button{white-space:nowrap;background:#ffe7a0}
-.admin-tabs button.selected{background:#d71920;color:white}
+.categories,.admin-tabs,.auth-tabs{display:flex;gap:8px;overflow-x:auto;padding:8px 0}
+.categories button,.admin-tabs button,.auth-tabs button{white-space:nowrap;background:#ffe7a0}
+.admin-tabs button.selected,.auth-tabs button.selected{background:#d71920;color:white}
 .status{padding:10px;border-radius:7px;margin:8px 0;background:#eee;overflow-wrap:anywhere}
 .success{background:#d9f8df;color:#145b22}
 .error{background:#ffe0e0;color:#9b0000}
@@ -57,7 +58,14 @@ th{background:#fff0c0}
 .small{font-size:12px;color:#666}
 .actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
 .actions button{padding:9px;font-size:12px}
-@media(max-width:360px){.products,.quick,.stats{grid-template-columns:1fr}.copy-number{font-size:16px}}
+.countdown{background:#292929;color:#ffcc00;text-align:center;padding:18px;border-radius:12px;margin:12px 0}
+.countdown strong{display:block;font-size:25px;margin-top:8px;letter-spacing:2px}
+.vip-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.vip-card{border:1px solid #e7c36d;border-radius:10px;padding:12px;background:#fffaf0}
+.vip-card h3{color:#d71920;margin:0 0 8px}
+.vip-card strong{color:#d71920}
+.auth-tabs button{flex:1}
+@media(max-width:360px){.products,.quick,.stats,.vip-grid{grid-template-columns:1fr}.copy-number{font-size:16px}}
 </style>
 </head>
 
@@ -73,6 +81,7 @@ th{background:#fff0c0}
 
 <!-- ACCUEIL -->
 <section id="home">
+
 <div class="carousel">
 <div class="slide active"><img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=900" alt="Panneaux solaires"></div>
 <div class="slide"><img src="https://images.unsplash.com/photo-1592833159155-c62df1b65634?w=900" alt="Énergie"></div>
@@ -81,10 +90,16 @@ th{background:#fff0c0}
 <div class="slide"><img src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=900" alt="Solaire"></div>
 </div>
 
+<div class="countdown">
+<div>⏳ COMPTE À REBOURS DU LANCEMENT</div>
+<strong id="countdown">Chargement...</strong>
+<div id="countdownText">POWER STATION</div>
+</div>
+
 <div class="card">
 <h2>Bienvenue chez POWER STATION</h2>
 <p>Achetez vos équipements électriques et solaires en toute simplicité.</p>
-<button class="red" style="width:100%" onclick="showPage('auth')">Créer un compte / Se connecter</button>
+<button class="red" style="width:100%" onclick="showPage('auth')">INSCRIPTION / CONNEXION</button>
 </div>
 
 <div class="card">
@@ -98,15 +113,27 @@ th{background:#fff0c0}
 </div>
 
 <div class="card">
+<h2>Nos produits VIP</h2>
+<p>Consultez les produits disponibles.</p>
+<div id="homeVIP" class="vip-grid">Chargement des produits...</div>
+</div>
+
+<div class="card">
 <h2>Nos communautés</h2>
-<p><a href="https://chat.whatsapp.com/DzKHiqrdBbPI22W7afe9ps" target="_blank"><button class="red">Rejoindre WhatsApp</button></a></p>
-<p><a href="https://t.me/francscongolais" target="_blank"><button class="btn">Rejoindre Telegram</button></a></p>
+<p><a href="https://chat.whatsapp.com/DzKHiqrdBbPI22W7afe9ps" target="_blank" rel="noopener"><button class="red">Rejoindre WhatsApp</button></a></p>
+<p><a href="https://t.me/francscongolais" target="_blank" rel="noopener"><button class="btn">Rejoindre Telegram</button></a></p>
 </div>
 </section>
 
-<!-- AUTHENTIFICATION -->
+<!-- AUTHENTIFICATION : UN SEUL FORMULAIRE VISIBLE -->
 <section id="auth" class="hidden">
 <div class="card">
+<div class="auth-tabs">
+<button id="signupTab" class="selected" onclick="authMode('signup')">INSCRIPTION</button>
+<button id="loginTab" onclick="authMode('login')">CONNEXION</button>
+</div>
+
+<div id="signupPanel">
 <h2>Créer un compte</h2>
 <form id="signupForm">
 <input id="fullName" placeholder="Nom complet" required>
@@ -114,12 +141,12 @@ th{background:#fff0c0}
 <input id="signupPassword" type="password" placeholder="Mot de passe : 6 chiffres" inputmode="numeric" pattern="[0-9]{6}" minlength="6" maxlength="6" required>
 <input id="confirmPassword" type="password" placeholder="Confirmer les 6 chiffres" inputmode="numeric" pattern="[0-9]{6}" minlength="6" maxlength="6" required>
 <input id="referralCode" placeholder="Code parrain (facultatif)">
-<button class="red" type="submit" style="width:100%">S'INSCRIRE</button>
+<button class="red" type="submit" style="width:100%">CRÉER MON COMPTE</button>
 </form>
 <div id="signupMessage" class="status hidden"></div>
 </div>
 
-<div class="card">
+<div id="loginPanel" class="hidden">
 <h2>Se connecter</h2>
 <form id="loginForm">
 <input id="loginPhone" type="tel" placeholder="Numéro de téléphone" required>
@@ -127,6 +154,7 @@ th{background:#fff0c0}
 <button class="btn" type="submit" style="width:100%">SE CONNECTER</button>
 </form>
 <div id="loginMessage" class="status hidden"></div>
+</div>
 </div>
 </section>
 
@@ -154,6 +182,11 @@ th{background:#fff0c0}
 <button class="red" style="width:100%" onclick="createOrder()">CONFIRMER MA COMMANDE</button>
 <div id="orderMessage" class="status hidden"></div>
 </div>
+
+<div class="card">
+<h2>Produits VIP</h2>
+<div id="shopVIP" class="vip-grid">Chargement...</div>
+</div>
 </section>
 
 <!-- PAIEMENT COMMANDE -->
@@ -161,15 +194,31 @@ th{background:#fff0c0}
 <div class="card">
 <h2>Déclaration du paiement</h2>
 <p>Effectuez votre paiement sur l'un des numéros suivants.</p>
+
 <div id="paymentNumbers">
-<div class="payment-box"><strong>Airtel Money</strong><div class="copy-row"><span class="copy-number">973087965</span><button class="copy-button" onclick="copyText('973087965',this)">COPIER</button></div><p>Nom : BASHANGWA</p></div>
-<div class="payment-box"><strong>Orange Money</strong><div class="copy-row"><span class="copy-number">899532643</span><button class="copy-button" onclick="copyText('899532643',this)">COPIER</button></div><p>Nom : JEANCQUELINE</p></div>
-<div class="payment-box"><strong>M-Pesa</strong><div class="copy-row"><span class="copy-number">0861823718</span><button class="copy-button" onclick="copyText('0861823718',this)">COPIER</button></div><p>Nom : REGINA</p></div>
+<div class="payment-box">
+<strong>Airtel Money</strong>
+<div class="copy-row"><span class="copy-number">973087965</span><button class="copy-button" onclick="copyText('973087965',this)">COPIER</button></div>
+<p>Nom : BASHANGWA</p>
 </div>
+<div class="payment-box">
+<strong>Orange Money</strong>
+<div class="copy-row"><span class="copy-number">899532643</span><button class="copy-button" onclick="copyText('899532643',this)">COPIER</button></div>
+<p>Nom : JEANCQUELINE</p>
+</div>
+<div class="payment-box">
+<strong>M-Pesa</strong>
+<div class="copy-row"><span class="copy-number">0861823718</span><button class="copy-button" onclick="copyText('0861823718',this)">COPIER</button></div>
+<p>Nom : REGINA</p>
+</div>
+</div>
+
 <input id="paymentOrderId" placeholder="Numéro de commande" readonly>
 <select id="paymentMethod">
 <option value="">Choisir le moyen de paiement</option>
-<option>Airtel Money</option><option>Orange Money</option><option>M-Pesa</option>
+<option>Airtel Money</option>
+<option>Orange Money</option>
+<option>M-Pesa</option>
 </select>
 <input id="senderPhone" placeholder="Numéro ayant envoyé l'argent">
 <input id="transactionReference" placeholder="Référence de transaction">
@@ -190,12 +239,14 @@ th{background:#fff0c0}
 
 <div class="card">
 <h2>Demande de retrait</h2>
-<p>Minimum : 5 000 FC. Frais : 0 %. Les demandes sont traitées du lundi au vendredi, de 08h à 18h.</p>
+<p>Minimum : 5 000 FC. Frais : 0 %. Traitement du lundi au vendredi, de 08h à 18h.</p>
 <input id="withdrawName" placeholder="Nom du bénéficiaire">
 <input id="withdrawPhone" placeholder="Numéro Mobile Money">
 <select id="withdrawMethod">
 <option value="">Choisir le moyen de réception</option>
-<option>Airtel Money</option><option>Orange Money</option><option>M-Pesa</option>
+<option>Airtel Money</option>
+<option>Orange Money</option>
+<option>M-Pesa</option>
 </select>
 <input id="withdrawAmount" type="number" min="5000" placeholder="Montant à retirer en FC">
 <button class="red" style="width:100%" onclick="submitWithdrawal()">ENVOYER MA DEMANDE</button>
@@ -303,7 +354,7 @@ th{background:#fff0c0}
 <div id="admin-withdrawals" class="admin-panel hidden">
 <div class="card">
 <h2>Demandes de retrait</h2>
-<p>Le bouton « Paiement effectué » confirme que tu as réellement envoyé l'argent au client.</p>
+<p>Confirmez le succès uniquement après avoir réellement envoyé l'argent au client.</p>
 <button class="btn" onclick="loadAdminWithdrawals()">ACTUALISER</button>
 <div id="adminWithdrawalsList"></div>
 </div>
@@ -327,7 +378,10 @@ th{background:#fff0c0}
 <div class="card">
 <h2>Désigner un promoteur</h2>
 <input id="promoterUserId" placeholder="ID du membre">
-<select id="promoterActive"><option value="true">Activer promoteur</option><option value="false">Retirer le statut promoteur</option></select>
+<select id="promoterActive">
+<option value="true">Activer promoteur</option>
+<option value="false">Retirer le statut promoteur</option>
+</select>
 <button class="red" style="width:100%" onclick="appointPromoter()">ENREGISTRER</button>
 <div id="promoterMessage" class="status hidden"></div>
 </div>
@@ -352,7 +406,6 @@ th{background:#fff0c0}
 <div id="admin-settings" class="admin-panel hidden">
 <div class="card">
 <h2>Paramètres de la plateforme</h2>
-<p class="small">Les valeurs sont enregistrées dans Supabase.</p>
 <label>Dépôt minimum (FC)</label><input id="setMinDeposit" type="number">
 <label>Retrait minimum (FC)</label><input id="setMinWithdrawal" type="number">
 <label>Frais de retrait (%)</label><input id="setWithdrawalFee" type="number">
@@ -365,15 +418,14 @@ th{background:#fff0c0}
 <div id="settingsMessage" class="status hidden"></div>
 </div>
 <div class="card">
-<h2>Informations de paiement affichées</h2>
-<p>Airtel Money : 973087965 — BASHANGWA</p>
-<p>Orange Money : 899532643 — JEANCQUELINE</p>
-<p>M-Pesa : 0861823718 — REGINA</p>
-<p class="small">La modification de ces numéros nécessite une fonction serveur d'administration dédiée dans Supabase. Aucun changement fictif n'est effectué ici.</p>
+<h2>Numéros de paiement</h2>
+<p>Airtel Money : <strong>973087965 — BASHANGWA</strong></p>
+<p>Orange Money : <strong>899532643 — JEANCQUELINE</strong></p>
+<p>M-Pesa : <strong>0861823718 — REGINA</strong></p>
 </div>
 <div class="card">
 <h2>Sécurité</h2>
-<p>La réinitialisation des mots de passe des membres nécessite une fonction serveur sécurisée. Ne jamais placer la clé service_role dans cette page.</p>
+<p>La réinitialisation des mots de passe des membres nécessite une fonction serveur sécurisée. La clé service_role ne doit jamais être placée dans cette page.</p>
 </div>
 </div>
 </section>
@@ -391,7 +443,7 @@ th{background:#fff0c0}
 
 <script>
 // ==================================
-// CONFIGURATION SUPABASE
+// SUPABASE
 // ==================================
 const SUPABASE_URL="https://ggmsnwsetemhijfybiux.supabase.co";
 const SUPABASE_ANON_KEY="sb_publishable_M1LJ_gItIR_FbuK6oTPLKA_dZgvFRw6";
@@ -404,8 +456,11 @@ let allProducts=[];
 let allMembers=[];
 let allVIP=[];
 let selectedCategory="Tous";
+let categoryMap={};
 let myReferralCode="";
 let myReferralLink="";
+
+const $=id=>document.getElementById(id);
 
 const categoryNames=[
 "Panneaux solaires","Batteries","Câbles","Amplificateurs",
@@ -413,7 +468,16 @@ const categoryNames=[
 "Groupes électrogènes","Power banks"
 ];
 
-const $=id=>document.getElementById(id);
+const vipFallback=[
+{code:"P1",price_fc:7000,daily_revenue_fc:700,duration_days:35,total_revenue_fc:24500},
+{code:"P2",price_fc:15000,daily_revenue_fc:1500,duration_days:35,total_revenue_fc:52500},
+{code:"P3",price_fc:27000,daily_revenue_fc:2800,duration_days:35,total_revenue_fc:98000},
+{code:"P4",price_fc:50000,daily_revenue_fc:6000,duration_days:35,total_revenue_fc:210000},
+{code:"P5",price_fc:100000,daily_revenue_fc:13000,duration_days:35,total_revenue_fc:455000},
+{code:"P6",price_fc:250000,daily_revenue_fc:35000,duration_days:35,total_revenue_fc:1225000},
+{code:"P7",price_fc:500000,daily_revenue_fc:70000,duration_days:35,total_revenue_fc:2450000},
+{code:"P8",price_fc:1000000,daily_revenue_fc:160000,duration_days:35,total_revenue_fc:5600000}
+];
 
 function escapeHTML(value){
 return String(value??"").replace(/[&<>"']/g,c=>({
@@ -435,7 +499,7 @@ if(type==="error")el.classList.add("error");
 }
 
 function formatPhone(value){
-let phone=value.trim().replace(/[\s()-]/g,"");
+let phone=String(value||"").trim().replace(/[\s()-]/g,"");
 if(phone.startsWith("00"))phone="+"+phone.substring(2);
 if(phone.startsWith("+243"))return phone;
 if(phone.startsWith("243"))return "+"+phone;
@@ -445,8 +509,9 @@ return phone.startsWith("+")?phone:"+"+phone;
 }
 
 async function checkSession(){
-const {data}=await db.auth.getSession();
-currentUser=data.session?data.session.user:null;
+const {data,error}=await db.auth.getSession();
+if(error)console.error(error);
+currentUser=data?.session?.user||null;
 return currentUser;
 }
 
@@ -454,9 +519,38 @@ async function checkAdmin(){
 await checkSession();
 if(!currentUser){isAdmin=false;return false;}
 const {data,error}=await db.rpc("power_station_is_admin");
-isAdmin=!error&&data===true;
+isAdmin=!error&&(data===true||data==="true");
 return isAdmin;
 }
+
+// ==================================
+// COMPTE À REBOURS
+// Date cible : 11 novembre 2026 à 08h00, Kinshasa
+// ==================================
+function updateCountdown(){
+const target=new Date("2026-11-11T08:00:00+02:00").getTime();
+const now=Date.now();
+let diff=target-now;
+if(diff<=0){
+$("countdown").textContent="00 : 00 : 00 : 00";
+$("countdownText").textContent="LANCEMENT ARRIVÉ";
+return;
+}
+const days=Math.floor(diff/86400000);
+diff%=86400000;
+const hours=Math.floor(diff/3600000);
+diff%=3600000;
+const minutes=Math.floor(diff/60000);
+const seconds=Math.floor((diff%60000)/1000);
+$("countdown").textContent=
+String(days).padStart(2,"0")+" : "+
+String(hours).padStart(2,"0")+" : "+
+String(minutes).padStart(2,"0")+" : "+
+String(seconds).padStart(2,"0");
+$("countdownText").textContent="JOURS : HEURES : MINUTES : SECONDES";
+}
+updateCountdown();
+setInterval(updateCountdown,1000);
 
 // ==================================
 // NAVIGATION
@@ -470,10 +564,11 @@ document.querySelectorAll(".bottom-nav button").forEach(b=>b.classList.remove("a
 if(button)button.classList.add("active");
 else{
 const map={home:0,shop:1,team:2,account:3};
-if(map[page]!==undefined)document.querySelectorAll(".bottom-nav button")[map[page]].classList.add("active");
+if(map[page]!==undefined)
+document.querySelectorAll(".bottom-nav button")[map[page]].classList.add("active");
 }
 
-if(page==="shop")loadProducts();
+if(page==="shop"){loadProducts();loadVIPProducts();}
 if(page==="orders")loadOrders();
 if(page==="active")loadActiveProducts();
 if(page==="account")loadAccount();
@@ -483,12 +578,22 @@ if(page==="admin")openAdmin();
 window.scrollTo(0,0);
 }
 
+// ==================================
+// INSCRIPTION / CONNEXION : ALTERNANCE
+// ==================================
+function authMode(mode){
+const signup=mode==="signup";
+$("signupPanel").classList.toggle("hidden",!signup);
+$("loginPanel").classList.toggle("hidden",signup);
+$("signupTab").classList.toggle("selected",signup);
+$("loginTab").classList.toggle("selected",!signup);
+}
+
 function adminTab(tab,button){
 document.querySelectorAll(".admin-panel").forEach(p=>p.classList.add("hidden"));
 $("admin-"+tab).classList.remove("hidden");
 document.querySelectorAll(".admin-tabs button").forEach(b=>b.classList.remove("selected"));
 if(button)button.classList.add("selected");
-
 if(tab==="dashboard")loadAdminDashboard();
 if(tab==="deposits")loadAdminDeposits();
 if(tab==="withdrawals")loadAdminWithdrawals();
@@ -502,20 +607,35 @@ if(tab==="settings")loadSettings();
 // ==================================
 async function copyText(text,button){
 try{
-if(navigator.clipboard&&window.isSecureContext)await navigator.clipboard.writeText(text);
-else{
+if(navigator.clipboard&&window.isSecureContext){
+await navigator.clipboard.writeText(text);
+}else{
 const input=document.createElement("textarea");
-input.value=text;document.body.appendChild(input);input.select();
-document.execCommand("copy");input.remove();
+input.value=text;
+input.style.position="fixed";
+input.style.opacity="0";
+document.body.appendChild(input);
+input.select();
+document.execCommand("copy");
+input.remove();
 }
 if(button){
-const old=button.textContent;button.textContent="COPIÉ !";
+const old=button.textContent;
+button.textContent="COPIÉ !";
 setTimeout(()=>button.textContent=old,1500);
 }
-}catch(e){alert("Copiez le texte manuellement.");}
+}catch(e){
+alert("Copiez le texte manuellement : "+text);
 }
-function copyReferralCode(){if(myReferralCode)copyText(myReferralCode);else alert("Code indisponible.");}
-function copyReferralLink(){if(myReferralLink)copyText(myReferralLink);else alert("Lien indisponible.");}
+}
+function copyReferralCode(){
+if(myReferralCode)copyText(myReferralCode);
+else alert("Code indisponible.");
+}
+function copyReferralLink(){
+if(myReferralLink)copyText(myReferralLink);
+else alert("Lien indisponible.");
+}
 
 // ==================================
 // INSCRIPTION
@@ -529,7 +649,7 @@ const confirmation=$("confirmPassword").value;
 const referral=$("referralCode").value.trim().toUpperCase();
 
 if(!name)return message("signupMessage","Veuillez saisir votre nom.","error");
-if(!/^[0-9]{6}$/.test(password))return message("signupMessage","Le mot de passe doit contenir 6 chiffres.","error");
+if(!/^[0-9]{6}$/.test(password))return message("signupMessage","Le mot de passe doit contenir exactement 6 chiffres.","error");
 if(password!==confirmation)return message("signupMessage","Les mots de passe ne correspondent pas.","error");
 
 message("signupMessage","Création du compte en cours...");
@@ -537,14 +657,15 @@ const {data,error}=await db.auth.signUp({
 phone,password,
 options:{data:{full_name:name,referral_code:referral}}
 });
+
 if(error)return message("signupMessage",error.message,"error");
 
 if(data.session){
 currentUser=data.user;
 message("signupMessage","Compte créé avec succès !","success");
-await loadAccount();
+setTimeout(()=>showPage("account"),700);
 }else{
-message("signupMessage","Inscription envoyée. Vérifiez la confirmation téléphonique configurée dans Supabase.","success");
+message("signupMessage","Inscription envoyée. Si Supabase demande une confirmation SMS, vérifiez votre téléphone.","success");
 }
 });
 
@@ -555,7 +676,8 @@ $("loginForm").addEventListener("submit",async e=>{
 e.preventDefault();
 const phone=formatPhone($("loginPhone").value);
 const password=$("loginPassword").value;
-if(!/^[0-9]{6}$/.test(password))return message("loginMessage","Entrez exactement 6 chiffres.","error");
+if(!/^[0-9]{6}$/.test(password))
+return message("loginMessage","Entrez exactement 6 chiffres.","error");
 
 message("loginMessage","Connexion en cours...");
 const {data,error}=await db.auth.signInWithPassword({phone,password});
@@ -568,7 +690,8 @@ setTimeout(()=>showPage("account"),500);
 async function logout(){
 const {error}=await db.auth.signOut();
 if(error)return alert(error.message);
-currentUser=null;isAdmin=false;
+currentUser=null;
+isAdmin=false;
 showPage("home");
 }
 
@@ -577,14 +700,20 @@ showPage("home");
 // ==================================
 async function loadAccount(){
 await checkSession();
-if(!currentUser){$("accountInfo").textContent="Vous n'êtes pas connecté."; $("adminAccess").classList.add("hidden");return;}
+if(!currentUser){
+$("accountInfo").textContent="Vous n'êtes pas connecté.";
+$("adminAccess").classList.add("hidden");
+return;
+}
 
 const {data,error}=await db.from("power_station_profiles")
 .select("full_name,phone").eq("user_id",currentUser.id).maybeSingle();
 
 let walletText="Solde non disponible";
 const {data:wallet}=await db.from("ps_wallets")
-.select("available_balance,reserved_balance").eq("user_id",currentUser.id).maybeSingle();
+.select("available_balance,reserved_balance")
+.eq("user_id",currentUser.id).maybeSingle();
+
 if(wallet)walletText=money(wallet.available_balance);
 
 $("accountInfo").innerHTML=`
@@ -594,8 +723,9 @@ $("accountInfo").innerHTML=`
 <p><strong>E-mail :</strong> ${escapeHTML(currentUser.email||"Non renseigné")}</p>
 <p><strong>Solde disponible :</strong> ${escapeHTML(walletText)}</p>
 <p><strong>Statut :</strong> Connecté</p>
-${error?'<p class="small">Profil non chargé. Vérifiez la création du profil dans Supabase.</p>':''}
+${error?'<p class="small">Profil non chargé. Vérifiez le profil dans Supabase.</p>':''}
 `;
+
 const admin=await checkAdmin();
 $("adminAccess").classList.toggle("hidden",!admin);
 }
@@ -605,13 +735,22 @@ $("adminAccess").classList.toggle("hidden",!admin);
 // ==================================
 async function loadWallet(){
 await checkSession();
-if(!currentUser){$("walletSummary").textContent="Connectez-vous.";return;}
+if(!currentUser){
+$("walletSummary").textContent="Connectez-vous.";
+return;
+}
 const {data,error}=await db.from("ps_wallets")
 .select("available_balance,reserved_balance,total_deposited,total_withdrawn,total_bonus")
 .eq("user_id",currentUser.id).maybeSingle();
 
-if(error){$("walletSummary").textContent="Impossible de charger le portefeuille.";return;}
-if(!data){$("walletSummary").textContent="Portefeuille en cours de création.";return;}
+if(error){
+$("walletSummary").textContent="Impossible de charger le portefeuille : "+error.message;
+return;
+}
+if(!data){
+$("walletSummary").textContent="Portefeuille en cours de création.";
+return;
+}
 
 $("walletSummary").innerHTML=`
 <strong>Solde disponible :</strong> ${money(data.available_balance)}<br>
@@ -629,17 +768,24 @@ async function savePayoutAccount(){
 const provider=$("withdrawMethod").value;
 const number=formatPhone($("withdrawPhone").value);
 const name=$("withdrawName").value.trim();
-if(!provider||!number||!name)return message("withdrawMessage","Complétez le nom, le numéro et le moyen de paiement.","error");
+
+if(!provider||!number||!name){
+message("withdrawMessage","Complétez le nom, le numéro et le moyen de paiement.","error");
+return false;
+}
 
 const {error}=await db.rpc("ps_save_payout_account",{
 p_provider:provider,p_number:number,p_name:name
 });
-if(error)return message("withdrawMessage",error.message,"error");
+if(error){
+message("withdrawMessage",error.message,"error");
+return false;
+}
 return true;
 }
 
 // ==================================
-// DEMANDER UN RETRAIT
+// DEMANDE DE RETRAIT
 // ==================================
 async function submitWithdrawal(){
 await checkSession();
@@ -650,14 +796,14 @@ if(!Number.isFinite(amount)||amount<5000)
 return message("withdrawMessage","Le retrait minimum est de 5 000 FC.","error");
 
 const saved=await savePayoutAccount();
-if(saved!==true)return;
+if(!saved)return;
 
 message("withdrawMessage","Enregistrement de votre demande...");
 const {data,error}=await db.rpc("ps_submit_withdrawal",{p_amount:amount});
 if(error)return message("withdrawMessage",error.message,"error");
 
 $("withdrawAmount").value="";
-message("withdrawMessage","Demande envoyée. Votre solde est réservé pendant le traitement. Le statut deviendra Succès après confirmation du paiement par l'administration.","success");
+message("withdrawMessage","Demande envoyée. Le statut deviendra Succès uniquement après confirmation du paiement par l'administration.","success");
 await loadWallet();
 await loadMyWithdrawals();
 }
@@ -669,20 +815,25 @@ async function loadMyWithdrawals(){
 await checkSession();
 const box=$("myWithdrawals");
 if(!currentUser){box.textContent="Connectez-vous.";return;}
+
 const {data,error}=await db.from("ps_withdrawal_requests")
 .select("id,amount,net_amount,provider,mobile_money_number,status,admin_note,created_at,paid_at")
 .eq("user_id",currentUser.id).order("created_at",{ascending:false});
-if(error){box.textContent="Historique momentanément indisponible.";return;}
+
+if(error){box.textContent="Historique momentanément indisponible : "+error.message;return;}
 box.innerHTML="";
 if(!data?.length){box.textContent="Aucune demande de retrait.";return;}
+
 data.forEach(r=>{
-const el=document.createElement("div");el.className="payment-box";
-const labels={pending:"En attente",processing:"En cours",success:"Succès",rejected:"Rejeté"};
+const el=document.createElement("div");
+el.className="payment-box";
+const state=String(r.status||"").toLowerCase();
+const labels={pending:"En attente",processing:"En cours",success:"Succès",rejected:"Rejeté",paid:"Succès"};
 el.innerHTML=`
 <strong>Retrait : ${money(r.amount)}</strong>
 <p>Montant à recevoir : ${money(r.net_amount)}</p>
 <p>Moyen : ${escapeHTML(r.provider)} — ${escapeHTML(r.mobile_money_number)}</p>
-<p>Statut : <strong>${labels[r.status]||escapeHTML(r.status)}</strong></p>
+<p>Statut : <strong>${labels[state]||escapeHTML(r.status)}</strong></p>
 <p>Date : ${new Date(r.created_at).toLocaleString("fr-FR")}</p>
 ${r.paid_at?'<p>Paiement confirmé : '+new Date(r.paid_at).toLocaleString("fr-FR")+'</p>':''}
 ${r.admin_note?'<p>Note : '+escapeHTML(r.admin_note)+'</p>':''}
@@ -702,10 +853,15 @@ $("myReferralLink").textContent="Connectez-vous";
 message("teamMessage","Connectez-vous pour consulter votre équipe.","error");
 return;
 }
+
 message("teamMessage","Chargement...");
 const {data,error}=await db.from("power_station_referrals")
 .select("referral_code").eq("user_id",currentUser.id).maybeSingle();
-if(error){message("teamMessage","Code de parrainage indisponible.","error");return;}
+
+if(error){
+message("teamMessage","Code de parrainage indisponible : "+error.message,"error");
+return;
+}
 
 myReferralCode=data?.referral_code||"";
 if(!myReferralCode){
@@ -714,6 +870,7 @@ $("myReferralLink").textContent="Aucun lien";
 message("teamMessage","Code de parrainage non créé pour ce compte.","error");
 return;
 }
+
 myReferralLink=location.origin+location.pathname+"?ref="+encodeURIComponent(myReferralCode);
 $("myReferralCode").textContent=myReferralCode;
 $("myReferralLink").textContent=myReferralLink;
@@ -721,6 +878,7 @@ $("myReferralLink").textContent=myReferralLink;
 const {count,error:countError}=await db.from("power_station_referrals")
 .select("user_id",{count:"exact",head:true})
 .eq("referred_by_user_id",currentUser.id);
+
 $("teamRegistered").textContent=countError?"—":(count??0);
 $("teamTotal").textContent=countError?"—":(count??0);
 $("teamValidated").textContent="—";
@@ -736,39 +894,58 @@ const referralFromUrl=urlParams.get("ref");
 if(referralFromUrl)$("referralCode").value=referralFromUrl.toUpperCase();
 
 // ==================================
-// CATEGORIES ET PRODUITS
+// CATEGORIES ET PRODUITS PHYSIQUES
 // ==================================
 function renderCategories(){
-const box=$("categories");box.innerHTML="";
+const box=$("categories");
+box.innerHTML="";
 ["Tous",...categoryNames].forEach(name=>{
-const b=document.createElement("button");b.textContent=name;
-if(selectedCategory===name){b.style.background="#d71920";b.style.color="white";}
-b.onclick=()=>{selectedCategory=name;renderCategories();renderProducts();};
+const b=document.createElement("button");
+b.textContent=name;
+if(selectedCategory===name){
+b.style.background="#d71920";
+b.style.color="white";
+}
+b.onclick=()=>{
+selectedCategory=name;
+renderCategories();
+renderProducts();
+};
 box.appendChild(b);
 });
 }
 
-async function loadProducts(){
-const box=$("products");box.textContent="Chargement...";
-const {data,error}=await db.from("power_station_products")
-.select("id,name,description,image_url,price_fc,stock,category_id")
-.eq("is_active",true).order("name");
-if(error){box.textContent="Produits momentanément indisponibles.";console.error(error);return;}
-allProducts=data||[];
-renderCategories();renderProducts();
-}
-
 async function loadCategoryMap(){
-const {data}=await db.from("power_station_categories").select("id,name");
+const {data,error}=await db.from("power_station_categories").select("id,name");
+if(error){
+console.warn("Catégories :",error.message);
+return {};
+}
 return Object.fromEntries((data||[]).map(c=>[String(c.id),c.name]));
 }
 
-let categoryMap={};
+async function loadProducts(){
+const box=$("products");
+box.textContent="Chargement...";
+const {data,error}=await db.from("power_station_products")
+.select("id,name,description,image_url,price_fc,stock,category_id")
+.eq("is_active",true).order("name");
 
-async function renderProducts(){
-const box=$("products");box.innerHTML="";
+if(error){
+box.textContent="Produits momentanément indisponibles.";
+console.error(error);
+return;
+}
+allProducts=data||[];
+categoryMap=await loadCategoryMap();
+renderCategories();
+renderProducts();
+}
+
+function renderProducts(){
+const box=$("products");
+box.innerHTML="";
 const search=$("searchProduct").value.toLowerCase();
-if(!Object.keys(categoryMap).length)categoryMap=await loadCategoryMap();
 
 const filtered=allProducts.filter(p=>{
 const category=categoryMap[String(p.category_id)]||"";
@@ -776,45 +953,133 @@ const text=((p.name||"")+" "+(p.description||"")+" "+category).toLowerCase();
 const categoryOK=selectedCategory==="Tous"||category===selectedCategory;
 return categoryOK&&text.includes(search);
 });
-if(!filtered.length){box.textContent="Aucun produit disponible.";return;}
+
+if(!filtered.length){
+box.textContent="Aucun produit disponible.";
+return;
+}
 
 filtered.forEach(p=>{
-const card=document.createElement("div");card.className="product";
+const card=document.createElement("div");
+card.className="product";
 const img=document.createElement("img");
 img.src=p.image_url||"https://placehold.co/400x300?text=POWER+STATION";
 img.onerror=()=>img.src="https://placehold.co/400x300?text=POWER+STATION";
-const info=document.createElement("div");info.className="product-info";
-const title=document.createElement("h3");title.textContent=p.name;
-const desc=document.createElement("p");desc.textContent=p.description||"";
-const price=document.createElement("p");price.className="price";price.textContent=money(p.price_fc);
-const stock=document.createElement("p");stock.textContent="Stock : "+p.stock;
-const btn=document.createElement("button");btn.className="red";btn.textContent="Ajouter au panier";btn.disabled=Number(p.stock)<=0;btn.onclick=()=>addToCart(p);
-info.append(title,desc,price,stock,btn);card.append(img,info);box.appendChild(card);
+
+const info=document.createElement("div");
+info.className="product-info";
+
+const title=document.createElement("h3");
+title.textContent=p.name;
+const desc=document.createElement("p");
+desc.textContent=p.description||"";
+const price=document.createElement("p");
+price.className="price";
+price.textContent=money(p.price_fc);
+const stock=document.createElement("p");
+stock.textContent="Stock : "+p.stock;
+
+const btn=document.createElement("button");
+btn.className="red";
+btn.textContent="Ajouter au panier";
+btn.disabled=Number(p.stock)<=0;
+btn.onclick=()=>addToCart(p);
+
+info.append(title,desc,price,stock,btn);
+card.append(img,info);
+box.appendChild(card);
 });
 }
 $("searchProduct").addEventListener("input",renderProducts);
+
+// ==================================
+// PRODUITS VIP P1 À P8
+// ==================================
+function renderVIP(target,products){
+const box=$(target);
+if(!box)return;
+box.innerHTML="";
+
+products.forEach(v=>{
+const el=document.createElement("div");
+el.className="vip-card";
+el.innerHTML=`
+<h3>${escapeHTML(v.code||"VIP")}</h3>
+<p>Prix : <strong>${money(v.price_fc)}</strong></p>
+<p>Revenu journalier indiqué : ${money(v.daily_revenue_fc)}</p>
+<p>Durée : ${Number(v.duration_days||35)} jours</p>
+<p>Total annoncé : <strong>${money(v.total_revenue_fc)}</strong></p>
+<p class="small">Les revenus affichés sont indicatifs et dépendent des conditions réelles du programme.</p>
+`;
+box.appendChild(el);
+});
+}
+
+async function loadVIPProducts(){
+const home=$("homeVIP");
+const shop=$("shopVIP");
+if(home)home.textContent="Chargement...";
+if(shop)shop.textContent="Chargement...";
+
+const {data,error}=await db.from("power_station_vip_products")
+.select("id,code,price_fc,daily_revenue_fc,duration_days,total_revenue_fc,is_active")
+.eq("is_active",true).order("id");
+
+if(error){
+console.warn("Catalogue VIP Supabase :",error.message);
+renderVIP("homeVIP",vipFallback);
+renderVIP("shopVIP",vipFallback);
+return;
+}
+
+const products=data?.length?data:vipFallback;
+renderVIP("homeVIP",products);
+renderVIP("shopVIP",products);
+}
 
 // ==================================
 // PANIER
 // ==================================
 function addToCart(p){
 const existing=cart.find(i=>i.id===p.id);
-if(existing){if(existing.quantity>=Number(p.stock))return alert("Stock insuffisant.");existing.quantity++;}
-else{if(Number(p.stock)<=0)return alert("Produit indisponible.");cart.push({id:p.id,name:p.name,price:Number(p.price_fc),quantity:1,stock:Number(p.stock)});}
+if(existing){
+if(existing.quantity>=Number(p.stock))return alert("Stock insuffisant.");
+existing.quantity++;
+}else{
+if(Number(p.stock)<=0)return alert("Produit indisponible.");
+cart.push({
+id:p.id,name:p.name,price:Number(p.price_fc),
+quantity:1,stock:Number(p.stock)
+});
+}
 renderCart();
 }
 
 function renderCart(){
-const box=$("cartItems");box.innerHTML="";
-if(!cart.length){box.textContent="Votre panier est vide.";$("cartTotal").textContent="Total : 0 FC";return;}
+const box=$("cartItems");
+box.innerHTML="";
+if(!cart.length){
+box.textContent="Votre panier est vide.";
+$("cartTotal").textContent="Total : 0 FC";
+return;
+}
 let total=0;
 cart.forEach(item=>{
-const subtotal=item.price*item.quantity;total+=subtotal;
-const row=document.createElement("div");row.className="payment-box";
-const p=document.createElement("p");p.textContent=item.name+" × "+item.quantity+" = "+money(subtotal);
-const b=document.createElement("button");b.className="red";b.textContent="Retirer";
-b.onclick=()=>{cart=cart.filter(x=>x.id!==item.id);renderCart();};
-row.append(p,b);box.appendChild(row);
+const subtotal=item.price*item.quantity;
+total+=subtotal;
+const row=document.createElement("div");
+row.className="payment-box";
+const p=document.createElement("p");
+p.textContent=item.name+" × "+item.quantity+" = "+money(subtotal);
+const b=document.createElement("button");
+b.className="red";
+b.textContent="Retirer";
+b.onclick=()=>{
+cart=cart.filter(x=>x.id!==item.id);
+renderCart();
+};
+row.append(p,b);
+box.appendChild(row);
 });
 $("cartTotal").textContent="Total : "+money(total);
 }
@@ -826,23 +1091,33 @@ async function createOrder(){
 await checkSession();
 if(!currentUser){showPage("auth");return alert("Connectez-vous avant de commander.");}
 if(!cart.length)return alert("Votre panier est vide.");
+
 const name=$("customerName").value.trim();
 const phone=formatPhone($("customerPhone").value);
 const address=$("customerAddress").value.trim();
 const note=$("customerNote").value.trim();
-if(!name||!phone||!address)return alert("Remplissez le nom, le téléphone et l'adresse.");
+
+if(!name||!phone||!address)
+return alert("Remplissez le nom, le téléphone et l'adresse.");
 
 message("orderMessage","Enregistrement de la commande...");
 const {data,error}=await db.rpc("power_station_create_order",{
-p_customer_name:name,p_phone:phone,p_address:address,p_note:note,
+p_customer_name:name,
+p_phone:phone,
+p_address:address,
+p_note:note,
 p_items:cart.map(i=>({product_id:i.id,quantity:i.quantity}))
 });
-if(error)return message("orderMessage","Commande non enregistrée. Vérifiez vos informations.","error");
+
+if(error)return message("orderMessage",error.message,"error");
 
 const orderId=typeof data==="string"?data:data?.id||data?.order_id;
-if(!orderId)return message("orderMessage","Commande enregistrée mais identifiant introuvable.","error");
+if(!orderId)
+return message("orderMessage","Commande enregistrée mais identifiant introuvable.","error");
 
-$("paymentOrderId").value=orderId;cart=[];renderCart();
+$("paymentOrderId").value=orderId;
+cart=[];
+renderCart();
 message("orderMessage","Commande enregistrée. Déclarez votre paiement.","success");
 setTimeout(()=>showPage("payment"),700);
 }
@@ -850,18 +1125,25 @@ setTimeout(()=>showPage("payment"),700);
 async function submitPayment(){
 await checkSession();
 if(!currentUser){showPage("auth");return;}
+
 const orderId=$("paymentOrderId").value.trim();
 const method=$("paymentMethod").value;
 const sender=formatPhone($("senderPhone").value);
 const reference=$("transactionReference").value.trim();
 const proof=$("proofUrl").value.trim();
-if(!orderId||!method||!sender||!reference)return message("paymentMessage","Remplissez les champs obligatoires.","error");
+
+if(!orderId||!method||!sender||!reference)
+return message("paymentMessage","Remplissez les champs obligatoires.","error");
 
 const {error}=await db.rpc("power_station_submit_payment",{
-p_order_id:orderId,p_method:method,p_sender_phone:sender,
-p_reference:reference,p_proof_path:proof||null
+p_order_id:orderId,
+p_method:method,
+p_sender_phone:sender,
+p_reference:reference,
+p_proof_path:proof||null
 });
-if(error)return message("paymentMessage","Déclaration non enregistrée. Réessayez.","error");
+
+if(error)return message("paymentMessage",error.message,"error");
 message("paymentMessage","Déclaration envoyée. Votre paiement attend une vérification.","success");
 }
 
@@ -872,16 +1154,26 @@ async function loadOrders(){
 await checkSession();
 const box=$("ordersList");
 if(!currentUser){box.textContent="Connectez-vous.";return;}
+
 box.textContent="Chargement...";
 const {data,error}=await db.from("power_station_orders")
-.select("id,total_fc,status,created_at").eq("user_id",currentUser.id)
+.select("id,total_fc,status,created_at")
+.eq("user_id",currentUser.id)
 .order("created_at",{ascending:false});
+
 if(error){box.textContent="Historique momentanément indisponible.";return;}
 box.innerHTML="";
 if(!data?.length){box.textContent="Aucune commande.";return;}
+
 data.forEach(o=>{
-const el=document.createElement("div");el.className="payment-box";
-el.innerHTML=`<strong>Commande : ${escapeHTML(o.id)}</strong><p>Total : ${money(o.total_fc)}</p><p>Statut : ${escapeHTML(o.status)}</p><p>Date : ${new Date(o.created_at).toLocaleString("fr-FR")}</p>`;
+const el=document.createElement("div");
+el.className="payment-box";
+el.innerHTML=`
+<strong>Commande : ${escapeHTML(o.id)}</strong>
+<p>Total : ${money(o.total_fc)}</p>
+<p>Statut : ${escapeHTML(o.status)}</p>
+<p>Date : ${new Date(o.created_at).toLocaleString("fr-FR")}</p>
+`;
 box.appendChild(el);
 });
 }
@@ -893,25 +1185,48 @@ async function loadActiveProducts(){
 await checkSession();
 const box=$("activeProducts");
 if(!currentUser){box.textContent="Connectez-vous.";return;}
+
 const {data,error}=await db.from("ps_vip_activations")
 .select("id,status,activated_at,expires_at,vip_product_id")
-.eq("user_id",currentUser.id).order("activated_at",{ascending:false});
-if(error){box.textContent="Produits actifs momentanément indisponibles.";return;}
+.eq("user_id",currentUser.id)
+.order("activated_at",{ascending:false});
+
+if(error){
+box.textContent="Produits actifs momentanément indisponibles : "+error.message;
+return;
+}
+
 box.innerHTML="";
-if(!data?.length){box.textContent="Aucun VIP attribué pour le moment.";return;}
+if(!data?.length){
+box.textContent="Aucun VIP attribué pour le moment.";
+return;
+}
+
 const vipIds=[...new Set(data.map(x=>x.vip_product_id))];
-const {data:vips}=await db.from("power_station_vip_products").select("id,code,price_fc,daily_revenue_fc,duration_days").in("id",vipIds);
+const {data:vips}=await db.from("power_station_vip_products")
+.select("id,code,price_fc,daily_revenue_fc,duration_days")
+.in("id",vipIds);
+
 const map=Object.fromEntries((vips||[]).map(v=>[v.id,v]));
+
 data.forEach(a=>{
 const v=map[a.vip_product_id]||{};
-const el=document.createElement("div");el.className="payment-box";
-el.innerHTML=`<strong>${escapeHTML(v.code||"VIP")}</strong><p>Prix : ${money(v.price_fc)}</p><p>Revenu journalier indiqué : ${money(v.daily_revenue_fc)}</p><p>Durée : ${v.duration_days||"-"} jours</p><p>Statut : ${escapeHTML(a.status)}</p><p>Expiration : ${new Date(a.expires_at).toLocaleString("fr-FR")}</p>`;
+const el=document.createElement("div");
+el.className="payment-box";
+el.innerHTML=`
+<strong>${escapeHTML(v.code||"VIP")}</strong>
+<p>Prix : ${money(v.price_fc)}</p>
+<p>Revenu journalier indiqué : ${money(v.daily_revenue_fc)}</p>
+<p>Durée : ${v.duration_days||"-"} jours</p>
+<p>Statut : ${escapeHTML(a.status)}</p>
+<p>Expiration : ${a.expires_at?new Date(a.expires_at).toLocaleString("fr-FR"):"-"}</p>
+`;
 box.appendChild(el);
 });
 }
 
 // ==================================
-// SUPER ADMIN - OUVERTURE
+// SUPER ADMIN
 // ==================================
 async function openAdmin(){
 const ok=await checkAdmin();
@@ -928,7 +1243,10 @@ adminTab("dashboard",document.querySelector(".admin-tabs button"));
 }
 
 async function adminReady(){
-if(!await checkAdmin()){alert("Accès SUPER ADMIN refusé.");return false;}
+if(!await checkAdmin()){
+alert("Accès SUPER ADMIN refusé.");
+return false;
+}
 return true;
 }
 
@@ -937,12 +1255,14 @@ return true;
 // ==================================
 async function loadAdminDashboard(){
 if(!await adminReady())return;
+
 const [members,deposits,withdrawals,wallets]=await Promise.all([
 db.rpc("ps_admin_list_members"),
 db.from("ps_deposit_requests").select("id",{count:"exact",head:true}).eq("status","pending"),
 db.from("ps_withdrawal_requests").select("id",{count:"exact",head:true}).in("status",["pending","processing"]),
 db.from("ps_wallets").select("reserved_balance")
 ]);
+
 if(!members.error)$("adminMemberCount").textContent=members.data?.length||0;
 $("adminDepositCount").textContent=deposits.count??"—";
 $("adminWithdrawalCount").textContent=withdrawals.count??"—";
@@ -954,14 +1274,23 @@ $("adminReserved").textContent=wallets.error?"—":money((wallets.data||[]).redu
 // ==================================
 async function loadAdminDeposits(){
 if(!await adminReady())return;
-const box=$("adminDepositsList");box.textContent="Chargement...";
+const box=$("adminDepositsList");
+box.textContent="Chargement...";
+
 const {data,error}=await db.from("ps_deposit_requests")
 .select("*").order("created_at",{ascending:false});
-if(error){box.textContent="Impossible de charger les dépôts. Vérifiez les politiques RLS.";return;}
+
+if(error){
+box.textContent="Impossible de charger les dépôts : "+error.message;
+return;
+}
+
 box.innerHTML="";
 if(!data?.length){box.textContent="Aucune demande de dépôt.";return;}
+
 data.forEach(d=>{
-const el=document.createElement("div");el.className="admin-card";
+const el=document.createElement("div");
+el.className="admin-card";
 el.innerHTML=`
 <strong>Dépôt ${money(d.amount)}</strong>
 <p>ID membre : ${escapeHTML(d.user_id)}</p>
@@ -970,13 +1299,28 @@ el.innerHTML=`
 <p>Référence : ${escapeHTML(d.transaction_reference||"-")}</p>
 <p>Statut : ${escapeHTML(d.status)}</p>
 <p>Date : ${new Date(d.created_at).toLocaleString("fr-FR")}</p>
-${d.proof_path?'<p>Preuve : <a href="'+escapeHTML(d.proof_path)+'" target="_blank" rel="noopener">Voir la preuve</a></p>':''}
 `;
+if(d.proof_path){
+const link=document.createElement("a");
+link.href=d.proof_path;
+link.target="_blank";
+link.rel="noopener";
+link.textContent="Voir la preuve";
+el.appendChild(link);
+}
 if(d.status==="pending"){
-const actions=document.createElement("div");actions.className="actions";
-const approve=document.createElement("button");approve.className="green";approve.textContent="VALIDER LE DÉPÔT";approve.onclick=()=>reviewDeposit(d.id,true);
-const reject=document.createElement("button");reject.className="red";reject.textContent="REJETER";reject.onclick=()=>reviewDeposit(d.id,false);
-actions.append(approve,reject);el.appendChild(actions);
+const actions=document.createElement("div");
+actions.className="actions";
+const approve=document.createElement("button");
+approve.className="green";
+approve.textContent="VALIDER LE DÉPÔT";
+approve.onclick=()=>reviewDeposit(d.id,true);
+const reject=document.createElement("button");
+reject.className="red";
+reject.textContent="REJETER";
+reject.onclick=()=>reviewDeposit(d.id,false);
+actions.append(approve,reject);
+el.appendChild(actions);
 }
 box.appendChild(el);
 });
@@ -984,12 +1328,16 @@ box.appendChild(el);
 
 async function reviewDeposit(id,approve){
 if(!await adminReady())return;
-const promptText=approve?"Confirmer que l'argent est réellement reçu ?":"Confirmer le rejet de ce dépôt ?";
-if(!confirm(promptText))return;
-const {data,error}=await db.rpc("ps_admin_review_deposit",{p_deposit_id:id,p_approve:approve});
+if(!confirm(approve?"Confirmer que l'argent est réellement reçu ?":"Confirmer le rejet de ce dépôt ?"))return;
+
+const {data,error}=await db.rpc("ps_admin_review_deposit",{
+p_deposit_id:id,p_approve:approve
+});
+
 if(error){alert("Opération impossible : "+error.message);return;}
 alert(data||"Opération effectuée.");
-loadAdminDeposits();loadAdminDashboard();
+loadAdminDeposits();
+loadAdminDashboard();
 }
 
 // ==================================
@@ -997,14 +1345,23 @@ loadAdminDeposits();loadAdminDashboard();
 // ==================================
 async function loadAdminWithdrawals(){
 if(!await adminReady())return;
-const box=$("adminWithdrawalsList");box.textContent="Chargement...";
+const box=$("adminWithdrawalsList");
+box.textContent="Chargement...";
+
 const {data,error}=await db.from("ps_withdrawal_requests")
 .select("*").order("created_at",{ascending:false});
-if(error){box.textContent="Impossible de charger les retraits. Vérifiez les politiques RLS.";return;}
+
+if(error){
+box.textContent="Impossible de charger les retraits : "+error.message;
+return;
+}
+
 box.innerHTML="";
 if(!data?.length){box.textContent="Aucune demande de retrait.";return;}
+
 data.forEach(r=>{
-const el=document.createElement("div");el.className="admin-card";
+const el=document.createElement("div");
+el.className="admin-card";
 el.innerHTML=`
 <strong>Retrait demandé : ${money(r.amount)}</strong>
 <p>ID membre : ${escapeHTML(r.user_id)}</p>
@@ -1016,11 +1373,23 @@ el.innerHTML=`
 <p>Date : ${new Date(r.created_at).toLocaleString("fr-FR")}</p>
 ${r.admin_note?'<p>Note : '+escapeHTML(r.admin_note)+'</p>':''}
 `;
-if(["pending","processing"].includes(r.status)){
-const actions=document.createElement("div");actions.className="actions";
-const paid=document.createElement("button");paid.className="green";paid.textContent="PAIEMENT EFFECTUÉ — CONFIRMER SUCCÈS";paid.onclick=()=>confirmWithdrawal(r.id);
-const reject=document.createElement("button");reject.className="red";reject.textContent="REJETER";reject.onclick=()=>rejectWithdrawal(r.id);
-actions.append(paid,reject);el.appendChild(actions);
+
+if(["pending","processing"].includes(String(r.status).toLowerCase())){
+const actions=document.createElement("div");
+actions.className="actions";
+
+const paid=document.createElement("button");
+paid.className="green";
+paid.textContent="PAIEMENT EFFECTUÉ — CONFIRMER SUCCÈS";
+paid.onclick=()=>confirmWithdrawal(r.id);
+
+const reject=document.createElement("button");
+reject.className="red";
+reject.textContent="REJETER";
+reject.onclick=()=>rejectWithdrawal(r.id);
+
+actions.append(paid,reject);
+el.appendChild(actions);
 }
 box.appendChild(el);
 });
@@ -1028,22 +1397,36 @@ box.appendChild(el);
 
 async function confirmWithdrawal(id){
 if(!await adminReady())return;
-if(!confirm("As-tu réellement envoyé l'argent sur le compte Mobile Money du client ? Le statut sera SUCCESS."))return;
-const note=prompt("Référence du paiement ou note administrative (facultatif) :")||"Paiement confirmé par administration";
-const {data,error}=await db.rpc("ps_admin_confirm_withdrawal",{p_withdrawal_id:id,p_admin_note:note});
+if(!confirm("As-tu réellement envoyé l'argent sur le compte Mobile Money du client ?"))return;
+
+const note=prompt("Référence du paiement ou note administrative :");
+if(note===null)return;
+
+const {data,error}=await db.rpc("ps_admin_confirm_withdrawal",{
+p_withdrawal_id:id,
+p_admin_note:note||"Paiement confirmé par administration"
+});
+
 if(error){alert("Erreur : "+error.message);return;}
 alert(data||"Retrait confirmé.");
-loadAdminWithdrawals();loadAdminDashboard();
+loadAdminWithdrawals();
+loadAdminDashboard();
 }
 
 async function rejectWithdrawal(id){
 if(!await adminReady())return;
 const reason=prompt("Motif du rejet :");
 if(reason===null)return;
-const {data,error}=await db.rpc("ps_admin_reject_withdrawal",{p_withdrawal_id:id,p_reason:reason});
+
+const {data,error}=await db.rpc("ps_admin_reject_withdrawal",{
+p_withdrawal_id:id,
+p_reason:reason
+});
+
 if(error){alert("Erreur : "+error.message);return;}
-alert(data||"Retrait rejeté et solde restitué.");
-loadAdminWithdrawals();loadAdminDashboard();
+alert(data||"Retrait rejeté.");
+loadAdminWithdrawals();
+loadAdminDashboard();
 }
 
 // ==================================
@@ -1051,39 +1434,59 @@ loadAdminWithdrawals();loadAdminDashboard();
 // ==================================
 async function loadAdminMembers(){
 if(!await adminReady())return;
-const box=$("adminMembersList");box.textContent="Chargement...";
+const box=$("adminMembersList");
+box.textContent="Chargement...";
+
 const {data,error}=await db.rpc("ps_admin_list_members");
-if(error){box.textContent="Liste indisponible : "+error.message;return;}
+if(error){
+box.textContent="Liste indisponible : "+error.message;
+return;
+}
 allMembers=data||[];
 renderAdminMembers(allMembers);
 }
 
 function renderAdminMembers(list){
-const box=$("adminMembersList");box.innerHTML="";
+const box=$("adminMembersList");
+box.innerHTML="";
 if(!list.length){box.textContent="Aucun membre trouvé.";return;}
-const wrap=document.createElement("div");wrap.className="table-wrap";
+
+const wrap=document.createElement("div");
+wrap.className="table-wrap";
 const table=document.createElement("table");
 table.innerHTML="<thead><tr><th>Nom</th><th>Téléphone</th><th>ID</th><th>E-mail</th><th>Code</th><th>Solde</th><th>Réservé</th><th>Promoteur</th><th>Action</th></tr></thead>";
+
 const body=document.createElement("tbody");
 list.forEach(m=>{
 const tr=document.createElement("tr");
-const values=[
+[
 m.full_name||"-",m.phone||"-",m.user_id,m.email||"-",
 m.referral_code||"-",money(m.available_balance),
 money(m.reserved_balance),m.is_promoter?"Oui":"Non"
-];
-values.forEach(v=>{const td=document.createElement("td");td.textContent=v;tr.appendChild(td);});
+].forEach(v=>{
 const td=document.createElement("td");
-const b=document.createElement("button");b.className="btn";b.textContent="Choisir";
+td.textContent=v;
+tr.appendChild(td);
+});
+
+const td=document.createElement("td");
+const b=document.createElement("button");
+b.className="btn";
+b.textContent="Choisir";
 b.onclick=()=>{
 $("bonusUserId").value=m.user_id;
 $("promoterUserId").value=m.user_id;
 $("vipUserId").value=m.user_id;
-alert("Membre sélectionné pour bonus, promoteur et VIP.");
+alert("Membre sélectionné.");
 };
-td.appendChild(b);tr.appendChild(td);body.appendChild(tr);
+td.appendChild(b);
+tr.appendChild(td);
+body.appendChild(tr);
 });
-table.appendChild(body);wrap.appendChild(table);box.appendChild(wrap);
+
+table.appendChild(body);
+wrap.appendChild(table);
+box.appendChild(wrap);
 }
 
 function filterMembers(){
@@ -1102,13 +1505,20 @@ if(!await adminReady())return;
 const userId=$("bonusUserId").value.trim();
 const amount=Number($("bonusAmount").value);
 const reason=$("bonusReason").value.trim();
-if(!userId||!amount||amount<=0)return message("bonusMessage","ID et montant valides obligatoires.","error");
+
+if(!userId||!amount||amount<=0)
+return message("bonusMessage","ID et montant valides obligatoires.","error");
+
 const {data,error}=await db.rpc("ps_admin_give_bonus",{
-p_user_id:userId,p_amount:amount,p_reason:reason||"Bonus administrateur"
+p_user_id:userId,
+p_amount:amount,
+p_reason:reason||"Bonus administrateur"
 });
+
 if(error)return message("bonusMessage",error.message,"error");
 message("bonusMessage",data||"Bonus attribué.","success");
-$("bonusAmount").value="";loadAdminMembers();
+$("bonusAmount").value="";
+loadAdminMembers();
 }
 
 // ==================================
@@ -1118,8 +1528,12 @@ async function appointPromoter(){
 if(!await adminReady())return;
 const userId=$("promoterUserId").value.trim();
 if(!userId)return message("promoterMessage","ID membre obligatoire.","error");
+
 const active=$("promoterActive").value==="true";
-const {data,error}=await db.rpc("ps_admin_appoint_promoter",{p_user_id:userId,p_active:active});
+const {data,error}=await db.rpc("ps_admin_appoint_promoter",{
+p_user_id:userId,p_active:active
+});
+
 if(error)return message("promoterMessage",error.message,"error");
 message("promoterMessage",data||"Statut modifié.","success");
 loadAdminMembers();
@@ -1130,17 +1544,38 @@ loadAdminMembers();
 // ==================================
 async function loadAdminVIP(){
 if(!await adminReady())return;
-const box=$("adminVIPList");box.textContent="Chargement...";
+const box=$("adminVIPList");
+box.textContent="Chargement...";
+
 const {data,error}=await db.from("power_station_vip_products")
 .select("*").order("id");
-if(error){box.textContent="Catalogue VIP indisponible.";return;}
+
+if(error){
+box.textContent="Catalogue VIP indisponible : "+error.message;
+return;
+}
+
 allVIP=data||[];
 box.innerHTML="";
 $("vipProductSelect").innerHTML='<option value="">Choisir un VIP</option>';
+
 allVIP.forEach(v=>{
-const option=document.createElement("option");option.value=v.id;option.textContent=v.code+" — "+money(v.price_fc);$("vipProductSelect").appendChild(option);
-const el=document.createElement("div");el.className="payment-box";
-el.innerHTML=`<strong>${escapeHTML(v.code)}</strong><p>Prix : ${money(v.price_fc)}</p><p>Revenu journalier annoncé : ${money(v.daily_revenue_fc)}</p><p>Durée : ${v.duration_days} jours</p><p>Total annoncé : ${money(v.total_revenue_fc)}</p><p>Achats maximum par membre : ${v.max_purchases_per_user}</p><p>Statut : ${v.is_active?"Actif":"Inactif"}</p>`;
+const option=document.createElement("option");
+option.value=v.id;
+option.textContent=v.code+" — "+money(v.price_fc);
+$("vipProductSelect").appendChild(option);
+
+const el=document.createElement("div");
+el.className="payment-box";
+el.innerHTML=`
+<strong>${escapeHTML(v.code)}</strong>
+<p>Prix : ${money(v.price_fc)}</p>
+<p>Revenu journalier indiqué : ${money(v.daily_revenue_fc)}</p>
+<p>Durée : ${v.duration_days} jours</p>
+<p>Total indiqué : ${money(v.total_revenue_fc)}</p>
+<p>Achats maximum par membre : ${v.max_purchases_per_user}</p>
+<p>Statut : ${v.is_active?"Actif":"Inactif"}</p>
+`;
 box.appendChild(el);
 });
 }
@@ -1150,26 +1585,40 @@ if(!await adminReady())return;
 const userId=$("vipUserId").value.trim();
 const vipId=Number($("vipProductSelect").value);
 const note=$("vipNote").value.trim();
-if(!userId||!vipId)return message("vipMessage","ID du membre et VIP obligatoires.","error");
+
+if(!userId||!vipId)
+return message("vipMessage","ID du membre et VIP obligatoires.","error");
+
 const {data,error}=await db.rpc("ps_admin_assign_vip",{
-p_user_id:userId,p_vip_product_id:vipId,p_note:note||null
+p_user_id:userId,
+p_vip_product_id:vipId,
+p_note:note||null
 });
+
 if(error)return message("vipMessage",error.message,"error");
 message("vipMessage","VIP attribué. Identifiant : "+data,"success");
 }
 
 // ==================================
-// PARAMETRES
+// PARAMÈTRES
 // ==================================
 async function loadSettings(){
 if(!await adminReady())return;
-const {data,error}=await db.from("ps_platform_settings").select("setting_key,setting_value");
-if(error){message("settingsMessage","Paramètres non disponibles.","error");return;}
+
+const {data,error}=await db.from("ps_platform_settings")
+.select("setting_key,setting_value");
+
+if(error){
+message("settingsMessage","Paramètres non disponibles : "+error.message,"error");
+return;
+}
+
 const values=Object.fromEntries((data||[]).map(x=>[x.setting_key,x.setting_value]));
 const val=k=>values[k]??"";
+
 $("setMinDeposit").value=val("minimum_deposit")||7000;
 $("setMinWithdrawal").value=val("minimum_withdrawal")||5000;
-$("setWithdrawalFee").value=val("withdrawal_fee_percent")||0;
+$("setWithdrawalFee").value=val("withdrawal_fee_percent")??0;
 $("setRef1").value=val("referral_level_1")||20;
 $("setRef2").value=val("referral_level_2")||2;
 $("setRef3").value=val("referral_level_3")||1;
@@ -1179,6 +1628,7 @@ $("setTelegram").value=String(val("telegram_group")||"").replace(/^"|"$/g,"");
 
 async function saveSettings(){
 if(!await adminReady())return;
+
 const settings=[
 ["minimum_deposit",Number($("setMinDeposit").value)],
 ["minimum_withdrawal",Number($("setMinWithdrawal").value)],
@@ -1189,12 +1639,20 @@ const settings=[
 ["whatsapp_group",$("setWhatsapp").value.trim()],
 ["telegram_group",$("setTelegram").value.trim()]
 ];
+
 for(const [key,value] of settings){
 if(typeof value==="number"&&(!Number.isFinite(value)||value<0))
 return message("settingsMessage","Valeur incorrecte pour "+key,"error");
-const {error}=await db.rpc("ps_admin_update_setting",{p_key:key,p_value:JSON.stringify(value)});
-if(error)return message("settingsMessage","Échec pour "+key+" : "+error.message,"error");
+
+const {error}=await db.rpc("ps_admin_update_setting",{
+p_key:key,
+p_value:JSON.stringify(value)
+});
+
+if(error)
+return message("settingsMessage","Échec pour "+key+" : "+error.message,"error");
 }
+
 message("settingsMessage","Paramètres enregistrés avec succès.","success");
 }
 
@@ -1217,9 +1675,15 @@ setInterval(nextSlide,6000);
 await checkSession();
 renderCategories();
 renderCart();
-if(referralFromUrl)showPage("auth");
+loadVIPProducts();
+
+if(referralFromUrl){
+authMode("signup");
+showPage("auth");
+}
 if(currentUser)await checkAdmin();
 })();
 </script>
+
 </body>
 </html>
