@@ -34,6 +34,11 @@ input,select{width:100%;padding:13px;margin:7px 0;border:1px solid #ddd;border-r
 .warning{background:#fff4d6;color:#815400}
 .small{font-size:12px;color:#777}
 .payment-box{background:#f1f6ff;padding:13px;border-radius:12px;margin:10px 0;border:1px solid #d5e2ff;overflow-wrap:anywhere}
+.payment-number-card{background:#fff;border:2px solid #007fff;border-radius:14px;padding:15px;margin:12px 0;box-shadow:0 3px 12px #00339912}
+.payment-number-card .operator{font-size:14px;font-weight:bold;color:#003399}
+.payment-number-card .number{font-size:25px;font-weight:900;letter-spacing:1px;color:#ce1021;margin:12px 0;overflow-wrap:anywhere}
+.payment-number-card .holder{font-size:13px;color:#444;margin-bottom:12px}
+.copy-payment-btn{width:100%;background:#003399;color:white;font-size:15px;padding:14px}
 .vip-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .vip-card{border:1px solid #e2c65c;border-radius:14px;padding:14px;background:linear-gradient(145deg,#fff,#fff9df)}
 .vip-card h3{color:var(--dark)}
@@ -62,14 +67,12 @@ label{font-weight:bold;font-size:13px}
 .color-input{height:45px;padding:4px}
 .launch-box{background:linear-gradient(120deg,#007fff,#003399,#ce1021);color:white;text-align:center;padding:19px 10px;margin:12px 0;border:3px solid #ffce00;border-radius:15px}
 .launch-box h2{color:white;margin:5px}
-.launch-time{font-size:32px;font-weight:bold;letter-spacing:2px;margin:13px 0}
+.launch-time{font-size:clamp(20px,6vw,32px);font-weight:bold;letter-spacing:1px;margin:13px 0}
 .flag{font-size:24px}
 .service-btn{display:block;text-align:center;text-decoration:none;margin:9px 0;padding:14px;border-radius:10px;color:white;font-weight:bold}
 .whatsapp{background:#168447}
 .telegram{background:#168ac4}
 .customer{background:#ce1021}
-
-/* CARROUSEL DES 5 PHOTOS */
 .photo-slider{position:relative;width:100%;height:220px;overflow:hidden;border-radius:15px;margin:12px 0;background:#123}
 .photo-slide{position:absolute;inset:0;opacity:0;transition:opacity .8s ease}
 .photo-slide.active{opacity:1}
@@ -92,7 +95,6 @@ label{font-weight:bold;font-size:13px}
 <main class="container">
 
 <section id="home">
-<!-- CARROUSEL : 5 PHOTOS -->
 <div class="photo-slider" id="photoSlider">
  <div class="photo-slide active">
   <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1200&auto=format&fit=crop" alt="Énergie">
@@ -127,8 +129,8 @@ label{font-weight:bold;font-size:13px}
 <div class="flag">🇨🇩 🇨🇩 🇨🇩</div>
 <h2>POWER STATION RDC</h2>
 <p>LANCEMENT OFFICIEL</p>
-<div class="launch-time" id="launchTimer">--:--:--</div>
-<p id="launchMessage">POWER STATION RDC</p>
+<div class="launch-time" id="launchTimer">00jrs:00h:00min:00sec</div>
+<p id="launchMessage">Préparation du lancement...</p>
 </div>
 
 <div class="card">
@@ -199,6 +201,8 @@ label{font-weight:bold;font-size:13px}
 <div class="card">
 <h2>Rechargement VIP</h2>
 <div id="chosenVIP" class="payment-box"></div>
+<h3 style="color:#003399">Numéros officiels de paiement</h3>
+<p class="small">Sélectionnez votre opérateur et copiez le numéro exact avant d'effectuer votre paiement.</p>
 <div id="paymentNumbers"></div>
 <select id="vipPaymentMethod"><option value="">Choisir le moyen de paiement</option><option>Airtel Money</option><option>Orange Money</option><option>M-Pesa</option></select>
 <input id="vipSenderPhone" placeholder="Numéro ayant envoyé l'argent">
@@ -253,31 +257,26 @@ label{font-weight:bold;font-size:13px}
 </div>
 </section>
 
-<!-- ÉQUIPE : AFFICHAGE DES TROIS NIVEAUX -->
 <section id="team" class="hidden">
 <div class="card">
 <h2><i class="fa-solid fa-people-group"></i> Mon équipe</h2>
 <p>Invitez vos amis avec votre lien personnel d'inscription.</p>
-
 <div class="payment-box">
 <strong>Mon code de parrainage</strong>
 <div id="myReferralCode" class="copy-number">Chargement...</div>
 <button class="red" style="width:100%;margin-top:8px" onclick="copyReferralCode(this)">Copier mon code</button>
 </div>
-
 <div class="payment-box">
 <strong>Mon lien d'inscription</strong>
 <div id="myReferralLink" class="referral-link">Chargement...</div>
 <button class="red" style="width:100%" onclick="copyReferralLink(this)">Copier le lien d'inscription</button>
 </div>
-
 <h2>Commissions de parrainage</h2>
 <div class="stats">
 <div class="stat">Niveau 1<strong>15 %</strong></div>
 <div class="stat">Niveau 2<strong>2 %</strong></div>
 <div class="stat">Niveau 3<strong>1 %</strong></div>
 </div>
-
 <h2>Statistiques de mon équipe</h2>
 <div class="stats">
 <div class="stat">Total inscrits<strong id="teamRegistered">0</strong></div>
@@ -287,14 +286,12 @@ label{font-weight:bold;font-size:13px}
 <div class="stat">Niveau 3 inscrits<strong id="teamLevel3">0</strong></div>
 <div class="stat">Dépôts validés<strong id="teamDepositTotal">0 FC</strong></div>
 </div>
-
 <div class="tabs" id="teamTabs">
 <button class="selected" onclick="filterTeamLevel('all',this)">Tous</button>
 <button onclick="filterTeamLevel(1,this)">Niveau 1</button>
 <button onclick="filterTeamLevel(2,this)">Niveau 2</button>
 <button onclick="filterTeamLevel(3,this)">Niveau 3</button>
 </div>
-
 <h2>Liste de mes membres</h2>
 <div id="teamMembers">Chargement...</div>
 <div id="teamMessage" class="status">Chargement de votre équipe...</div>
@@ -505,14 +502,22 @@ async function copyText(text,button){
  try{
   if(navigator.clipboard&&window.isSecureContext)await navigator.clipboard.writeText(text);
   else{
-   const t=document.createElement("textarea");t.value=text;t.style.position="fixed";t.style.left="-9999px";
+   const t=document.createElement("textarea");
+   t.value=text;t.style.position="fixed";t.style.left="-9999px";
    document.body.appendChild(t);t.select();
    if(!document.execCommand("copy"))throw Error("Copie refusée");
    t.remove();
   }
-  if(button){const old=button.innerHTML;button.innerHTML="Copié";setTimeout(()=>button.innerHTML=old,1800);}
+  if(button){
+   const old=button.innerHTML;
+   button.innerHTML='<i class="fa-solid fa-check"></i> Copié !';
+   setTimeout(()=>button.innerHTML=old,1800);
+  }
   return true;
- }catch(e){prompt("Copiez ce texte :",text);return false;}
+ }catch(e){
+  prompt("Copiez ce texte :",text);
+  return false;
+ }
 }
 function copyReferralCode(b){if(myReferralCode)copyText(myReferralCode,b);else alert("Code indisponible.");}
 function copyReferralLink(b){if(myReferralLink)copyText(myReferralLink,b);else alert("Lien indisponible.");}
@@ -531,17 +536,36 @@ function startPhotoSlider(){
  slideTimer=setInterval(()=>goSlide(slideIndex+1),4500);
 }
 
-/* COMPTEUR DE LANCEMENT */
+/* COMPTEUR DU LANCEMENT : AUJOURD'HUI À 07H00 */
 function updateLaunchTimer(){
- const target=new Date("2026-11-10T18:00:00+02:00").getTime();
- const diff=target-Date.now();
+ const now=new Date();
+ const launch=new Date();
+ launch.setHours(7,0,0,0);
+
+ const timer=$("launchTimer");
+ const launchMessage=$("launchMessage");
+ if(!timer||!launchMessage)return;
+
+ const diff=launch.getTime()-now.getTime();
+
  if(diff<=0){
-  $("launchTimer").textContent="00:00:00";
-  $("launchMessage").textContent="🇨🇩 POWER STATION EST OFFICIELLEMENT LANCÉE !";
+  timer.textContent="00jrs:00h:00min:00sec";
+  launchMessage.textContent="🇨🇩 POWER STATION EST OFFICIELLEMENT LANCÉE ! BIENVENUE.";
   return;
  }
- const h=Math.floor(diff/3600000),m=Math.floor(diff%3600000/60000),s=Math.floor(diff%60000/1000);
- $("launchTimer").textContent=[h,m,s].map(x=>String(x).padStart(2,"0")).join(":");
+
+ const days=Math.floor(diff/86400000);
+ const hours=Math.floor((diff%86400000)/3600000);
+ const minutes=Math.floor((diff%3600000)/60000);
+ const seconds=Math.floor((diff%60000)/1000);
+
+ timer.textContent=
+  String(days).padStart(2,"0")+"jrs:"+
+  String(hours).padStart(2,"0")+"h:"+
+  String(minutes).padStart(2,"0")+"min:"+
+  String(seconds).padStart(2,"0")+"sec";
+
+ launchMessage.textContent="Le lancement commence aujourd'hui à 07h00.";
 }
 updateLaunchTimer();
 setInterval(updateLaunchTimer,1000);
@@ -634,7 +658,7 @@ async function loadAccount(){
  $("adminAccess").classList.toggle("hidden",!await checkAdmin());
 }
 
-/* ÉQUIPE : RPC SQL POUR LES 3 NIVEAUX */
+/* ÉQUIPE */
 async function loadTeam(){
  await checkSession();
  const box=$("teamMembers");
@@ -649,7 +673,6 @@ async function loadTeam(){
  box.textContent="Recherche de vos membres...";
  message("teamMessage","Chargement de votre équipe...");
 
- // Récupérer le code personnel du membre
  const {data:own,error:ownError}=await db
   .from("power_station_referrals")
   .select("referral_code")
@@ -663,7 +686,6 @@ async function loadTeam(){
 
  myReferralCode=own?.referral_code||"";
 
- // Si le code n'est pas dans la table referrals, essayer le profil
  if(!myReferralCode){
   const {data:profile}=await db.from("power_station_profiles")
    .select("referral_code")
@@ -681,7 +703,6 @@ async function loadTeam(){
   $("myReferralLink").textContent=myReferralLink;
  }
 
- // Récupérer les membres des niveaux 1, 2 et 3 avec la fonction SQL
  const {data,error}=await db.rpc("ps_get_my_team");
 
  if(error){
@@ -701,7 +722,6 @@ async function loadTeam(){
  const counts=result.counts||{};
  teamCache=Array.isArray(result.members)?result.members:[];
 
- // Calcul des compteurs à partir de la liste reçue
  const n1=teamCache.filter(m=>Number(m.level)===1).length;
  const n2=teamCache.filter(m=>Number(m.level)===2).length;
  const n3=teamCache.filter(m=>Number(m.level)===3).length;
@@ -790,16 +810,35 @@ async function loadVIPProducts(){
  if(error){console.error(error);renderVIP(vipFallback);return;}
  renderVIP(data?.length?data:vipFallback);
 }
+
+/* NUMÉROS DE PAIEMENT AVEC BOUTON COPIER */
 function renderPaymentNumbers(){
- const rows=[["Airtel Money",settings.airtel,settings.airtelName],["Orange Money",settings.orange,settings.orangeName],["M-Pesa",settings.mpesa,settings.mpesaName]];
- $("paymentNumbers").innerHTML=rows.map(r=>`<div class="payment-box"><strong>${r[0]}</strong><p><b>${escapeHTML(r[1])}</b></p><p>Nom : ${escapeHTML(r[2])}</p></div>`).join("");
+ const rows=[
+  {name:"Airtel Money",number:settings.airtel,holder:settings.airtelName},
+  {name:"Orange Money",number:settings.orange,holder:settings.orangeName},
+  {name:"M-Pesa",number:settings.mpesa,holder:settings.mpesaName}
+ ];
+
+ $("paymentNumbers").innerHTML=rows.map((r,index)=>`
+  <div class="payment-number-card">
+   <div class="operator"><i class="fa-solid fa-mobile-screen-button"></i> ${r.name}</div>
+   <div class="number">${escapeHTML(r.number||"Numéro non configuré")}</div>
+   <div class="holder">Nom du bénéficiaire : <strong>${escapeHTML(r.holder||"-")}</strong></div>
+   <button class="copy-payment-btn" type="button" onclick="copyText('${String(r.number||"").replace(/'/g,"\\'")}',this)">
+    <i class="fa-solid fa-copy"></i> COPIER LE NUMÉRO
+   </button>
+  </div>
+ `).join("");
 }
+
 function chooseVIP(id,code,price){
  if(!id)return alert("Le produit VIP doit être chargé depuis Supabase.");
  selectedVIP={id,code,price};
  $("chosenVIP").innerHTML=`<strong>${escapeHTML(code)}</strong><p>Montant à payer : <b>${money(price)}</b></p><p>Activation après validation administrative.</p>`;
+ renderPaymentNumbers();
  showPage("vipDeposit");
 }
+
 async function submitVIPDeposit(){
  await checkSession();
  if(!currentUser)return showPage("auth");
