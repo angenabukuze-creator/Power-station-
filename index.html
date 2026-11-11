@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>POWER STATION RDC</title>
+
+<!-- INSTALLATION PWA -->
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#007fff">
+<link rel="apple-touch-icon" href="/icon-192.png">
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
@@ -507,7 +513,6 @@ async function copyText(text,button){
 function copyReferralCode(b){if(myReferralCode)copyText(myReferralCode,b);else alert("Code indisponible.");}
 function copyReferralLink(b){if(myReferralLink)copyText(myReferralLink,b);else alert("Lien indisponible.");}
 
-/* CARROUSEL AUTOMATIQUE */
 function goSlide(index){
  const slides=document.querySelectorAll(".photo-slide");
  const dots=document.querySelectorAll("#sliderDots button");
@@ -521,8 +526,6 @@ function startPhotoSlider(){
  slideTimer=setInterval(()=>goSlide(slideIndex+1),4500);
 }
 
-/* COMPTEUR : DÉPART LE 11 NOVEMBRE 2026 À 07H00, HEURE DE KINSHASA.
-   LE COMPTEUR AFFICHE LE TEMPS ÉCOULÉ ET S'ARRÊTE À 35 JOURS. */
 const LAUNCH_START=new Date("2026-11-11T07:00:00+02:00").getTime();
 const LAUNCH_DURATION=35*24*60*60*1000;
 
@@ -611,7 +614,6 @@ async function logout(){
  currentUser=null;isAdmin=false;showPage("home");
 }
 
-/* MOT DE PASSE */
 async function changeMyPassword(){
  await checkSession();
  if(!currentUser)return message("passwordMessage","Connectez-vous d'abord.","error");
@@ -632,7 +634,6 @@ async function changeAdminPassword(){
  message("adminPasswordMessage","Mot de passe administrateur modifié.","success");
 }
 
-/* COMPTE */
 async function loadAccount(){
  await checkSession();
  if(!currentUser){$("accountInfo").textContent="Vous n'êtes pas connecté.";return;}
@@ -648,7 +649,6 @@ async function loadAccount(){
  $("adminAccess").classList.toggle("hidden",!await checkAdmin());
 }
 
-/* ÉQUIPE */
 async function loadTeam(){
  await checkSession();
  const box=$("teamMembers");
@@ -733,7 +733,6 @@ function renderTeamMembers(){
 const referralFromUrl=new URLSearchParams(location.search).get("ref");
 if(referralFromUrl)$("referralCode").value=referralFromUrl.toUpperCase();
 
-/* PRODUITS VIP */
 function totalVIP(v){return Number(v.daily_revenue_fc||0)*Number(v.duration_days||35);}
 function renderVIP(products){
  const box=$("shopVIP");box.innerHTML="";
@@ -756,7 +755,6 @@ async function loadVIPProducts(){
  renderVIP(data?.length?data:vipFallback);
 }
 
-/* NUMÉROS DE PAIEMENT AVEC BOUTON COPIER */
 function renderPaymentNumbers(){
  const rows=[
   ["Airtel Money",settings.airtel,settings.airtelName],
@@ -795,7 +793,6 @@ async function submitVIPDeposit(){
  message("vipDepositMessage","Demande envoyée. En attente de validation. Référence : "+data,"success");
 }
 
-/* PRODUITS VIP ACTIFS */
 function timeLeft(date){
  const ms=new Date(date).getTime()-Date.now();
  if(ms<=0)return "Disponible maintenant";
@@ -868,7 +865,6 @@ async function claimVIPEarnings(activationId){
  await loadWallet();await loadActiveProducts();
 }
 
-/* PORTEFEUILLE ET RETRAITS */
 async function hasActiveVIP(){
  const {data,error}=await db.from("ps_vip_activations").select("id,status,expires_at").eq("user_id",currentUser.id).eq("status","active").limit(20);
  if(error)throw error;
@@ -919,7 +915,6 @@ async function loadMyWithdrawals(){
  if(!data?.length)box.textContent="Aucun retrait.";
 }
 
-/* HISTORIQUE */
 function historyTab(t,b){
  ["deposits","withdrawals","bonuses"].forEach(x=>$("history"+x[0].toUpperCase()+x.slice(1)).classList.toggle("hidden",x!==t));
  document.querySelectorAll("#orders .tabs button").forEach(x=>x.classList.remove("selected"));
@@ -968,7 +963,6 @@ async function loadBonusHistory(){
  if(!rows.length)b.textContent="Aucun bonus ou commission.";
 }
 
-/* ADMINISTRATION */
 async function openAdmin(){
  if(!await checkAdmin()){$("adminStatus").textContent="Accès refusé : compte non administrateur.";showPage("account");return;}
  $("adminStatus").textContent="Accès SUPER ADMIN autorisé.";
@@ -1060,7 +1054,6 @@ async function rejectWithdrawal(id){
  alert(data||"Retrait rejeté.");loadAdminWithdrawals();
 }
 
-/* MEMBRES ADMIN */
 async function loadAdminMembers(){
  if(!await adminReady())return;
  const b=$("adminMembersList");b.textContent="Chargement...";
@@ -1104,7 +1097,6 @@ async function giveBonus(){
  message("bonusMessage",data||"Bonus attribué.","success");
 }
 
-/* VIP ADMIN */
 async function loadAdminVIP(){
  if(!await adminReady())return;
  const {data,error}=await db.from("power_station_vip_products").select("*").order("id");
@@ -1137,7 +1129,6 @@ async function adminAddEarning(){
  message("adminEarningMessage","Revenu enregistré. "+data,"success");
 }
 
-/* PARAMÈTRES */
 function applyTheme(){
  document.documentElement.style.setProperty("--primary",settings.primary);
  document.documentElement.style.setProperty("--dark",settings.primary);
@@ -1266,6 +1257,18 @@ async function saveVIPProduct(id){
  if(referralFromUrl){authMode("signup");showPage("auth");}
  if(currentUser)await checkAdmin();
 })();
+
+/* ACTIVATION DU SERVICE WORKER PWA */
+if ("serviceWorker" in navigator) {
+ window.addEventListener("load", async () => {
+  try {
+   const registration = await navigator.serviceWorker.register("/sw.js");
+   console.log("POWER STATION RDC : Service Worker activé", registration.scope);
+  } catch (error) {
+   console.error("Erreur Service Worker :", error);
+  }
+ });
+}
 </script>
 </body>
 </html>
