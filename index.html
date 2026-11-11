@@ -34,11 +34,10 @@ input,select{width:100%;padding:13px;margin:7px 0;border:1px solid #ddd;border-r
 .warning{background:#fff4d6;color:#815400}
 .small{font-size:12px;color:#777}
 .payment-box{background:#f1f6ff;padding:13px;border-radius:12px;margin:10px 0;border:1px solid #d5e2ff;overflow-wrap:anywhere}
-.payment-number-card{background:#fff;border:2px solid #007fff;border-radius:14px;padding:15px;margin:12px 0;box-shadow:0 3px 12px #00339912}
-.payment-number-card .operator{font-size:14px;font-weight:bold;color:#003399}
-.payment-number-card .number{font-size:25px;font-weight:900;letter-spacing:1px;color:#ce1021;margin:12px 0;overflow-wrap:anywhere}
-.payment-number-card .holder{font-size:13px;color:#444;margin-bottom:12px}
-.copy-payment-btn{width:100%;background:#003399;color:white;font-size:15px;padding:14px}
+.payment-number-card{background:#fff;border:2px solid #007fff;border-radius:13px;padding:15px;margin:12px 0}
+.payment-number-card .operator{font-size:14px;color:#555;font-weight:bold}
+.payment-number-card .number{font-size:25px;font-weight:900;color:#003399;letter-spacing:1px;margin:12px 0;overflow-wrap:anywhere}
+.copy-payment-btn{width:100%;background:#007fff;color:white;font-size:15px;padding:14px}
 .vip-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .vip-card{border:1px solid #e2c65c;border-radius:14px;padding:14px;background:linear-gradient(145deg,#fff,#fff9df)}
 .vip-card h3{color:var(--dark)}
@@ -67,12 +66,14 @@ label{font-weight:bold;font-size:13px}
 .color-input{height:45px;padding:4px}
 .launch-box{background:linear-gradient(120deg,#007fff,#003399,#ce1021);color:white;text-align:center;padding:19px 10px;margin:12px 0;border:3px solid #ffce00;border-radius:15px}
 .launch-box h2{color:white;margin:5px}
-.launch-time{font-size:clamp(20px,6vw,32px);font-weight:bold;letter-spacing:1px;margin:13px 0}
+.launch-time{font-size:clamp(22px,6vw,32px);font-weight:bold;letter-spacing:1px;margin:13px 0}
+.launch-label{font-size:12px;opacity:.9;margin-bottom:5px}
 .flag{font-size:24px}
 .service-btn{display:block;text-align:center;text-decoration:none;margin:9px 0;padding:14px;border-radius:10px;color:white;font-weight:bold}
 .whatsapp{background:#168447}
 .telegram{background:#168ac4}
 .customer{background:#ce1021}
+.apk-btn{display:block;width:100%;text-align:center;text-decoration:none;background:#168447;color:white;padding:16px;border-radius:12px;font-weight:bold;font-size:16px;margin:12px 0}
 .photo-slider{position:relative;width:100%;height:220px;overflow:hidden;border-radius:15px;margin:12px 0;background:#123}
 .photo-slide{position:absolute;inset:0;opacity:0;transition:opacity .8s ease}
 .photo-slide.active{opacity:1}
@@ -96,32 +97,13 @@ label{font-weight:bold;font-size:13px}
 
 <section id="home">
 <div class="photo-slider" id="photoSlider">
- <div class="photo-slide active">
-  <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1200&auto=format&fit=crop" alt="Énergie">
-  <div class="photo-caption">POWER STATION RDC — Énergie et innovation</div>
- </div>
- <div class="photo-slide">
-  <img src="https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?w=1200&auto=format&fit=crop" alt="Électricité">
-  <div class="photo-caption">Construisons ensemble un avenir énergétique</div>
- </div>
- <div class="photo-slide">
-  <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1200&auto=format&fit=crop" alt="Panneaux solaires">
-  <div class="photo-caption">Innovation et nouvelles technologies</div>
- </div>
- <div class="photo-slide">
-  <img src="https://images.unsplash.com/photo-1497440001374-f26997328c1b?w=1200&auto=format&fit=crop" alt="Énergie renouvelable">
-  <div class="photo-caption">Une plateforme numérique pour nos membres</div>
- </div>
- <div class="photo-slide">
-  <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1200&auto=format&fit=crop&sat=-50" alt="Centrale énergétique">
-  <div class="photo-caption">POWER STATION RDC — Bienvenue</div>
- </div>
+ <div class="photo-slide active"><img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1200&auto=format&fit=crop" alt="Énergie"><div class="photo-caption">POWER STATION RDC — Énergie et innovation</div></div>
+ <div class="photo-slide"><img src="https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?w=1200&auto=format&fit=crop" alt="Électricité"><div class="photo-caption">Construisons ensemble un avenir énergétique</div></div>
+ <div class="photo-slide"><img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1200&auto=format&fit=crop" alt="Panneaux solaires"><div class="photo-caption">Innovation et nouvelles technologies</div></div>
+ <div class="photo-slide"><img src="https://images.unsplash.com/photo-1497440001374-f26997328c1b?w=1200&auto=format&fit=crop" alt="Énergie renouvelable"><div class="photo-caption">Une plateforme numérique pour nos membres</div></div>
+ <div class="photo-slide"><img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1200&auto=format&fit=crop&sat=-50" alt="Centrale énergétique"><div class="photo-caption">POWER STATION RDC — Bienvenue</div></div>
  <div class="slider-dots" id="sliderDots">
-  <button class="active" onclick="goSlide(0)"></button>
-  <button onclick="goSlide(1)"></button>
-  <button onclick="goSlide(2)"></button>
-  <button onclick="goSlide(3)"></button>
-  <button onclick="goSlide(4)"></button>
+  <button class="active" onclick="goSlide(0)"></button><button onclick="goSlide(1)"></button><button onclick="goSlide(2)"></button><button onclick="goSlide(3)"></button><button onclick="goSlide(4)"></button>
  </div>
 </div>
 
@@ -129,8 +111,9 @@ label{font-weight:bold;font-size:13px}
 <div class="flag">🇨🇩 🇨🇩 🇨🇩</div>
 <h2>POWER STATION RDC</h2>
 <p>LANCEMENT OFFICIEL</p>
-<div class="launch-time" id="launchTimer">00jrs:00h:00min:00sec</div>
-<p id="launchMessage">Préparation du lancement...</p>
+<div class="launch-label" id="launchLabel">TEMPS ÉCOULÉ DEPUIS LE LANCEMENT</div>
+<div class="launch-time" id="launchTimer">00jrs:00h:00min:00sec.</div>
+<p id="launchMessage">POWER STATION RDC</p>
 </div>
 
 <div class="card">
@@ -152,6 +135,13 @@ label{font-weight:bold;font-size:13px}
 <button class="gold" onclick="showPage('orders')"><i class="fa-solid fa-clock-rotate-left"></i><br>Historique</button>
 <button class="gold" onclick="showPage('active')"><i class="fa-solid fa-bolt"></i><br>Produits actifs</button>
 </div>
+</div>
+
+<div class="card">
+<h2><i class="fa-solid fa-download"></i> Application POWER STATION</h2>
+<p>Téléchargez l'application Android POWER STATION sur votre téléphone pour retrouver facilement la plateforme.</p>
+<a id="apkDownloadButton" class="apk-btn" href="#" onclick="return downloadAPK(event)"><i class="fa-brands fa-android"></i> TÉLÉCHARGER L'APPLICATION APK</a>
+<p class="small" id="apkDownloadInfo">Le lien de téléchargement APK doit être configuré par l'administration.</p>
 </div>
 
 <div class="card">
@@ -201,8 +191,8 @@ label{font-weight:bold;font-size:13px}
 <div class="card">
 <h2>Rechargement VIP</h2>
 <div id="chosenVIP" class="payment-box"></div>
-<h3 style="color:#003399">Numéros officiels de paiement</h3>
-<p class="small">Sélectionnez votre opérateur et copiez le numéro exact avant d'effectuer votre paiement.</p>
+<h3>Numéros officiels de paiement</h3>
+<p class="small">Sélectionnez votre opérateur et copiez le numéro affiché pour effectuer votre paiement.</p>
 <div id="paymentNumbers"></div>
 <select id="vipPaymentMethod"><option value="">Choisir le moyen de paiement</option><option>Airtel Money</option><option>Orange Money</option><option>M-Pesa</option></select>
 <input id="vipSenderPhone" placeholder="Numéro ayant envoyé l'argent">
@@ -369,6 +359,10 @@ label{font-weight:bold;font-size:13px}
 <label>Nom Orange</label><input id="settingOrangeName">
 <label>M-Pesa</label><input id="settingMpesa">
 <label>Nom M-Pesa</label><input id="settingMpesaName">
+<h3>Application Android</h3>
+<label>Lien de téléchargement APK</label>
+<input id="settingApkUrl" type="url" placeholder="https://exemple.com/power-station.apk">
+<p class="small">Collez ici le lien direct de votre fichier APK hébergé en ligne.</p>
 <h3>Couleurs</h3>
 <label>Couleur principale</label><input class="color-input" type="color" id="settingPrimary">
 <label>Couleur secondaire</label><input class="color-input" type="color" id="settingGold">
@@ -381,7 +375,6 @@ label{font-weight:bold;font-size:13px}
 <button class="green" style="width:100%" onclick="saveLocalSettings()">Enregistrer les paramètres</button>
 <div id="settingsMessage" class="status hidden"></div>
 </div>
-
 <div class="card">
 <h2>Changer le mot de passe administrateur</h2>
 <input id="adminNewPassword" type="password" placeholder="Nouveau mot de passe">
@@ -389,7 +382,6 @@ label{font-weight:bold;font-size:13px}
 <button class="red" onclick="changeAdminPassword()">Modifier</button>
 <div id="adminPasswordMessage" class="status hidden"></div>
 </div>
-
 <div class="card"><h2>Modifier les produits VIP</h2><div id="vipSettingsList">Chargement...</div></div>
 </div>
 </section>
@@ -420,7 +412,8 @@ let settings={
  mpesa:"0861823718",mpesaName:"REGINA",
  primary:"#007fff",gold:"#ffce00",background:"#f4f6fa",
  promoFee:0,withdrawFee:0,withdrawMin:5000,
- whatsappGroup:"",telegramGroup:"",customerWhatsApp:""
+ whatsappGroup:"",telegramGroup:"",customerWhatsApp:"",
+ apkUrl:""
 };
 
 const vipFallback=[
@@ -502,22 +495,14 @@ async function copyText(text,button){
  try{
   if(navigator.clipboard&&window.isSecureContext)await navigator.clipboard.writeText(text);
   else{
-   const t=document.createElement("textarea");
-   t.value=text;t.style.position="fixed";t.style.left="-9999px";
+   const t=document.createElement("textarea");t.value=text;t.style.position="fixed";t.style.left="-9999px";
    document.body.appendChild(t);t.select();
    if(!document.execCommand("copy"))throw Error("Copie refusée");
    t.remove();
   }
-  if(button){
-   const old=button.innerHTML;
-   button.innerHTML='<i class="fa-solid fa-check"></i> Copié !';
-   setTimeout(()=>button.innerHTML=old,1800);
-  }
+  if(button){const old=button.innerHTML;button.innerHTML='<i class="fa-solid fa-check"></i> Copié !';setTimeout(()=>button.innerHTML=old,1800);}
   return true;
- }catch(e){
-  prompt("Copiez ce texte :",text);
-  return false;
- }
+ }catch(e){prompt("Copiez ce texte :",text);return false;}
 }
 function copyReferralCode(b){if(myReferralCode)copyText(myReferralCode,b);else alert("Code indisponible.");}
 function copyReferralLink(b){if(myReferralLink)copyText(myReferralLink,b);else alert("Lien indisponible.");}
@@ -536,36 +521,45 @@ function startPhotoSlider(){
  slideTimer=setInterval(()=>goSlide(slideIndex+1),4500);
 }
 
-/* COMPTEUR DU LANCEMENT : AUJOURD'HUI À 07H00 */
+/* COMPTEUR : DÉPART LE 11 NOVEMBRE 2026 À 07H00, HEURE DE KINSHASA.
+   LE COMPTEUR AFFICHE LE TEMPS ÉCOULÉ ET S'ARRÊTE À 35 JOURS. */
+const LAUNCH_START=new Date("2026-11-11T07:00:00+02:00").getTime();
+const LAUNCH_DURATION=35*24*60*60*1000;
+
 function updateLaunchTimer(){
- const now=new Date();
- const launch=new Date();
- launch.setHours(7,0,0,0);
-
+ const now=Date.now();
+ const elapsed=Math.max(0,now-LAUNCH_START);
+ const remaining=Math.max(0,LAUNCH_DURATION-elapsed);
  const timer=$("launchTimer");
- const launchMessage=$("launchMessage");
- if(!timer||!launchMessage)return;
+ const label=$("launchLabel");
 
- const diff=launch.getTime()-now.getTime();
-
- if(diff<=0){
-  timer.textContent="00jrs:00h:00min:00sec";
-  launchMessage.textContent="🇨🇩 POWER STATION EST OFFICIELLEMENT LANCÉE ! BIENVENUE.";
+ if(now<LAUNCH_START){
+  const until=LAUNCH_START-now;
+  const d=Math.floor(until/86400000);
+  const h=Math.floor(until%86400000/3600000);
+  const m=Math.floor(until%3600000/60000);
+  const s=Math.floor(until%60000/1000);
+  label.textContent="TEMPS AVANT LE LANCEMENT";
+  timer.textContent=String(d).padStart(2,"0")+"jrs:"+String(h).padStart(2,"0")+"h:"+String(m).padStart(2,"0")+"min:"+String(s).padStart(2,"0")+"sec.";
+  $("launchMessage").textContent="Le lancement commence le 11 novembre 2026 à 07h00.";
   return;
  }
 
- const days=Math.floor(diff/86400000);
- const hours=Math.floor((diff%86400000)/3600000);
- const minutes=Math.floor((diff%3600000)/60000);
- const seconds=Math.floor((diff%60000)/1000);
+ if(elapsed>=LAUNCH_DURATION){
+  label.textContent="PÉRIODE DE 35 JOURS TERMINÉE";
+  timer.textContent="35jrs:00h:00min:00sec.";
+  $("launchMessage").textContent="La période de 35 jours est terminée.";
+  return;
+ }
 
- timer.textContent=
-  String(days).padStart(2,"0")+"jrs:"+
-  String(hours).padStart(2,"0")+"h:"+
-  String(minutes).padStart(2,"0")+"min:"+
-  String(seconds).padStart(2,"0")+"sec";
+ const d=Math.floor(elapsed/86400000);
+ const h=Math.floor(elapsed%86400000/3600000);
+ const m=Math.floor(elapsed%3600000/60000);
+ const s=Math.floor(elapsed%60000/1000);
 
- launchMessage.textContent="Le lancement commence aujourd'hui à 07h00.";
+ label.textContent="TEMPS ÉCOULÉ DEPUIS LE LANCEMENT";
+ timer.textContent=String(d).padStart(2,"0")+"jrs:"+String(h).padStart(2,"0")+"h:"+String(m).padStart(2,"0")+"min:"+String(s).padStart(2,"0")+"sec.";
+ $("launchMessage").textContent="🇨🇩 POWER STATION RDC EST OFFICIELLEMENT LANCÉE !";
 }
 updateLaunchTimer();
 setInterval(updateLaunchTimer,1000);
@@ -578,14 +572,11 @@ $("signupForm").addEventListener("submit",async e=>{
  const password=$("signupPassword").value;
  const confirmP=$("confirmPassword").value;
  const ref=$("referralCode").value.trim().toUpperCase();
-
  if(password.length!==6||!/^\d{6}$/.test(password))return message("signupMessage","Le mot de passe doit contenir 6 chiffres.","error");
  if(password!==confirmP)return message("signupMessage","Les mots de passe ne correspondent pas.","error");
-
  message("signupMessage","Création du compte...");
  const {data,error}=await db.auth.signUp({phone,password,options:{data:{full_name:name,referral_code:ref}}});
  if(error)return message("signupMessage",error.message,"error");
-
  if(data.session){
   currentUser=data.user;
   message("signupMessage","Compte créé avec succès.","success");
@@ -601,7 +592,6 @@ $("loginForm").addEventListener("submit",async e=>{
  const raw=$("loginPhone").value.trim().replace(/[\s()-]/g,"");
  const password=$("loginPassword").value;
  if(!/^\d{6}$/.test(password))return message("loginMessage","Mot de passe : 6 chiffres.","error");
-
  const candidates=[...new Set([raw,raw.startsWith("+")?raw.slice(1):formatPhone(raw)])];
  let result=null,lastError=null;
  for(const phone of candidates){
@@ -662,38 +652,24 @@ async function loadAccount(){
 async function loadTeam(){
  await checkSession();
  const box=$("teamMembers");
-
  if(!currentUser){
   $("myReferralCode").textContent="Connectez-vous";
   $("myReferralLink").textContent="Connectez-vous";
   box.textContent="Connectez-vous pour voir votre équipe.";
   return message("teamMessage","Connexion obligatoire.","error");
  }
-
  box.textContent="Recherche de vos membres...";
  message("teamMessage","Chargement de votre équipe...");
-
- const {data:own,error:ownError}=await db
-  .from("power_station_referrals")
-  .select("referral_code")
-  .eq("user_id",currentUser.id)
-  .maybeSingle();
-
+ const {data:own,error:ownError}=await db.from("power_station_referrals").select("referral_code").eq("user_id",currentUser.id).maybeSingle();
  if(ownError){
   box.textContent="Erreur de lecture du code : "+ownError.message;
   return message("teamMessage",ownError.message,"error");
  }
-
  myReferralCode=own?.referral_code||"";
-
  if(!myReferralCode){
-  const {data:profile}=await db.from("power_station_profiles")
-   .select("referral_code")
-   .eq("user_id",currentUser.id)
-   .maybeSingle();
+  const {data:profile}=await db.from("power_station_profiles").select("referral_code").eq("user_id",currentUser.id).maybeSingle();
   myReferralCode=profile?.referral_code||"";
  }
-
  if(!myReferralCode){
   $("myReferralCode").textContent="Code non disponible";
   $("myReferralLink").textContent="Code non disponible";
@@ -702,73 +678,46 @@ async function loadTeam(){
   $("myReferralCode").textContent=myReferralCode;
   $("myReferralLink").textContent=myReferralLink;
  }
-
  const {data,error}=await db.rpc("ps_get_my_team");
-
  if(error){
   teamCache=[];
-  box.textContent="Impossible de charger les trois niveaux : "+error.message+
-  ". Vérifiez que la fonction SQL ps_get_my_team existe dans Supabase.";
-  $("teamRegistered").textContent="0";
-  $("teamValidated").textContent="0";
-  $("teamLevel1").textContent="0";
-  $("teamLevel2").textContent="0";
-  $("teamLevel3").textContent="0";
+  box.textContent="Impossible de charger les trois niveaux : "+error.message+". Vérifiez que la fonction SQL ps_get_my_team existe dans Supabase.";
+  $("teamRegistered").textContent="0";$("teamValidated").textContent="0";
+  $("teamLevel1").textContent="0";$("teamLevel2").textContent="0";$("teamLevel3").textContent="0";
   $("teamDepositTotal").textContent=money(0);
   return message("teamMessage","Erreur de chargement : "+error.message,"error");
  }
-
- const result=data||{};
- const counts=result.counts||{};
+ const result=data||{},counts=result.counts||{};
  teamCache=Array.isArray(result.members)?result.members:[];
-
  const n1=teamCache.filter(m=>Number(m.level)===1).length;
  const n2=teamCache.filter(m=>Number(m.level)===2).length;
  const n3=teamCache.filter(m=>Number(m.level)===3).length;
  const total=teamCache.length;
  const vipCount=teamCache.filter(m=>m.has_deposit===true&&Number(m.deposit_count)>0).length;
  const depositTotal=teamCache.reduce((sum,m)=>sum+Number(m.deposit_total||0),0);
-
  $("teamLevel1").textContent=counts.level1??n1;
  $("teamLevel2").textContent=counts.level2??n2;
  $("teamLevel3").textContent=counts.level3??n3;
  $("teamRegistered").textContent=counts.total??total;
  $("teamValidated").textContent=vipCount;
  $("teamDepositTotal").textContent=money(depositTotal);
-
  renderTeamMembers();
  message("teamMessage","Équipe actualisée : "+total+" membre(s) répartis sur les trois niveaux.","success");
 }
-
 function filterTeamLevel(level,button){
  teamFilter=level;
  document.querySelectorAll("#teamTabs button").forEach(b=>b.classList.remove("selected"));
  if(button)button.classList.add("selected");
  renderTeamMembers();
 }
-
 function renderTeamMembers(){
- const box=$("teamMembers");
- box.innerHTML="";
-
+ const box=$("teamMembers");box.innerHTML="";
  const rows=teamCache.filter(m=>teamFilter==="all"||Number(m.level)===Number(teamFilter));
-
- if(!rows.length){
-  box.textContent=teamFilter==="all"?"Aucun membre inscrit pour le moment.":"Aucun membre trouvé dans ce niveau.";
-  return;
- }
-
+ if(!rows.length){box.textContent=teamFilter==="all"?"Aucun membre inscrit pour le moment.":"Aucun membre trouvé dans ce niveau.";return;}
  rows.forEach((m,index)=>{
-  const level=Number(m.level);
-  const depositCount=Number(m.deposit_count||0);
-  const depositTotal=Number(m.deposit_total||0);
-  const el=document.createElement("div");
-  el.className="member-line";
-
-  const depositBadge=depositCount>0
-   ?'<span class="badge badge-green">Dépôt validé</span>'
-   :'<span class="badge badge-orange">Aucun dépôt validé</span>';
-
+  const level=Number(m.level),depositCount=Number(m.deposit_count||0),depositTotal=Number(m.deposit_total||0);
+  const el=document.createElement("div");el.className="member-line";
+  const depositBadge=depositCount>0?'<span class="badge badge-green">Dépôt validé</span>':'<span class="badge badge-orange">Aucun dépôt validé</span>';
   el.innerHTML=`
    <div class="level-title">NIVEAU ${level} — MEMBRE ${index+1}</div>
    <p><strong>Nom :</strong> ${escapeHTML(m.full_name||"Non renseigné")}</p>
@@ -781,15 +730,13 @@ function renderTeamMembers(){
   box.appendChild(el);
  });
 }
-
 const referralFromUrl=new URLSearchParams(location.search).get("ref");
 if(referralFromUrl)$("referralCode").value=referralFromUrl.toUpperCase();
 
 /* PRODUITS VIP */
 function totalVIP(v){return Number(v.daily_revenue_fc||0)*Number(v.duration_days||35);}
 function renderVIP(products){
- const box=$("shopVIP");
- box.innerHTML="";
+ const box=$("shopVIP");box.innerHTML="";
  products.forEach(v=>{
   const duration=Number(v.duration_days||35),total=totalVIP(v),el=document.createElement("div");
   el.className="vip-card";
@@ -804,9 +751,7 @@ function renderVIP(products){
  });
 }
 async function loadVIPProducts(){
- const {data,error}=await db.from("power_station_vip_products")
-  .select("id,code,price_fc,daily_revenue_fc,duration_days,total_revenue_fc,is_active")
-  .eq("is_active",true).order("id");
+ const {data,error}=await db.from("power_station_vip_products").select("id,code,price_fc,daily_revenue_fc,duration_days,total_revenue_fc,is_active").eq("is_active",true).order("id");
  if(error){console.error(error);renderVIP(vipFallback);return;}
  renderVIP(data?.length?data:vipFallback);
 }
@@ -814,23 +759,20 @@ async function loadVIPProducts(){
 /* NUMÉROS DE PAIEMENT AVEC BOUTON COPIER */
 function renderPaymentNumbers(){
  const rows=[
-  {name:"Airtel Money",number:settings.airtel,holder:settings.airtelName},
-  {name:"Orange Money",number:settings.orange,holder:settings.orangeName},
-  {name:"M-Pesa",number:settings.mpesa,holder:settings.mpesaName}
+  ["Airtel Money",settings.airtel,settings.airtelName],
+  ["Orange Money",settings.orange,settings.orangeName],
+  ["M-Pesa",settings.mpesa,settings.mpesaName]
  ];
-
- $("paymentNumbers").innerHTML=rows.map((r,index)=>`
+ $("paymentNumbers").innerHTML=rows.map((r,i)=>`
   <div class="payment-number-card">
-   <div class="operator"><i class="fa-solid fa-mobile-screen-button"></i> ${r.name}</div>
-   <div class="number">${escapeHTML(r.number||"Numéro non configuré")}</div>
-   <div class="holder">Nom du bénéficiaire : <strong>${escapeHTML(r.holder||"-")}</strong></div>
-   <button class="copy-payment-btn" type="button" onclick="copyText('${String(r.number||"").replace(/'/g,"\\'")}',this)">
-    <i class="fa-solid fa-copy"></i> COPIER LE NUMÉRO
+   <div class="operator"><i class="fa-solid fa-mobile-screen-button"></i> ${r[0]}</div>
+   <div class="number">${escapeHTML(r[1]||"Numéro non configuré")}</div>
+   <p>Nom du bénéficiaire : <strong>${escapeHTML(r[2]||"-")}</strong></p>
+   <button class="copy-payment-btn" onclick="copyText('${String(r[1]||"").replace(/'/g,"\\'")}',this)">
+    <i class="fa-regular fa-copy"></i> COPIER LE NUMÉRO
    </button>
-  </div>
- `).join("");
+  </div>`).join("");
 }
-
 function chooseVIP(id,code,price){
  if(!id)return alert("Le produit VIP doit être chargé depuis Supabase.");
  selectedVIP={id,code,price};
@@ -838,7 +780,6 @@ function chooseVIP(id,code,price){
  renderPaymentNumbers();
  showPage("vipDeposit");
 }
-
 async function submitVIPDeposit(){
  await checkSession();
  if(!currentUser)return showPage("auth");
@@ -847,13 +788,8 @@ async function submitVIPDeposit(){
  let sender=formatPhone($("vipSenderPhone").value);
  let reference=$("vipTransactionReference").value.trim();
  if(!method||!sender||!reference)return message("vipDepositMessage","Complétez tous les champs.","error");
-
  const {data,error}=await db.rpc("ps_submit_vip_deposit",{
-  p_vip_product_id:selectedVIP.id,
-  p_method:method,
-  p_sender_phone:sender,
-  p_reference:reference,
-  p_proof_path:null
+  p_vip_product_id:selectedVIP.id,p_method:method,p_sender_phone:sender,p_reference:reference,p_proof_path:null
  });
  if(error)return message("vipDepositMessage",error.message,"error");
  message("vipDepositMessage","Demande envoyée. En attente de validation. Référence : "+data,"success");
@@ -871,27 +807,19 @@ async function loadActiveProducts(){
  const box=$("activeProducts");
  if(!currentUser){box.textContent="Connectez-vous.";return;}
  box.textContent="Chargement des produits actifs...";
-
- const {data:acts,error}=await db.from("ps_vip_activations")
-  .select("id,status,activated_at,expires_at,vip_product_id")
-  .eq("user_id",currentUser.id).order("activated_at",{ascending:false});
+ const {data:acts,error}=await db.from("ps_vip_activations").select("id,status,activated_at,expires_at,vip_product_id").eq("user_id",currentUser.id).order("activated_at",{ascending:false});
  if(error){box.textContent="Produits actifs indisponibles : "+error.message;return;}
  if(!acts?.length){box.textContent="Aucun VIP actif pour le moment.";return;}
-
  const ids=[...new Set(acts.map(a=>a.vip_product_id).filter(Boolean))];
  const [{data:vips},{data:earnings,error:earnError}]=await Promise.all([
   db.from("power_station_vip_products").select("id,code,price_fc,daily_revenue_fc,duration_days").in("id",ids),
   db.from("ps_member_earnings").select("id,vip_code,amount,status,available_at,claimed_at,description").eq("user_id",currentUser.id).order("available_at",{ascending:true})
  ]);
  if(earnError){box.textContent="Impossible de lire les revenus : "+earnError.message;return;}
-
  const vmap=Object.fromEntries((vips||[]).map(v=>[v.id,v]));
  box.innerHTML="";
-
  acts.forEach(a=>{
-  const v=vmap[a.vip_product_id]||{};
-  const duration=Number(v.duration_days||35);
-  const code=v.code||"VIP";
+  const v=vmap[a.vip_product_id]||{},duration=Number(v.duration_days||35),code=v.code||"VIP";
   const rows=(earnings||[]).filter(e=>String(e.vip_code||"").toUpperCase()===String(code).toUpperCase()&&e.status==="pending");
   const ready=rows.filter(e=>new Date(e.available_at).getTime()<=Date.now());
   const waiting=rows.filter(e=>new Date(e.available_at).getTime()>Date.now());
@@ -899,9 +827,7 @@ async function loadActiveProducts(){
   const readyAmount=ready.reduce((s,e)=>s+Number(e.amount||0),0);
   const elapsed=a.activated_at?Math.min(duration,Math.max(0,Math.floor((Date.now()-new Date(a.activated_at).getTime())/86400000))):0;
   const theoreticalTotal=Number(v.daily_revenue_fc||0)*duration;
-
-  const el=document.createElement("div");
-  el.className="payment-box";
+  const el=document.createElement("div");el.className="payment-box";
   el.innerHTML=`
    <h3><i class="fa-solid fa-gem"></i> ${escapeHTML(code)}</h3>
    <p>Prix : <strong>${money(v.price_fc)}</strong></p>
@@ -918,25 +844,17 @@ async function loadActiveProducts(){
    <i class="fa-solid fa-hand-holding-dollar"></i> Récolter ${ready.length?"("+money(readyAmount)+")":"(pas encore disponible)"}</button>`;
   box.appendChild(el);
  });
-
  if(countdownTimer)clearInterval(countdownTimer);
  countdownTimer=setInterval(()=>{
   acts.forEach(a=>{
-   const v=vmap[a.vip_product_id]||{};
-   const duration=Number(v.duration_days||35);
+   const v=vmap[a.vip_product_id]||{},duration=Number(v.duration_days||35);
    const rows=(earnings||[]).filter(e=>String(e.vip_code||"").toUpperCase()===String(v.code||"VIP").toUpperCase()&&e.status==="pending");
    const ready=rows.filter(e=>new Date(e.available_at).getTime()<=Date.now());
    const waiting=rows.filter(e=>new Date(e.available_at).getTime()>Date.now());
    const timer=$("timer-"+a.id),btn=$("claim-btn-"+a.id),day=$("day-"+a.id);
    if(timer)timer.textContent=waiting.length?timeLeft(waiting[0].available_at):ready.length?"Disponible maintenant":"Aucun revenu en attente";
-   if(btn){
-    btn.disabled=!ready.length;
-    btn.innerHTML=ready.length?"Récolter ("+money(ready.reduce((s,e)=>s+Number(e.amount||0),0))+")":"Récolter (pas encore disponible)";
-   }
-   if(day&&a.activated_at){
-    const elapsed=Math.min(duration,Math.max(0,Math.floor((Date.now()-new Date(a.activated_at).getTime())/86400000)));
-    day.textContent=elapsed+"/"+duration+" jours";
-   }
+   if(btn){btn.disabled=!ready.length;btn.innerHTML=ready.length?"Récolter ("+money(ready.reduce((s,e)=>s+Number(e.amount||0),0))+")":"Récolter (pas encore disponible)";}
+   if(day&&a.activated_at){const elapsed=Math.min(duration,Math.max(0,Math.floor((Date.now()-new Date(a.activated_at).getTime())/86400000)));day.textContent=elapsed+"/"+duration+" jours";}
   });
  },1000);
 }
@@ -947,68 +865,44 @@ async function claimVIPEarnings(activationId){
  const {data,error}=await db.rpc("ps_claim_vip_earnings",{p_vip_activation_id:activationId});
  if(error){message("earningMessage",error.message,"error");return;}
  message("earningMessage","Récolte demandée : "+money(data)+". Vérifiez votre portefeuille.","success");
- await loadWallet();
- await loadActiveProducts();
+ await loadWallet();await loadActiveProducts();
 }
 
 /* PORTEFEUILLE ET RETRAITS */
 async function hasActiveVIP(){
- const {data,error}=await db.from("ps_vip_activations")
-  .select("id,status,expires_at").eq("user_id",currentUser.id).eq("status","active").limit(20);
+ const {data,error}=await db.from("ps_vip_activations").select("id,status,expires_at").eq("user_id",currentUser.id).eq("status","active").limit(20);
  if(error)throw error;
  const now=Date.now();
  return (data||[]).some(v=>!v.expires_at||new Date(v.expires_at).getTime()>now);
 }
 function isWithdrawalTime(){
- const parts=new Intl.DateTimeFormat("en-GB",{
-  timeZone:"Africa/Kinshasa",hour:"2-digit",minute:"2-digit",hourCycle:"h23"
- }).formatToParts(new Date());
- const h=Number(parts.find(x=>x.type==="hour").value);
- const m=Number(parts.find(x=>x.type==="minute").value);
- const minutes=h*60+m;
+ const parts=new Intl.DateTimeFormat("en-GB",{timeZone:"Africa/Kinshasa",hour:"2-digit",minute:"2-digit",hourCycle:"h23"}).formatToParts(new Date());
+ const h=Number(parts.find(x=>x.type==="hour").value),m=Number(parts.find(x=>x.type==="minute").value),minutes=h*60+m;
  return minutes>=480&&minutes<1080;
 }
 async function loadWallet(){
  await checkSession();
  if(!currentUser)return $("walletSummary").textContent="Connectez-vous.";
- const {data,error}=await db.from("ps_wallets")
-  .select("available_balance,reserved_balance,total_deposited,total_withdrawn,total_bonus")
-  .eq("user_id",currentUser.id).maybeSingle();
+ const {data,error}=await db.from("ps_wallets").select("available_balance,reserved_balance,total_deposited,total_withdrawn,total_bonus").eq("user_id",currentUser.id).maybeSingle();
  if(error)return $("walletSummary").textContent=error.message;
  if(!data)return $("walletSummary").textContent="Portefeuille non créé.";
- $("walletSummary").innerHTML=
- `<b>Solde disponible : ${money(data.available_balance)}</b><br>
- Solde réservé : ${money(data.reserved_balance)}<br>
- Total dépôts : ${money(data.total_deposited)}<br>
- Total retraits : ${money(data.total_withdrawn)}<br>
- Bonus : ${money(data.total_bonus)}`;
+ $("walletSummary").innerHTML=`<b>Solde disponible : ${money(data.available_balance)}</b><br>Solde réservé : ${money(data.reserved_balance)}<br>Total dépôts : ${money(data.total_deposited)}<br>Total retraits : ${money(data.total_withdrawn)}<br>Bonus : ${money(data.total_bonus)}`;
 }
 async function submitWithdrawal(){
  await checkSession();
  if(!currentUser)return showPage("auth");
  if(!isWithdrawalTime())return message("withdrawMessage","Les retraits sont ouverts de 08h00 à 18h00, heure de Kinshasa. Revenez pendant ces horaires.","error");
-
  let active=false;
- try{active=await hasActiveVIP();}
- catch(e){return message("withdrawMessage","Vérification VIP impossible : "+e.message,"error");}
+ try{active=await hasActiveVIP();}catch(e){return message("withdrawMessage","Vérification VIP impossible : "+e.message,"error");}
  if(!active)return message("withdrawMessage","Vous devez disposer d'un VIP actif pour demander un retrait.","error");
-
- let amount=Number($("withdrawAmount").value);
- let name=$("withdrawName").value.trim();
- let number=formatPhone($("withdrawPhone").value);
- let provider=$("withdrawMethod").value;
-
+ let amount=Number($("withdrawAmount").value),name=$("withdrawName").value.trim(),number=formatPhone($("withdrawPhone").value),provider=$("withdrawMethod").value;
  if(amount<settings.withdrawMin||!name||!number||!provider)return message("withdrawMessage","Vérifiez le montant, le nom, le numéro et l'opérateur.","error");
-
  let {error}=await db.rpc("ps_save_payout_account",{p_provider:provider,p_number:number,p_name:name});
  if(error)return message("withdrawMessage",error.message,"error");
-
  ({error}=await db.rpc("ps_submit_withdrawal",{p_amount:amount}));
  if(error)return message("withdrawMessage",error.message,"error");
-
  message("withdrawMessage","Demande envoyée. Elle sera vérifiée par l'administration.","success");
- await loadWallet();
- await loadMyWithdrawals();
+ await loadWallet();await loadMyWithdrawals();
 }
 async function loadMyWithdrawals(){
  await checkSession();
@@ -1076,18 +970,11 @@ async function loadBonusHistory(){
 
 /* ADMINISTRATION */
 async function openAdmin(){
- if(!await checkAdmin()){
-  $("adminStatus").textContent="Accès refusé : compte non administrateur.";
-  showPage("account");
-  return;
- }
+ if(!await checkAdmin()){$("adminStatus").textContent="Accès refusé : compte non administrateur.";showPage("account");return;}
  $("adminStatus").textContent="Accès SUPER ADMIN autorisé.";
  adminTab("dashboard",document.querySelector(".admin-tabs button"));
 }
-async function adminReady(){
- if(!await checkAdmin()){alert("Accès administrateur refusé.");return false;}
- return true;
-}
+async function adminReady(){if(!await checkAdmin()){alert("Accès administrateur refusé.");return false;}return true;}
 async function loadAdminDashboard(){
  if(!await adminReady())return;
  const [m,d,w,wallets,dep]=await Promise.all([
@@ -1136,8 +1023,7 @@ async function reviewDeposit(id,approve){
  const {data,error}=await db.rpc("ps_admin_review_deposit",{p_deposit_id:id,p_approve:approve});
  if(error)return alert(error.message);
  alert(data||"Opération effectuée.");
- loadAdminDeposits();
- loadAdminDashboard();
+ loadAdminDeposits();loadAdminDashboard();
 }
 async function loadAdminWithdrawals(){
  if(!await adminReady())return;
@@ -1161,22 +1047,17 @@ async function loadAdminWithdrawals(){
 }
 async function confirmWithdrawal(id){
  if(!await adminReady()||!confirm("Avez-vous réellement envoyé l'argent au client ?"))return;
- let note=prompt("Référence du paiement :");
- if(note===null)return;
+ let note=prompt("Référence du paiement :");if(note===null)return;
  const {data,error}=await db.rpc("ps_admin_confirm_withdrawal",{p_withdrawal_id:id,p_admin_note:note});
  if(error)return alert(error.message);
- alert(data||"Retrait confirmé.");
- loadAdminWithdrawals();
- loadAdminDashboard();
+ alert(data||"Retrait confirmé.");loadAdminWithdrawals();loadAdminDashboard();
 }
 async function rejectWithdrawal(id){
  if(!await adminReady())return;
- let reason=prompt("Motif du rejet :");
- if(reason===null)return;
+ let reason=prompt("Motif du rejet :");if(reason===null)return;
  const {data,error}=await db.rpc("ps_admin_reject_withdrawal",{p_withdrawal_id:id,p_reason:reason});
  if(error)return alert(error.message);
- alert(data||"Retrait rejeté.");
- loadAdminWithdrawals();
+ alert(data||"Retrait rejeté.");loadAdminWithdrawals();
 }
 
 /* MEMBRES ADMIN */
@@ -1207,9 +1088,7 @@ function renderAdminMembers(rows){
  if(!rows.length)b.textContent="Aucun membre.";
 }
 function selectMember(id){
- $("bonusUserId").value=id;
- $("vipUserId").value=id;
- $("earningUserId").value=id;
+ $("bonusUserId").value=id;$("vipUserId").value=id;$("earningUserId").value=id;
  alert("Membre sélectionné.");
 }
 function filterMembers(){
@@ -1219,9 +1098,7 @@ function filterMembers(){
 async function giveBonus(){
  if(!await adminReady())return;
  const {data,error}=await db.rpc("ps_admin_give_bonus",{
-  p_user_id:$("bonusUserId").value.trim(),
-  p_amount:Number($("bonusAmount").value),
-  p_reason:$("bonusReason").value.trim()
+  p_user_id:$("bonusUserId").value.trim(),p_amount:Number($("bonusAmount").value),p_reason:$("bonusReason").value.trim()
  });
  if(error)return message("bonusMessage",error.message,"error");
  message("bonusMessage",data||"Bonus attribué.","success");
@@ -1236,9 +1113,7 @@ async function loadAdminVIP(){
  $("vipProductSelect").innerHTML='<option value="">Choisir VIP</option>';
  $("adminVIPList").innerHTML="";
  allVIP.forEach(v=>{
-  let o=document.createElement("option");
-  o.value=v.id;o.textContent=v.code+" — "+money(v.price_fc);
-  $("vipProductSelect").append(o);
+  let o=document.createElement("option");o.value=v.id;o.textContent=v.code+" — "+money(v.price_fc);$("vipProductSelect").append(o);
   let e=document.createElement("div");e.className="payment-box";
   e.innerHTML=`<b>${escapeHTML(v.code)}</b><p>Prix : ${money(v.price_fc)}</p><p>Revenu journalier : ${money(v.daily_revenue_fc)}</p><p>Durée : ${v.duration_days} jours</p><p>Total calculé : ${money(Number(v.daily_revenue_fc||0)*Number(v.duration_days||35))}</p>`;
   $("adminVIPList").append(e);
@@ -1247,9 +1122,7 @@ async function loadAdminVIP(){
 async function assignVIP(){
  if(!await adminReady())return;
  const {data,error}=await db.rpc("ps_admin_assign_vip",{
-  p_user_id:$("vipUserId").value.trim(),
-  p_vip_product_id:Number($("vipProductSelect").value),
-  p_note:$("vipNote").value.trim()||null
+  p_user_id:$("vipUserId").value.trim(),p_vip_product_id:Number($("vipProductSelect").value),p_note:$("vipNote").value.trim()||null
  });
  if(error)return message("vipMessage",error.message,"error");
  message("vipMessage","VIP attribué : "+data,"success");
@@ -1257,10 +1130,8 @@ async function assignVIP(){
 async function adminAddEarning(){
  if(!await adminReady())return;
  const {data,error}=await db.rpc("ps_admin_add_vip_earning",{
-  p_user_id:$("earningUserId").value.trim(),
-  p_vip_activation_id:$("earningActivationId").value.trim(),
-  p_amount:Number($("earningAmount").value),
-  p_description:$("earningDescription").value.trim()||null
+  p_user_id:$("earningUserId").value.trim(),p_vip_activation_id:$("earningActivationId").value.trim(),
+  p_amount:Number($("earningAmount").value),p_description:$("earningDescription").value.trim()||null
  });
  if(error)return message("adminEarningMessage",error.message,"error");
  message("adminEarningMessage","Revenu enregistré. "+data,"success");
@@ -1274,25 +1145,32 @@ function applyTheme(){
  document.documentElement.style.setProperty("--bg",settings.background);
 }
 function applyCommunityLinks(){
- const links=[
-  ["whatsappGroup",settings.whatsappGroup],
-  ["telegramGroup",settings.telegramGroup],
-  ["customerWhatsApp",settings.customerWhatsApp]
- ];
+ const links=[["whatsappGroup",settings.whatsappGroup],["telegramGroup",settings.telegramGroup],["customerWhatsApp",settings.customerWhatsApp]];
  links.forEach(([id,url])=>{
   const a=$(id);
-  if(url&&/^https:\/\/(chat\.whatsapp\.com|wa\.me|t\.me)\//i.test(url)){
-   a.href=url;a.style.opacity="1";a.style.pointerEvents="auto";
-  }else{
-   a.href="#";a.style.opacity=".5";a.style.pointerEvents="none";
-  }
+  if(url&&/^https:\/\/(chat\.whatsapp\.com|wa\.me|t\.me)\//i.test(url)){a.href=url;a.style.opacity="1";a.style.pointerEvents="auto";}
+  else{a.href="#";a.style.opacity=".5";a.style.pointerEvents="none";}
  });
+}
+function applyAPKLink(){
+ const btn=$("apkDownloadButton"),info=$("apkDownloadInfo");
+ if(settings.apkUrl&&/^https:\/\//i.test(settings.apkUrl)){
+  btn.href=settings.apkUrl;btn.style.opacity="1";btn.style.pointerEvents="auto";
+  info.textContent="Application Android disponible. Appuyez sur le bouton pour télécharger le fichier APK.";
+ }else{
+  btn.href="#";btn.style.opacity=".5";btn.style.pointerEvents="auto";
+  info.textContent="Le lien APK n'est pas encore configuré. L'administration doit ajouter le lien de téléchargement.";
+ }
+}
+function downloadAPK(e){
+ if(!settings.apkUrl||!/^https:\/\//i.test(settings.apkUrl)){
+  e.preventDefault();alert("Le lien de téléchargement APK n'a pas encore été ajouté par l'administration.");return false;
+ }
+ return true;
 }
 function loadLocalSettings(){
  try{settings={...settings,...JSON.parse(localStorage.getItem("power_station_settings")||"{}")};}catch(e){}
- applyTheme();
- renderPaymentNumbers();
- applyCommunityLinks();
+ applyTheme();renderPaymentNumbers();applyCommunityLinks();applyAPKLink();
  $("withdrawRules").textContent="Minimum : "+money(settings.withdrawMin)+". Frais affichés : "+settings.withdrawFee+" %. Retraits : 08h00–18h00.";
 }
 function loadSettingsPanel(){
@@ -1312,17 +1190,18 @@ function loadSettingsPanel(){
  $("settingWhatsAppGroup").value=settings.whatsappGroup||"";
  $("settingTelegramGroup").value=settings.telegramGroup||"";
  $("settingCustomerWhatsApp").value=settings.customerWhatsApp||"";
+ $("settingApkUrl").value=settings.apkUrl||"";
  loadVIPSettings();
 }
 function saveLocalSettings(){
  settings={
   ...settings,
-  airtel:$("settingAirtel").value,
-  airtelName:$("settingAirtelName").value,
-  orange:$("settingOrange").value,
-  orangeName:$("settingOrangeName").value,
-  mpesa:$("settingMpesa").value,
-  mpesaName:$("settingMpesaName").value,
+  airtel:$("settingAirtel").value.trim(),
+  airtelName:$("settingAirtelName").value.trim(),
+  orange:$("settingOrange").value.trim(),
+  orangeName:$("settingOrangeName").value.trim(),
+  mpesa:$("settingMpesa").value.trim(),
+  mpesaName:$("settingMpesaName").value.trim(),
   primary:$("settingPrimary").value,
   gold:$("settingGold").value,
   background:$("settingBackground").value,
@@ -1331,17 +1210,15 @@ function saveLocalSettings(){
   withdrawMin:Number($("settingWithdrawMin").value),
   whatsappGroup:$("settingWhatsAppGroup").value.trim(),
   telegramGroup:$("settingTelegramGroup").value.trim(),
-  customerWhatsApp:$("settingCustomerWhatsApp").value.trim()
+  customerWhatsApp:$("settingCustomerWhatsApp").value.trim(),
+  apkUrl:$("settingApkUrl").value.trim()
  };
  localStorage.setItem("power_station_settings",JSON.stringify(settings));
- applyTheme();
- renderPaymentNumbers();
- applyCommunityLinks();
+ applyTheme();renderPaymentNumbers();applyCommunityLinks();applyAPKLink();
  message("settingsMessage","Paramètres enregistrés sur cet appareil.","success");
 }
 function loadVIPSettings(){
- const b=$("vipSettingsList");
- b.textContent="Chargement...";
+ const b=$("vipSettingsList");b.textContent="Chargement...";
  db.from("power_station_vip_products").select("*").order("id").then(({data,error})=>{
   if(error)return b.textContent=error.message;
   b.innerHTML="";
@@ -1386,10 +1263,7 @@ async function saveVIPProduct(id){
  startPhotoSlider();
  await checkSession();
  await loadVIPProducts();
- if(referralFromUrl){
-  authMode("signup");
-  showPage("auth");
- }
+ if(referralFromUrl){authMode("signup");showPage("auth");}
  if(currentUser)await checkAdmin();
 })();
 </script>
