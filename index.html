@@ -6,7 +6,7 @@
 <title>POWER STATION RDC</title>
 
 <link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#172536">
+<meta name="theme-color" content="#172333">
 <link rel="apple-touch-icon" href="/icon-192.png">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -14,21 +14,21 @@
 
 <style>
 :root{
---primary:#172536;
---dark:#101b2a;
+--primary:#172b40;
+--dark:#101d2c;
 --gold:#d9a441;
---red:#a92732;
---bg:#f5f3ee;
+--red:#a92d32;
+--bg:#f5f3ed;
 --green:#168447;
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:#242633;font-family:Arial,sans-serif;padding-bottom:80px}
-header{background:linear-gradient(110deg,#101b2a,#243d50,#172536);color:white;text-align:center;padding:19px;position:sticky;top:0;z-index:10;border-bottom:4px solid var(--gold)}
+header{background:linear-gradient(120deg,#101d2c,#24445d,#172b40);color:white;text-align:center;padding:20px;position:sticky;top:0;z-index:10;border-bottom:4px solid var(--gold)}
 header h1{margin:0;font-size:24px;letter-spacing:1px}
-header p{margin:5px 0 0;font-size:12px;color:#f4d99c}
+header p{margin:5px 0 0;font-size:12px;color:#f1d69a}
 .container{max-width:950px;margin:auto;padding:12px}
-.card{background:white;padding:16px;border-radius:15px;margin:12px 0;box-shadow:0 4px 16px #0000000c;border:1px solid #e8e9ef}
-h2{font-size:19px;color:var(--dark);margin:5px 0 15px}
+.card{background:white;padding:16px;border-radius:15px;margin:12px 0;box-shadow:0 4px 16px #0000000c;border:1px solid #e8e3d7}
+h2{font-size:19px;color:var(--primary);margin:5px 0 15px}
 h3{font-size:16px}
 p{line-height:1.5}
 button,input,select{font:inherit}
@@ -37,26 +37,26 @@ button:disabled{opacity:.5;cursor:not-allowed}
 input,select{width:100%;padding:13px;margin:7px 0;border:1px solid #ddd;border-radius:10px;background:white}
 .red{background:var(--red);color:white}
 .green{background:var(--green);color:white}
-.gold{background:#f6e6bd;color:#483512}
-.dark{background:#172536;color:white}
+.gold{background:#f5e5bd;color:#493511}
+.dark{background:#172b40;color:white}
 .hidden{display:none!important}
 .status{padding:12px;border-radius:10px;background:#f0f1f5;margin:10px 0;overflow-wrap:anywhere;font-size:13px}
 .success{background:#dcfce7;color:#166534}
 .error{background:#fee2e2;color:#991b1b}
 .warning{background:#fff4d6;color:#815400}
 .small{font-size:12px;color:#777}
-.payment-box{background:#f8f6f0;padding:13px;border-radius:12px;margin:10px 0;border:1px solid #e9dfc9;overflow-wrap:anywhere}
+.payment-box{background:#f8f5ed;padding:13px;border-radius:12px;margin:10px 0;border:1px solid #eadbb9;overflow-wrap:anywhere}
 .payment-number-card{background:#fff;border:2px solid var(--gold);border-radius:13px;padding:15px;margin:12px 0}
 .payment-number-card .operator{font-size:14px;color:#555;font-weight:bold}
-.payment-number-card .number{font-size:25px;font-weight:900;color:var(--dark);letter-spacing:1px;margin:12px 0;overflow-wrap:anywhere}
-.copy-payment-btn{width:100%;background:var(--dark);color:white;font-size:15px;padding:14px}
+.payment-number-card .number{font-size:25px;font-weight:900;color:var(--primary);letter-spacing:1px;margin:12px 0;overflow-wrap:anywhere}
+.copy-payment-btn{width:100%;background:var(--primary);color:white;font-size:15px;padding:14px}
 .vip-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.vip-card{border:1px solid #e2c65c;border-radius:14px;padding:14px;background:linear-gradient(145deg,#fff,#fff9df)}
-.vip-card h3{color:var(--dark)}
+.vip-card{border:1px solid #e2c65c;border-radius:14px;padding:14px;background:linear-gradient(145deg,#fff,#fff9e9)}
+.vip-card h3{color:var(--primary)}
 .bottom-nav{position:fixed;bottom:0;left:0;width:100%;background:white;display:grid;grid-template-columns:repeat(4,1fr);box-shadow:0 -3px 15px #0001;z-index:20}
 .bottom-nav button{background:white;color:#777;border-radius:0;font-size:11px;padding:10px 2px}
 .bottom-nav i{display:block;font-size:19px;margin-bottom:5px}
-.bottom-nav button.active{color:var(--dark);background:#f6edda}
+.bottom-nav button.active{color:var(--primary);background:#f5eddd}
 .stat{background:#f8f8fb;padding:13px;border-radius:12px;border:1px solid #eee;font-size:12px;color:#777}
 .stat strong{display:block;font-size:20px;color:#222;margin-top:7px}
 .stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
@@ -68,21 +68,21 @@ input,select{width:100%;padding:13px;margin:7px 0;border:1px solid #ddd;border-r
 .badge-orange{background:#fff0c2;color:#805600}
 .tabs,.admin-tabs{display:flex;gap:7px;overflow:auto;margin-bottom:12px}
 .tabs button,.admin-tabs button{white-space:nowrap;background:#eee;color:#555}
-.tabs button.selected,.admin-tabs button.selected{background:var(--dark);color:white}
+.tabs button.selected,.admin-tabs button.selected{background:var(--primary);color:white}
 .referral-link{background:#fff4d6;padding:12px;border-radius:9px;overflow-wrap:anywhere;margin:10px 0;font-size:13px}
-.copy-number{font-size:18px;font-weight:bold;color:var(--dark);overflow-wrap:anywhere}
+.copy-number{font-size:18px;font-weight:bold;color:var(--primary);overflow-wrap:anywhere}
 .actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
 .actions button{font-size:12px}
 .admin-panel{margin-top:12px}
 label{font-weight:bold;font-size:13px}
 .color-input{height:45px;padding:4px}
-.flag{font-size:24px}
+.flag{font-size:25px}
 .service-btn{display:block;text-align:center;text-decoration:none;margin:9px 0;padding:14px;border-radius:10px;color:white;font-weight:bold}
 .whatsapp{background:#168447}
 .telegram{background:#168ac4}
-.customer{background:#a92732}
+.customer{background:#a92d32}
 .apk-btn{display:block;width:100%;text-align:center;text-decoration:none;background:#168447;color:white;padding:16px;border-radius:12px;font-weight:bold;font-size:16px;margin:12px 0}
-.photo-slider{position:relative;width:100%;height:240px;overflow:hidden;border-radius:15px;margin:12px 0;background:#172536;box-shadow:0 5px 18px #0002}
+.photo-slider{position:relative;width:100%;height:240px;overflow:hidden;border-radius:15px;margin:12px 0;background:#172b40;box-shadow:0 5px 18px #0002}
 .photo-slide{position:absolute;inset:0;opacity:0;transition:opacity .8s ease}
 .photo-slide.active{opacity:1}
 .photo-slide img{width:100%;height:100%;object-fit:cover}
@@ -90,7 +90,9 @@ label{font-weight:bold;font-size:13px}
 .slider-dots{position:absolute;bottom:8px;right:12px;display:flex;gap:6px;z-index:3}
 .slider-dots button{width:9px;height:9px;padding:0;border-radius:50%;background:#ffffff80}
 .slider-dots button.active{background:var(--gold)}
-.level-title{background:#f6edda;color:#172536;padding:11px;border-radius:10px;margin-top:16px;font-weight:bold}
+.level-title{background:#f5eddd;color:var(--primary);padding:11px;border-radius:10px;margin-top:16px;font-weight:bold}
+.launch-date{background:linear-gradient(120deg,#172b40,#304c60);color:white;padding:13px;border-radius:12px;text-align:center;margin:12px 0;border:1px solid var(--gold)}
+.launch-date strong{color:#f3ce7b;font-size:19px}
 @media(max-width:430px){
 .vip-grid{grid-template-columns:1fr}
 .container{padding:8px}
@@ -112,32 +114,26 @@ label{font-weight:bold;font-size:13px}
 <section id="home">
 
 <div class="photo-slider" id="photoSlider">
-
 <div class="photo-slide active">
-<img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1200&auto=format&fit=crop" alt="Panneaux solaires">
+<img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1200&auto=format&fit=crop" alt="Centrale énergétique">
 <div class="photo-caption">POWER STATION RDC — Énergie et innovation</div>
 </div>
-
 <div class="photo-slide">
-<img src="https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?w=1200&auto=format&fit=crop" alt="Énergie renouvelable">
+<img src="https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?w=1200&auto=format&fit=crop" alt="Énergie électrique">
 <div class="photo-caption">Construisons ensemble un avenir énergétique</div>
 </div>
-
 <div class="photo-slide">
-<img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1200&auto=format&fit=crop" alt="Centrale électrique">
+<img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1200&auto=format&fit=crop" alt="Panneaux solaires">
 <div class="photo-caption">Innovation et nouvelles technologies</div>
 </div>
-
 <div class="photo-slide">
-<img src="https://images.unsplash.com/photo-1497440001374-f26997328c1b?w=1200&auto=format&fit=crop" alt="Électricité">
+<img src="https://images.unsplash.com/photo-1497440001374-f26997328c1b?w=1200&auto=format&fit=crop" alt="Énergie renouvelable">
 <div class="photo-caption">Une plateforme numérique pour nos membres</div>
 </div>
-
 <div class="photo-slide">
-<img src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=1200&auto=format&fit=crop" alt="Installation solaire">
+<img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1200&auto=format&fit=crop&sat=-50" alt="Centrale énergétique">
 <div class="photo-caption">POWER STATION RDC — Bienvenue</div>
 </div>
-
 <div class="slider-dots" id="sliderDots">
 <button class="active" onclick="goSlide(0)"></button>
 <button onclick="goSlide(1)"></button>
@@ -145,7 +141,11 @@ label{font-weight:bold;font-size:13px}
 <button onclick="goSlide(3)"></button>
 <button onclick="goSlide(4)"></button>
 </div>
+</div>
 
+<div class="launch-date">
+<div>🇨🇩 LANCEMENT OFFICIEL 🇨🇩</div>
+<strong>11.11.2026</strong>
 </div>
 
 <div class="card">
@@ -154,9 +154,6 @@ label{font-weight:bold;font-size:13px}
 <p>POWER STATION RDC est une plateforme numérique permettant aux membres de consulter les offres VIP, effectuer leurs demandes de recharge, suivre leurs produits actifs et consulter leur équipe de parrainage.</p>
 
 <p>Chaque membre peut créer son compte, accéder à son espace personnel, consulter son portefeuille et suivre l'évolution de ses opérations.</p>
-
-<p><strong>La plateforme est officiellement lancée le 11.11.2026.</strong></p>
-
 </div>
 
 <div class="card">
@@ -253,10 +250,9 @@ label{font-weight:bold;font-size:13px}
 <div id="walletSummary" class="status">Connectez-vous pour voir votre solde.</div>
 <button class="gold" onclick="loadWallet()">Actualiser mon solde</button>
 </div>
-
 <div class="card">
 <h2>Demande de retrait</h2>
-<div class="status warning">Conditions : disposer d'un VIP actif et effectuer la demande entre 08h00 et 18h00, heure de Kinshasa. Les recharges restent accessibles 24h/24.</div>
+<div class="status warning">Conditions : disposer d'un VIP actif et effectuer la demande entre 08h00 et 18h00, heure de Kinshasa.</div>
 <p id="withdrawRules">Minimum : 5 000 FC.</p>
 <input id="withdrawName" placeholder="Nom du bénéficiaire">
 <input id="withdrawPhone" placeholder="Numéro Mobile Money">
@@ -270,7 +266,6 @@ label{font-weight:bold;font-size:13px}
 <button class="red" style="width:100%" onclick="submitWithdrawal()">Envoyer ma demande</button>
 <div id="withdrawMessage" class="status hidden"></div>
 </div>
-
 <div class="card">
 <h2>Mes demandes de retrait</h2>
 <div id="myWithdrawals"></div>
@@ -295,7 +290,7 @@ label{font-weight:bold;font-size:13px}
 <section id="active" class="hidden">
 <div class="card">
 <h2><i class="fa-solid fa-bolt"></i> Mes produits VIP actifs</h2>
-<p class="small">Le total théorique est calculé à partir du revenu journalier multiplié par la durée configurée.</p>
+<p class="small">Les montants affichés sont théoriques et ne constituent pas une garantie de rendement.</p>
 <button class="gold" onclick="loadActiveProducts()">Actualiser</button>
 <div id="activeProducts">Connectez-vous pour consulter vos produits.</div>
 <div id="earningMessage" class="status hidden"></div>
@@ -306,26 +301,22 @@ label{font-weight:bold;font-size:13px}
 <div class="card">
 <h2><i class="fa-solid fa-people-group"></i> Mon équipe</h2>
 <p>Invitez vos amis avec votre lien personnel d'inscription.</p>
-
 <div class="payment-box">
 <strong>Mon code de parrainage</strong>
 <div id="myReferralCode" class="copy-number">Chargement...</div>
 <button class="red" style="width:100%;margin-top:8px" onclick="copyReferralCode(this)">Copier mon code</button>
 </div>
-
 <div class="payment-box">
 <strong>Mon lien d'inscription</strong>
 <div id="myReferralLink" class="referral-link">Chargement...</div>
 <button class="red" style="width:100%" onclick="copyReferralLink(this)">Copier le lien d'inscription</button>
 </div>
-
 <h2>Commissions de parrainage</h2>
 <div class="stats">
 <div class="stat">Niveau 1<strong>15 %</strong></div>
 <div class="stat">Niveau 2<strong>2 %</strong></div>
 <div class="stat">Niveau 3<strong>1 %</strong></div>
 </div>
-
 <h2>Statistiques de mon équipe</h2>
 <div class="stats">
 <div class="stat">Total inscrits<strong id="teamRegistered">0</strong></div>
@@ -335,14 +326,12 @@ label{font-weight:bold;font-size:13px}
 <div class="stat">Niveau 3 inscrits<strong id="teamLevel3">0</strong></div>
 <div class="stat">Dépôts validés<strong id="teamDepositTotal">0 FC</strong></div>
 </div>
-
 <div class="tabs" id="teamTabs">
 <button class="selected" onclick="filterTeamLevel('all',this)">Tous</button>
 <button onclick="filterTeamLevel(1,this)">Niveau 1</button>
 <button onclick="filterTeamLevel(2,this)">Niveau 2</button>
 <button onclick="filterTeamLevel(3,this)">Niveau 3</button>
 </div>
-
 <h2>Liste de mes membres</h2>
 <div id="teamMembers">Chargement...</div>
 <div id="teamMessage" class="status">Chargement de votre équipe...</div>
@@ -364,8 +353,6 @@ label{font-weight:bold;font-size:13px}
 <button class="red" style="width:100%;margin-top:12px" onclick="logout()">Se déconnecter</button>
 </div>
 </section>
-
-<!-- ADMINISTRATION CONSERVÉE -->
 
 <section id="admin" class="hidden">
 <div class="card">
@@ -420,7 +407,6 @@ label{font-weight:bold;font-size:13px}
 <input id="memberSearch" placeholder="Rechercher un membre" oninput="filterMembers()">
 <div id="adminMembersList"></div>
 </div>
-
 <div class="card">
 <h2>Attribuer un bonus</h2>
 <input id="bonusUserId" placeholder="ID du membre">
@@ -437,16 +423,16 @@ label{font-weight:bold;font-size:13px}
 <button class="gold" onclick="loadAdminVIP()">Actualiser</button>
 <div id="adminVIPList"></div>
 </div>
-
 <div class="card">
 <h2>Attribuer un VIP</h2>
 <input id="vipUserId" placeholder="ID du membre">
-<select id="vipProductSelect"><option value="">Choisir VIP</option></select>
+<select id="vipProductSelect">
+<option value="">Choisir VIP</option>
+</select>
 <input id="vipNote" placeholder="Note">
 <button class="red" onclick="assignVIP()">Attribuer VIP</button>
 <div id="vipMessage" class="status hidden"></div>
 </div>
-
 <div class="card">
 <h2>Enregistrer un revenu VIP</h2>
 <input id="earningUserId" placeholder="ID membre">
@@ -485,7 +471,6 @@ label{font-weight:bold;font-size:13px}
 <h3>Application Android</h3>
 <label>Lien de téléchargement APK</label>
 <input id="settingApkUrl" type="url" placeholder="https://exemple.com/power-station.apk">
-<p class="small">Collez ici le lien direct de votre fichier APK hébergé en ligne.</p>
 
 <h3>Couleurs</h3>
 <label>Couleur principale</label>
@@ -502,8 +487,7 @@ label{font-weight:bold;font-size:13px}
 <input id="settingWithdrawFee" type="number">
 <label>Retrait minimum FC</label>
 <input id="settingWithdrawMin" type="number">
-<p class="small">Horaires de retrait : 08h00 à 18h00. Rechargement : 24h/24.</p>
-
+<p class="small">Horaires de retrait : 08h00 à 18h00.</p>
 <button class="green" style="width:100%" onclick="saveLocalSettings()">Enregistrer les paramètres</button>
 <div id="settingsMessage" class="status hidden"></div>
 </div>
@@ -521,8 +505,8 @@ label{font-weight:bold;font-size:13px}
 <div id="vipSettingsList">Chargement...</div>
 </div>
 </div>
-</section>
 
+</section>
 </main>
 
 <footer style="text-align:center;padding:20px;color:#777;font-size:12px">
@@ -538,19 +522,20 @@ label{font-weight:bold;font-size:13px}
 
 <script>
 const SUPABASE_URL="https://ggmsnwsetemhijfybiux.supabase.co";
-const SUPABASE_ANON_KEY="sb_publishable_M1LJ_gItIR_Fbu6K8oTPLKA_dZgvFRw6";
+const SUPABASE_ANON_KEY="sb_publishable_M1LJ_gItIR_Fbu6K6oTPLKA_dZgvFRw6";
+
 const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 const $=id=>document.getElementById(id);
 
 let currentUser=null,isAdmin=false,allMembers=[],allVIP=[],selectedVIP=null;
-let myReferralCode="",myReferralLink="";
-let teamCache=[],teamFilter="all",slideIndex=0,slideTimer=null,countdownTimer=null;
+let myReferralCode="",myReferralLink="",countdownTimer=null;
+let teamCache=[],teamFilter="all",slideIndex=0,slideTimer=null;
 
 let settings={
  airtel:"973087965",airtelName:"BASHANGWA",
  orange:"899532643",orangeName:"JEANCQUELLINE",
  mpesa:"0861823718",mpesaName:"REGINA",
- primary:"#172536",gold:"#d9a441",background:"#f5f3ee",
+ primary:"#172b40",gold:"#d9a441",background:"#f5f3ed",
  promoFee:0,withdrawFee:0,withdrawMin:5000,
  whatsappGroup:"",telegramGroup:"",customerWhatsApp:"",
  apkUrl:""
@@ -570,18 +555,30 @@ const vipFallback=[
 function escapeHTML(v){
  return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 }
-function money(v){return Number(v||0).toLocaleString("fr-FR")+" FC";}
+
+function money(v){
+ return Number(v||0).toLocaleString("fr-FR")+" FC";
+}
+
 function message(id,t,type=""){
- const e=$(id);if(!e)return;
- e.textContent=t;e.className="status";
+ const e=$(id);
+ if(!e)return;
+ let value=String(t??"");
+ if(/invalid api key|api key invalid|invalidapikey/i.test(value)){
+  value="Service temporairement indisponible. Vérifiez la configuration de connexion.";
+ }
+ e.textContent=value;
+ e.className="status";
  if(type)e.classList.add(type);
 }
+
 function badge(s){
  s=String(s||"").toLowerCase();
  if(["active","success","approved","claimed","paid","validated","confirmed","completed"].includes(s))return '<span class="badge badge-green">Actif / Succès</span>';
  if(["rejected","blocked"].includes(s))return '<span class="badge badge-red">Rejeté / Bloqué</span>';
  return '<span class="badge badge-orange">En attente</span>';
 }
+
 function formatPhone(v){
  let p=String(v||"").trim().replace(/[\s()-]/g,"");
  if(p.startsWith("00"))p="+"+p.slice(2);
@@ -645,18 +642,33 @@ async function copyText(text,button){
  try{
   if(navigator.clipboard&&window.isSecureContext)await navigator.clipboard.writeText(text);
   else{
-   const t=document.createElement("textarea");t.value=text;t.style.position="fixed";t.style.left="-9999px";
+   const t=document.createElement("textarea");
+   t.value=text;t.style.position="fixed";t.style.left="-9999px";
    document.body.appendChild(t);t.select();
    if(!document.execCommand("copy"))throw Error("Copie refusée");
    t.remove();
   }
-  if(button){const old=button.innerHTML;button.innerHTML='<i class="fa-solid fa-check"></i> Copié !';setTimeout(()=>button.innerHTML=old,1800);}
+  if(button){
+   const old=button.innerHTML;
+   button.innerHTML='<i class="fa-solid fa-check"></i> Copié !';
+   setTimeout(()=>button.innerHTML=old,1800);
+  }
   return true;
- }catch(e){prompt("Copiez ce texte :",text);return false;}
+ }catch(e){
+  prompt("Copiez ce texte :",text);
+  return false;
+ }
 }
 
-function copyReferralCode(b){if(myReferralCode)copyText(myReferralCode,b);else alert("Code indisponible.");}
-function copyReferralLink(b){if(myReferralLink)copyText(myReferralLink,b);else alert("Lien indisponible.");}
+function copyReferralCode(b){
+ if(myReferralCode)copyText(myReferralCode,b);
+ else alert("Code indisponible.");
+}
+
+function copyReferralLink(b){
+ if(myReferralLink)copyText(myReferralLink,b);
+ else alert("Lien indisponible.");
+}
 
 function goSlide(index){
  const slides=document.querySelectorAll(".photo-slide");
@@ -673,6 +685,7 @@ function startPhotoSlider(){
 }
 
 /* INSCRIPTION */
+
 $("signupForm").addEventListener("submit",async e=>{
  e.preventDefault();
  const name=$("fullName").value.trim();
@@ -681,13 +694,17 @@ $("signupForm").addEventListener("submit",async e=>{
  const confirmP=$("confirmPassword").value;
  const ref=$("referralCode").value.trim().toUpperCase();
 
- if(password.length!==6||!/^\d{6}$/.test(password))return message("signupMessage","Le mot de passe doit contenir 6 chiffres.","error");
- if(password!==confirmP)return message("signupMessage","Les mots de passe ne correspondent pas.","error");
+ if(password.length!==6||!/^\d{6}$/.test(password))
+  return message("signupMessage","Le mot de passe doit contenir 6 chiffres.","error");
+
+ if(password!==confirmP)
+  return message("signupMessage","Les mots de passe ne correspondent pas.","error");
 
  message("signupMessage","Création du compte...");
 
  const {data,error}=await db.auth.signUp({
-  phone,password,
+  phone,
+  password,
   options:{data:{full_name:name,referral_code:ref}}
  });
 
@@ -703,14 +720,18 @@ $("signupForm").addEventListener("submit",async e=>{
 });
 
 /* CONNEXION */
+
 $("loginForm").addEventListener("submit",async e=>{
  e.preventDefault();
+
  const raw=$("loginPhone").value.trim().replace(/[\s()-]/g,"");
  const password=$("loginPassword").value;
 
- if(!/^\d{6}$/.test(password))return message("loginMessage","Mot de passe : 6 chiffres.","error");
+ if(!/^\d{6}$/.test(password))
+  return message("loginMessage","Mot de passe : 6 chiffres.","error");
 
  const candidates=[...new Set([raw,raw.startsWith("+")?raw.slice(1):formatPhone(raw)])];
+
  let result=null,lastError=null;
 
  for(const phone of candidates){
@@ -719,7 +740,8 @@ $("loginForm").addEventListener("submit",async e=>{
   lastError=r.error;
  }
 
- if(!result)return message("loginMessage",lastError?.message||"Connexion refusée.","error");
+ if(!result)
+  return message("loginMessage",lastError?.message||"Connexion refusée.","error");
 
  currentUser=result.data.user;
  await checkAdmin();
@@ -730,47 +752,65 @@ $("loginForm").addEventListener("submit",async e=>{
 async function logout(){
  const {error}=await db.auth.signOut();
  if(error)return alert(error.message);
- currentUser=null;isAdmin=false;showPage("home");
+ currentUser=null;
+ isAdmin=false;
+ showPage("home");
 }
 
 async function changeMyPassword(){
  await checkSession();
  if(!currentUser)return message("passwordMessage","Connectez-vous d'abord.","error");
+
  let p=$("newPassword").value,c=$("confirmNewPassword").value;
+
  if(p.length<6)return message("passwordMessage","Minimum 6 caractères.","error");
  if(p!==c)return message("passwordMessage","Les mots de passe ne correspondent pas.","error");
+
  let {error}=await db.auth.updateUser({password:p});
  if(error)return message("passwordMessage",error.message,"error");
+
  $("newPassword").value=$("confirmNewPassword").value="";
  message("passwordMessage","Mot de passe modifié.","success");
 }
 
 async function changeAdminPassword(){
  let p=$("adminNewPassword").value,c=$("adminConfirmPassword").value;
- if(p.length<6||p!==c)return message("adminPasswordMessage","Vérifiez les deux mots de passe.","error");
+
+ if(p.length<6||p!==c)
+  return message("adminPasswordMessage","Vérifiez les deux mots de passe.","error");
+
  let {error}=await db.auth.updateUser({password:p});
  if(error)return message("adminPasswordMessage",error.message,"error");
+
  $("adminNewPassword").value=$("adminConfirmPassword").value="";
  message("adminPasswordMessage","Mot de passe administrateur modifié.","success");
 }
 
 async function loadAccount(){
  await checkSession();
- if(!currentUser){$("accountInfo").textContent="Vous n'êtes pas connecté.";return;}
+
+ if(!currentUser){
+  $("accountInfo").textContent="Vous n'êtes pas connecté.";
+  return;
+ }
+
  const [{data:p},{data:w}]=await Promise.all([
   db.from("power_station_profiles").select("full_name,phone").eq("user_id",currentUser.id).maybeSingle(),
   db.from("ps_wallets").select("available_balance").eq("user_id",currentUser.id).maybeSingle()
  ]);
+
  $("accountInfo").innerHTML=
  `<p>Nom : ${escapeHTML(p?.full_name||currentUser.user_metadata?.full_name||"-")}</p>
  <p>Téléphone : ${escapeHTML(p?.phone||currentUser.phone||"-")}</p>
  <p>ID : ${escapeHTML(currentUser.id)}</p>
  <p>Solde : <strong>${money(w?.available_balance)}</strong></p>`;
+
  $("adminAccess").classList.toggle("hidden",!await checkAdmin());
 }
 
 async function loadTeam(){
  await checkSession();
+
  const box=$("teamMembers");
 
  if(!currentUser){
@@ -822,9 +862,11 @@ async function loadTeam(){
 
  const result=data||{},counts=result.counts||{};
  teamCache=Array.isArray(result.members)?result.members:[];
+
  const n1=teamCache.filter(m=>Number(m.level)===1).length;
  const n2=teamCache.filter(m=>Number(m.level)===2).length;
  const n3=teamCache.filter(m=>Number(m.level)===3).length;
+
  const total=teamCache.length;
  const vipCount=teamCache.filter(m=>m.has_deposit===true&&Number(m.deposit_count)>0).length;
  const depositTotal=teamCache.reduce((sum,m)=>sum+Number(m.deposit_total||0),0);
@@ -837,6 +879,7 @@ async function loadTeam(){
  $("teamDepositTotal").textContent=money(depositTotal);
 
  renderTeamMembers();
+
  message("teamMessage","Équipe actualisée : "+total+" membre(s) répartis sur les trois niveaux.","success");
 }
 
@@ -848,7 +891,9 @@ function filterTeamLevel(level,button){
 }
 
 function renderTeamMembers(){
- const box=$("teamMembers");box.innerHTML="";
+ const box=$("teamMembers");
+ box.innerHTML="";
+
  const rows=teamCache.filter(m=>teamFilter==="all"||Number(m.level)===Number(teamFilter));
 
  if(!rows.length){
@@ -857,8 +902,13 @@ function renderTeamMembers(){
  }
 
  rows.forEach((m,index)=>{
-  const level=Number(m.level),depositCount=Number(m.deposit_count||0),depositTotal=Number(m.deposit_total||0);
-  const el=document.createElement("div");el.className="member-line";
+  const level=Number(m.level);
+  const depositCount=Number(m.deposit_count||0);
+  const depositTotal=Number(m.deposit_total||0);
+
+  const el=document.createElement("div");
+  el.className="member-line";
+
   const depositBadge=depositCount>0?'<span class="badge badge-green">Dépôt validé</span>':'<span class="badge badge-orange">Aucun dépôt validé</span>';
 
   el.innerHTML=`
@@ -883,11 +933,16 @@ function totalVIP(v){
 }
 
 function renderVIP(products){
- const box=$("shopVIP");box.innerHTML="";
+ const box=$("shopVIP");
+ box.innerHTML="";
 
  products.forEach(v=>{
-  const duration=Number(v.duration_days||35),total=totalVIP(v),el=document.createElement("div");
+  const duration=Number(v.duration_days||35);
+  const total=totalVIP(v);
+  const el=document.createElement("div");
+
   el.className="vip-card";
+
   el.innerHTML=`
    <h3><i class="fa-solid fa-gem"></i> ${escapeHTML(v.code)}</h3>
    <p>Prix : <strong>${money(v.price_fc)}</strong></p>
@@ -895,13 +950,20 @@ function renderVIP(products){
    <p>Durée : ${duration} jours</p>
    <p>Total théorique (${duration} jours) : <strong>${money(total)}</strong></p>
    <button class="red" style="width:100%" onclick="chooseVIP('${escapeHTML(v.id||"")}','${escapeHTML(v.code)}',${Number(v.price_fc)})">Choisir ce VIP</button>`;
+
   box.appendChild(el);
  });
 }
 
 async function loadVIPProducts(){
  const {data,error}=await db.from("power_station_vip_products").select("id,code,price_fc,daily_revenue_fc,duration_days,total_revenue_fc,is_active").eq("is_active",true).order("id");
- if(error){console.error(error);renderVIP(vipFallback);return;}
+
+ if(error){
+  console.error(error);
+  renderVIP(vipFallback);
+  return;
+ }
+
  renderVIP(data?.length?data:vipFallback);
 }
 
@@ -912,7 +974,7 @@ function renderPaymentNumbers(){
   ["M-Pesa",settings.mpesa,settings.mpesaName]
  ];
 
- $("paymentNumbers").innerHTML=rows.map((r,i)=>`
+ $("paymentNumbers").innerHTML=rows.map(r=>`
   <div class="payment-number-card">
    <div class="operator"><i class="fa-solid fa-mobile-screen-button"></i> ${r[0]}</div>
    <div class="number">${escapeHTML(r[1]||"Numéro non configuré")}</div>
@@ -925,14 +987,18 @@ function renderPaymentNumbers(){
 
 function chooseVIP(id,code,price){
  if(!id)return alert("Le produit VIP doit être chargé depuis Supabase.");
+
  selectedVIP={id,code,price};
+
  $("chosenVIP").innerHTML=`<strong>${escapeHTML(code)}</strong><p>Montant à payer : <b>${money(price)}</b></p><p>Activation après validation administrative.</p>`;
+
  renderPaymentNumbers();
  showPage("vipDeposit");
 }
 
 async function submitVIPDeposit(){
  await checkSession();
+
  if(!currentUser)return showPage("auth");
  if(!selectedVIP)return message("vipDepositMessage","Choisissez un VIP.","error");
 
@@ -940,7 +1006,8 @@ async function submitVIPDeposit(){
  let sender=formatPhone($("vipSenderPhone").value);
  let reference=$("vipTransactionReference").value.trim();
 
- if(!method||!sender||!reference)return message("vipDepositMessage","Complétez tous les champs.","error");
+ if(!method||!sender||!reference)
+  return message("vipDepositMessage","Complétez tous les champs.","error");
 
  const {data,error}=await db.rpc("ps_submit_vip_deposit",{
   p_vip_product_id:selectedVIP.id,
@@ -951,19 +1018,27 @@ async function submitVIPDeposit(){
  });
 
  if(error)return message("vipDepositMessage",error.message,"error");
+
  message("vipDepositMessage","Demande envoyée. En attente de validation. Référence : "+data,"success");
 }
 
 function timeLeft(date){
  const ms=new Date(date).getTime()-Date.now();
  if(ms<=0)return "Disponible maintenant";
- const d=Math.floor(ms/86400000),h=Math.floor(ms%86400000/3600000),m=Math.floor(ms%3600000/60000),s=Math.floor(ms%60000/1000);
+
+ const d=Math.floor(ms/86400000);
+ const h=Math.floor(ms%86400000/3600000);
+ const m=Math.floor(ms%3600000/60000);
+ const s=Math.floor(ms%60000/1000);
+
  return (d?d+"j ":"")+String(h).padStart(2,"0")+"h "+String(m).padStart(2,"0")+"m "+String(s).padStart(2,"0")+"s";
 }
 
 async function loadActiveProducts(){
  await checkSession();
+
  const box=$("activeProducts");
+
  if(!currentUser){box.textContent="Connectez-vous.";return;}
 
  box.textContent="Chargement des produits actifs...";
@@ -983,19 +1058,26 @@ async function loadActiveProducts(){
  if(earnError){box.textContent="Impossible de lire les revenus : "+earnError.message;return;}
 
  const vmap=Object.fromEntries((vips||[]).map(v=>[v.id,v]));
+
  box.innerHTML="";
 
  acts.forEach(a=>{
-  const v=vmap[a.vip_product_id]||{},duration=Number(v.duration_days||35),code=v.code||"VIP";
+  const v=vmap[a.vip_product_id]||{};
+  const duration=Number(v.duration_days||35);
+  const code=v.code||"VIP";
+
   const rows=(earnings||[]).filter(e=>String(e.vip_code||"").toUpperCase()===String(code).toUpperCase()&&e.status==="pending");
   const ready=rows.filter(e=>new Date(e.available_at).getTime()<=Date.now());
   const waiting=rows.filter(e=>new Date(e.available_at).getTime()>Date.now());
   const next=waiting.length?waiting[0].available_at:null;
   const readyAmount=ready.reduce((s,e)=>s+Number(e.amount||0),0);
+
   const elapsed=a.activated_at?Math.min(duration,Math.max(0,Math.floor((Date.now()-new Date(a.activated_at).getTime())/86400000))):0;
   const theoreticalTotal=Number(v.daily_revenue_fc||0)*duration;
 
-  const el=document.createElement("div");el.className="payment-box";
+  const el=document.createElement("div");
+  el.className="payment-box";
+
   el.innerHTML=`
    <h3><i class="fa-solid fa-gem"></i> ${escapeHTML(code)}</h3>
    <p>Prix : <strong>${money(v.price_fc)}</strong></p>
@@ -1018,11 +1100,16 @@ async function loadActiveProducts(){
 
  countdownTimer=setInterval(()=>{
   acts.forEach(a=>{
-   const v=vmap[a.vip_product_id]||{},duration=Number(v.duration_days||35);
+   const v=vmap[a.vip_product_id]||{};
+   const duration=Number(v.duration_days||35);
+
    const rows=(earnings||[]).filter(e=>String(e.vip_code||"").toUpperCase()===String(v.code||"VIP").toUpperCase()&&e.status==="pending");
    const ready=rows.filter(e=>new Date(e.available_at).getTime()<=Date.now());
    const waiting=rows.filter(e=>new Date(e.available_at).getTime()>Date.now());
-   const timer=$("timer-"+a.id),btn=$("claim-btn-"+a.id),day=$("day-"+a.id);
+
+   const timer=$("timer-"+a.id);
+   const btn=$("claim-btn-"+a.id);
+   const day=$("day-"+a.id);
 
    if(timer)timer.textContent=waiting.length?timeLeft(waiting[0].available_at):ready.length?"Disponible maintenant":"Aucun revenu en attente";
 
@@ -1041,6 +1128,7 @@ async function loadActiveProducts(){
 
 async function claimVIPEarnings(activationId){
  await checkSession();
+
  if(!currentUser)return showPage("auth");
  if(!confirm("Confirmer la récolte des revenus disponibles pour ce produit ?"))return;
 
@@ -1049,25 +1137,38 @@ async function claimVIPEarnings(activationId){
  if(error){message("earningMessage",error.message,"error");return;}
 
  message("earningMessage","Récolte demandée : "+money(data)+". Vérifiez votre portefeuille.","success");
+
  await loadWallet();
  await loadActiveProducts();
 }
 
 async function hasActiveVIP(){
  const {data,error}=await db.from("ps_vip_activations").select("id,status,expires_at").eq("user_id",currentUser.id).eq("status","active").limit(20);
+
  if(error)throw error;
+
  const now=Date.now();
  return (data||[]).some(v=>!v.expires_at||new Date(v.expires_at).getTime()>now);
 }
 
 function isWithdrawalTime(){
- const parts=new Intl.DateTimeFormat("en-GB",{timeZone:"Africa/Kinshasa",hour:"2-digit",minute:"2-digit",hourCycle:"h23"}).formatToParts(new Date());
- const h=Number(parts.find(x=>x.type==="hour").value),m=Number(parts.find(x=>x.type==="minute").value),minutes=h*60+m;
+ const parts=new Intl.DateTimeFormat("en-GB",{
+  timeZone:"Africa/Kinshasa",
+  hour:"2-digit",
+  minute:"2-digit",
+  hourCycle:"h23"
+ }).formatToParts(new Date());
+
+ const h=Number(parts.find(x=>x.type==="hour").value);
+ const m=Number(parts.find(x=>x.type==="minute").value);
+ const minutes=h*60+m;
+
  return minutes>=480&&minutes<1080;
 }
 
 async function loadWallet(){
  await checkSession();
+
  if(!currentUser)return $("walletSummary").textContent="Connectez-vous.";
 
  const {data,error}=await db.from("ps_wallets").select("available_balance,reserved_balance,total_deposited,total_withdrawn,total_bonus").eq("user_id",currentUser.id).maybeSingle();
@@ -1080,47 +1181,65 @@ async function loadWallet(){
 
 async function submitWithdrawal(){
  await checkSession();
+
  if(!currentUser)return showPage("auth");
 
- if(!isWithdrawalTime())return message("withdrawMessage","Les retraits sont ouverts de 08h00 à 18h00, heure de Kinshasa. Revenez pendant ces horaires.","error");
+ if(!isWithdrawalTime())
+  return message("withdrawMessage","Les retraits sont ouverts de 08h00 à 18h00, heure de Kinshasa. Revenez pendant ces horaires.","error");
 
  let active=false;
+
  try{active=await hasActiveVIP();}
  catch(e){return message("withdrawMessage","Vérification VIP impossible : "+e.message,"error");}
 
- if(!active)return message("withdrawMessage","Vous devez disposer d'un VIP actif pour demander un retrait.","error");
+ if(!active)
+  return message("withdrawMessage","Vous devez disposer d'un VIP actif pour demander un retrait.","error");
 
  let amount=Number($("withdrawAmount").value);
  let name=$("withdrawName").value.trim();
  let number=formatPhone($("withdrawPhone").value);
  let provider=$("withdrawMethod").value;
 
- if(amount<settings.withdrawMin||!name||!number||!provider)return message("withdrawMessage","Vérifiez le montant, le nom, le numéro et l'opérateur.","error");
+ if(amount<settings.withdrawMin||!name||!number||!provider)
+  return message("withdrawMessage","Vérifiez le montant, le nom, le numéro et l'opérateur.","error");
 
- let {error}=await db.rpc("ps_save_payout_account",{p_provider:provider,p_number:number,p_name:name});
+ let {error}=await db.rpc("ps_save_payout_account",{
+  p_provider:provider,
+  p_number:number,
+  p_name:name
+ });
+
  if(error)return message("withdrawMessage",error.message,"error");
 
  ({error}=await db.rpc("ps_submit_withdrawal",{p_amount:amount}));
+
  if(error)return message("withdrawMessage",error.message,"error");
 
  message("withdrawMessage","Demande envoyée. Elle sera vérifiée par l'administration.","success");
+
  await loadWallet();
  await loadMyWithdrawals();
 }
 
 async function loadMyWithdrawals(){
  await checkSession();
+
  const box=$("myWithdrawals");
+
  if(!currentUser)return box.textContent="Connectez-vous.";
 
  const {data,error}=await db.from("ps_withdrawal_requests").select("*").eq("user_id",currentUser.id).order("created_at",{ascending:false});
+
  if(error)return box.textContent=error.message;
 
  box.innerHTML="";
 
  (data||[]).forEach(r=>{
-  const e=document.createElement("div");e.className="payment-box";
+  const e=document.createElement("div");
+  e.className="payment-box";
+
   e.innerHTML=`<b>Retrait : ${money(r.amount)}</b><p>À recevoir : ${money(r.net_amount)}</p><p>${escapeHTML(r.provider)} — ${escapeHTML(r.mobile_money_number)}</p><p>Statut : ${badge(r.status)}</p><p>${new Date(r.created_at).toLocaleString("fr-FR")}</p>`;
+
   box.appendChild(e);
  });
 
@@ -1129,57 +1248,79 @@ async function loadMyWithdrawals(){
 
 function historyTab(t,b){
  ["deposits","withdrawals","bonuses"].forEach(x=>$("history"+x[0].toUpperCase()+x.slice(1)).classList.toggle("hidden",x!==t));
+
  document.querySelectorAll("#orders .tabs button").forEach(x=>x.classList.remove("selected"));
  b.classList.add("selected");
 }
 
 async function loadOrders(){
  await checkSession();
+
  if(!currentUser)return;
- await Promise.all([loadDepositHistory(),loadWithdrawalHistory(),loadBonusHistory()]);
+
+ await Promise.all([
+  loadDepositHistory(),
+  loadWithdrawalHistory(),
+  loadBonusHistory()
+ ]);
 }
 
 async function loadDepositHistory(){
  const b=$("historyDeposits");
+
  const {data,error}=await db.from("ps_deposit_requests").select("*").eq("user_id",currentUser.id).order("created_at",{ascending:false});
+
  if(error)return b.textContent=error.message;
 
  b.innerHTML="";
+
  (data||[]).forEach(r=>{
-  const e=document.createElement("div");e.className="payment-box";
+  const e=document.createElement("div");
+  e.className="payment-box";
   e.innerHTML=`Dépôt : ${money(r.amount)}<p>${escapeHTML(r.payment_method)}</p><p>Référence : ${escapeHTML(r.transaction_reference)}</p><p>${badge(r.status)}</p>`;
   b.appendChild(e);
  });
+
  if(!data?.length)b.textContent="Aucun dépôt.";
 }
 
 async function loadWithdrawalHistory(){
  const b=$("historyWithdrawals");
+
  const {data,error}=await db.from("ps_withdrawal_requests").select("*").eq("user_id",currentUser.id).order("created_at",{ascending:false});
+
  if(error)return b.textContent=error.message;
 
  b.innerHTML="";
+
  (data||[]).forEach(r=>{
-  const e=document.createElement("div");e.className="payment-box";
+  const e=document.createElement("div");
+  e.className="payment-box";
   e.innerHTML=`Retrait : ${money(r.amount)}<p>À recevoir : ${money(r.net_amount)}</p><p>${escapeHTML(r.provider)} — ${escapeHTML(r.mobile_money_number)}</p><p>${badge(r.status)}</p>`;
   b.appendChild(e);
  });
+
  if(!data?.length)b.textContent="Aucun retrait.";
 }
 
 async function loadBonusHistory(){
  const b=$("historyBonuses");
+
  const {data,error}=await db.from("ps_wallet_transactions").select("*").eq("user_id",currentUser.id).order("created_at",{ascending:false});
+
  if(error)return b.textContent=error.message;
 
  let rows=(data||[]).filter(x=>String(x.transaction_type).toLowerCase().includes("bonus")||String(x.transaction_type).toLowerCase().includes("commission"));
 
  b.innerHTML="";
+
  rows.forEach(r=>{
-  const e=document.createElement("div");e.className="payment-box";
+  const e=document.createElement("div");
+  e.className="payment-box";
   e.innerHTML=`Crédit : ${money(r.amount)}<p>${escapeHTML(r.description)}</p><p>${badge(r.status)}</p>`;
   b.appendChild(e);
  });
+
  if(!rows.length)b.textContent="Aucun bonus ou commission.";
 }
 
@@ -1189,12 +1330,16 @@ async function openAdmin(){
   showPage("account");
   return;
  }
+
  $("adminStatus").textContent="Accès SUPER ADMIN autorisé.";
  adminTab("dashboard",document.querySelector(".admin-tabs button"));
 }
 
 async function adminReady(){
- if(!await checkAdmin()){alert("Accès administrateur refusé.");return false;}
+ if(!await checkAdmin()){
+  alert("Accès administrateur refusé.");
+  return false;
+ }
  return true;
 }
 
@@ -1223,31 +1368,51 @@ async function loadAdminDashboard(){
 
 async function getProfileMap(ids){
  if(!ids.length)return {};
+
  const {data}=await db.from("power_station_profiles").select("user_id,full_name,phone").in("user_id",ids);
+
  return Object.fromEntries((data||[]).map(p=>[p.user_id,p]));
 }
 
 async function loadAdminDeposits(){
  if(!await adminReady())return;
 
- const b=$("adminDepositsList");b.textContent="Chargement...";
+ const b=$("adminDepositsList");
+ b.textContent="Chargement...";
+
  const {data,error}=await db.from("ps_deposit_requests").select("*").order("created_at",{ascending:false});
+
  if(error)return b.textContent=error.message;
 
  const pm=await getProfileMap([...new Set((data||[]).map(x=>x.user_id))]);
+
  b.innerHTML="";
 
  (data||[]).forEach(d=>{
-  const p=pm[d.user_id]||{},e=document.createElement("div");e.className="admin-card";
+  const p=pm[d.user_id]||{};
+  const e=document.createElement("div");
+  e.className="admin-card";
 
   e.innerHTML=`<b>Dépôt : ${money(d.amount)}</b><p>Membre : ${escapeHTML(p.full_name)}</p><p>Téléphone du compte : ${escapeHTML(p.phone)}</p><p>Numéro expéditeur : ${escapeHTML(d.sender_phone)}</p><p>Référence : ${escapeHTML(d.transaction_reference)}</p><p>Statut : ${badge(d.status)}</p>`;
 
   if(d.status==="pending"){
-   let a=document.createElement("div");a.className="actions";
-   let ok=document.createElement("button");ok.className="green";ok.textContent="Valider";ok.onclick=()=>reviewDeposit(d.id,true);
-   let no=document.createElement("button");no.className="red";no.textContent="Rejeter";no.onclick=()=>reviewDeposit(d.id,false);
-   a.append(ok,no);e.append(a);
+   let a=document.createElement("div");
+   a.className="actions";
+
+   let ok=document.createElement("button");
+   ok.className="green";
+   ok.textContent="Valider";
+   ok.onclick=()=>reviewDeposit(d.id,true);
+
+   let no=document.createElement("button");
+   no.className="red";
+   no.textContent="Rejeter";
+   no.onclick=()=>reviewDeposit(d.id,false);
+
+   a.append(ok,no);
+   e.append(a);
   }
+
   b.append(e);
  });
 
@@ -1257,7 +1422,11 @@ async function loadAdminDeposits(){
 async function reviewDeposit(id,approve){
  if(!await adminReady()||!confirm(approve?"Confirmer la réception réelle du paiement ?":"Rejeter cette demande ?"))return;
 
- const {data,error}=await db.rpc("ps_admin_review_deposit",{p_deposit_id:id,p_approve:approve});
+ const {data,error}=await db.rpc("ps_admin_review_deposit",{
+  p_deposit_id:id,
+  p_approve:approve
+ });
+
  if(error)return alert(error.message);
 
  alert(data||"Opération effectuée.");
@@ -1269,22 +1438,38 @@ async function loadAdminWithdrawals(){
  if(!await adminReady())return;
 
  const b=$("adminWithdrawalsList");
+
  const {data,error}=await db.from("ps_withdrawal_requests").select("*").order("created_at",{ascending:false});
+
  if(error)return b.textContent=error.message;
 
  const pm=await getProfileMap([...new Set((data||[]).map(x=>x.user_id))]);
+
  b.innerHTML="";
 
  (data||[]).forEach(r=>{
-  const p=pm[r.user_id]||{},e=document.createElement("div");e.className="admin-card";
+  const p=pm[r.user_id]||{};
+  const e=document.createElement("div");
+  e.className="admin-card";
 
   e.innerHTML=`<b>Retrait : ${money(r.amount)}</b><p>Membre : ${escapeHTML(p.full_name)}</p><p>Téléphone du compte : ${escapeHTML(p.phone)}</p><p>Numéro de paiement : ${escapeHTML(r.mobile_money_number)}</p><p>Bénéficiaire : ${escapeHTML(r.account_holder_name)}</p><p>À payer : ${money(r.net_amount)}</p><p>${badge(r.status)}</p>`;
 
   if(["pending","processing"].includes(r.status)){
-   let a=document.createElement("div");a.className="actions";
-   let ok=document.createElement("button");ok.className="green";ok.textContent="Paiement effectué — confirmer";ok.onclick=()=>confirmWithdrawal(r.id);
-   let no=document.createElement("button");no.className="red";no.textContent="Rejeter";no.onclick=()=>rejectWithdrawal(r.id);
-   a.append(ok,no);e.append(a);
+   let a=document.createElement("div");
+   a.className="actions";
+
+   let ok=document.createElement("button");
+   ok.className="green";
+   ok.textContent="Paiement effectué — confirmer";
+   ok.onclick=()=>confirmWithdrawal(r.id);
+
+   let no=document.createElement("button");
+   no.className="red";
+   no.textContent="Rejeter";
+   no.onclick=()=>rejectWithdrawal(r.id);
+
+   a.append(ok,no);
+   e.append(a);
   }
 
   b.append(e);
@@ -1299,7 +1484,11 @@ async function confirmWithdrawal(id){
  let note=prompt("Référence du paiement :");
  if(note===null)return;
 
- const {data,error}=await db.rpc("ps_admin_confirm_withdrawal",{p_withdrawal_id:id,p_admin_note:note});
+ const {data,error}=await db.rpc("ps_admin_confirm_withdrawal",{
+  p_withdrawal_id:id,
+  p_admin_note:note
+ });
+
  if(error)return alert(error.message);
 
  alert(data||"Retrait confirmé.");
@@ -1313,7 +1502,11 @@ async function rejectWithdrawal(id){
  let reason=prompt("Motif du rejet :");
  if(reason===null)return;
 
- const {data,error}=await db.rpc("ps_admin_reject_withdrawal",{p_withdrawal_id:id,p_reason:reason});
+ const {data,error}=await db.rpc("ps_admin_reject_withdrawal",{
+  p_withdrawal_id:id,
+  p_reason:reason
+ });
+
  if(error)return alert(error.message);
 
  alert(data||"Retrait rejeté.");
@@ -1323,11 +1516,15 @@ async function rejectWithdrawal(id){
 async function loadAdminMembers(){
  if(!await adminReady())return;
 
- const b=$("adminMembersList");b.textContent="Chargement...";
+ const b=$("adminMembersList");
+ b.textContent="Chargement...";
+
  const {data,error}=await db.rpc("ps_admin_list_members");
+
  if(error)return b.textContent=error.message;
 
  allMembers=data||[];
+
  const ids=allMembers.map(m=>m.user_id).filter(Boolean);
 
  const [a,w]=await Promise.all([
@@ -1336,23 +1533,33 @@ async function loadAdminMembers(){
  ]);
 
  const am={};
+
  (a.data||[]).forEach(x=>{
   if(x.status==="active"&&(!x.expires_at||new Date(x.expires_at)>new Date()))am[x.user_id]=x;
  });
 
  const wm=Object.fromEntries((w.data||[]).map(x=>[x.user_id,x]));
 
- allMembers=allMembers.map(m=>({...m,available_balance:wm[m.user_id]?.available_balance??m.available_balance??0,active_vip:am[m.user_id]?.vip_product_id||null,blocked:m.is_blocked===true||m.blocked===true}));
+ allMembers=allMembers.map(m=>({
+  ...m,
+  available_balance:wm[m.user_id]?.available_balance??m.available_balance??0,
+  active_vip:am[m.user_id]?.vip_product_id||null,
+  blocked:m.is_blocked===true||m.blocked===true
+ }));
 
  renderAdminMembers(allMembers);
 }
 
 function renderAdminMembers(rows){
- const b=$("adminMembersList");b.innerHTML="";
+ const b=$("adminMembersList");
+ b.innerHTML="";
 
  rows.forEach(m=>{
-  const e=document.createElement("div");e.className="member-line";
+  const e=document.createElement("div");
+  e.className="member-line";
+
   e.innerHTML=`<b>${escapeHTML(m.full_name||"Membre")}</b><p>Téléphone : ${escapeHTML(m.phone)}</p><p>ID : ${escapeHTML(m.user_id)}</p><p>Code : ${escapeHTML(m.referral_code)}</p><p>Solde : ${money(m.available_balance)}</p><p>VIP actif : ${escapeHTML(m.active_vip||"Aucun")}</p><p>Compte : ${m.blocked?badge("blocked"):badge("active")}</p><button class="gold" onclick="selectMember('${escapeHTML(m.user_id)}')">Sélectionner</button>`;
+
   b.append(e);
  });
 
@@ -1368,7 +1575,10 @@ function selectMember(id){
 
 function filterMembers(){
  let q=$("memberSearch").value.toLowerCase();
- renderAdminMembers(allMembers.filter(m=>[m.full_name,m.phone,m.user_id,m.referral_code].some(v=>String(v||"").toLowerCase().includes(q))));
+
+ renderAdminMembers(allMembers.filter(m=>
+  [m.full_name,m.phone,m.user_id,m.referral_code].some(v=>String(v||"").toLowerCase().includes(q))
+ ));
 }
 
 async function giveBonus(){
@@ -1381,6 +1591,7 @@ async function giveBonus(){
  });
 
  if(error)return message("bonusMessage",error.message,"error");
+
  message("bonusMessage",data||"Bonus attribué.","success");
 }
 
@@ -1388,9 +1599,11 @@ async function loadAdminVIP(){
  if(!await adminReady())return;
 
  const {data,error}=await db.from("power_station_vip_products").select("*").order("id");
+
  if(error)return $("adminVIPList").textContent=error.message;
 
  allVIP=data||[];
+
  $("vipProductSelect").innerHTML='<option value="">Choisir VIP</option>';
  $("adminVIPList").innerHTML="";
 
@@ -1400,8 +1613,11 @@ async function loadAdminVIP(){
   o.textContent=v.code+" — "+money(v.price_fc);
   $("vipProductSelect").append(o);
 
-  let e=document.createElement("div");e.className="payment-box";
+  let e=document.createElement("div");
+  e.className="payment-box";
+
   e.innerHTML=`<b>${escapeHTML(v.code)}</b><p>Prix : ${money(v.price_fc)}</p><p>Revenu journalier : ${money(v.daily_revenue_fc)}</p><p>Durée : ${v.duration_days} jours</p><p>Total calculé : ${money(Number(v.daily_revenue_fc||0)*Number(v.duration_days||35))}</p>`;
+
   $("adminVIPList").append(e);
  });
 }
@@ -1416,6 +1632,7 @@ async function assignVIP(){
  });
 
  if(error)return message("vipMessage",error.message,"error");
+
  message("vipMessage","VIP attribué : "+data,"success");
 }
 
@@ -1430,6 +1647,7 @@ async function adminAddEarning(){
  });
 
  if(error)return message("adminEarningMessage",error.message,"error");
+
  message("adminEarningMessage","Revenu enregistré. "+data,"success");
 }
 
@@ -1449,6 +1667,7 @@ function applyCommunityLinks(){
 
  links.forEach(([id,url])=>{
   const a=$(id);
+
   if(url&&/^https:\/\/(chat\.whatsapp\.com|wa\.me|t\.me)\//i.test(url)){
    a.href=url;
    a.style.opacity="1";
@@ -1462,13 +1681,14 @@ function applyCommunityLinks(){
 }
 
 function applyAPKLink(){
- const btn=$("apkDownloadButton"),info=$("apkDownloadInfo");
+ const btn=$("apkDownloadButton");
+ const info=$("apkDownloadInfo");
 
  if(settings.apkUrl&&/^https:\/\//i.test(settings.apkUrl)){
   btn.href=settings.apkUrl;
   btn.style.opacity="1";
   btn.style.pointerEvents="auto";
-  info.textContent="Application Android disponible. Appuyez sur le bouton pour télécharger le fichier APK.";
+  info.textContent="";
  }else{
   btn.href="#";
   btn.style.opacity=".5";
@@ -1480,7 +1700,7 @@ function applyAPKLink(){
 function downloadAPK(e){
  if(!settings.apkUrl||!/^https:\/\//i.test(settings.apkUrl)){
   e.preventDefault();
-  alert("Le lien de téléchargement APK n'a pas encore été ajouté.");
+  alert("Le téléchargement n'est pas encore disponible.");
   return false;
  }
  return true;
@@ -1508,12 +1728,15 @@ function loadSettingsPanel(){
  $("settingOrangeName").value=settings.orangeName;
  $("settingMpesa").value=settings.mpesa;
  $("settingMpesaName").value=settings.mpesaName;
+
  $("settingPrimary").value=settings.primary;
  $("settingGold").value=settings.gold;
  $("settingBackground").value=settings.background;
+
  $("settingPromoFee").value=settings.promoFee;
  $("settingWithdrawFee").value=settings.withdrawFee;
  $("settingWithdrawMin").value=settings.withdrawMin;
+
  $("settingWhatsAppGroup").value=settings.whatsappGroup||"";
  $("settingTelegramGroup").value=settings.telegramGroup||"";
  $("settingCustomerWhatsApp").value=settings.customerWhatsApp||"";
@@ -1531,12 +1754,15 @@ function saveLocalSettings(){
   orangeName:$("settingOrangeName").value.trim(),
   mpesa:$("settingMpesa").value.trim(),
   mpesaName:$("settingMpesaName").value.trim(),
+
   primary:$("settingPrimary").value,
   gold:$("settingGold").value,
   background:$("settingBackground").value,
+
   promoFee:Number($("settingPromoFee").value),
   withdrawFee:Number($("settingWithdrawFee").value),
   withdrawMin:Number($("settingWithdrawMin").value),
+
   whatsappGroup:$("settingWhatsAppGroup").value.trim(),
   telegramGroup:$("settingTelegramGroup").value.trim(),
   customerWhatsApp:$("settingCustomerWhatsApp").value.trim(),
@@ -1544,6 +1770,7 @@ function saveLocalSettings(){
  };
 
  localStorage.setItem("power_station_settings",JSON.stringify(settings));
+
  applyTheme();
  renderPaymentNumbers();
  applyCommunityLinks();
@@ -1553,7 +1780,8 @@ function saveLocalSettings(){
 }
 
 function loadVIPSettings(){
- const b=$("vipSettingsList");b.textContent="Chargement...";
+ const b=$("vipSettingsList");
+ b.textContent="Chargement...";
 
  db.from("power_station_vip_products").select("*").order("id").then(({data,error})=>{
   if(error)return b.textContent=error.message;
@@ -1561,7 +1789,8 @@ function loadVIPSettings(){
   b.innerHTML="";
 
   (data||[]).forEach(v=>{
-   const e=document.createElement("div");e.className="admin-card";
+   const e=document.createElement("div");
+   e.className="admin-card";
 
    e.innerHTML=`
     <h3>${escapeHTML(v.code)}</h3>
@@ -1598,20 +1827,24 @@ async function saveVIPProduct(id){
   total_revenue_fc:Number($("daily-"+id).value)*Number($("days-"+id).value)
  };
 
- if(values.price_fc<=0||values.daily_revenue_fc<0||values.duration_days<=0)return message("save-"+id,"Vérifiez les montants et la durée.","error");
+ if(values.price_fc<=0||values.daily_revenue_fc<0||values.duration_days<=0)
+  return message("save-"+id,"Vérifiez les montants et la durée.","error");
 
  const {error}=await db.from("power_station_vip_products").update(values).eq("id",id);
 
  if(error)return message("save-"+id,error.message,"error");
 
  message("save-"+id,"Produit modifié. Total recalculé : "+money(values.total_revenue_fc),"success");
+
  loadVIPProducts();
 }
 
 /* DÉMARRAGE */
+
 (async function init(){
  loadLocalSettings();
  startPhotoSlider();
+
  await checkSession();
  await loadVIPProducts();
 
@@ -1623,7 +1856,8 @@ async function saveVIPProduct(id){
  if(currentUser)await checkAdmin();
 })();
 
-/* SERVICE WORKER PWA */
+/* ACTIVATION DU SERVICE WORKER PWA */
+
 if("serviceWorker" in navigator){
  window.addEventListener("load",async()=>{
   try{
@@ -1635,6 +1869,5 @@ if("serviceWorker" in navigator){
  });
 }
 </script>
-
 </body>
 </html>
