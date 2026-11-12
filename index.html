@@ -6,7 +6,7 @@
 <title>POWER STATION RDC</title>
 
 <link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#111111">
+<meta name="theme-color" content="#062B55">
 <link rel="apple-touch-icon" href="/icon-192.png">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -17,10 +17,10 @@
  --primary:#007FFF;
  --dark:#062B55;
  --gold:#FFC400;
- --red:#062B55;
- --bg:#FFFFFF;
+ --red:#007FFF;
+ --bg:#F2F5F8;
  --green:#168447;
- --silver:#DCE6F0;
+ --silver:#D8E5F0;
 }
 
 *{box-sizing:border-box}
@@ -28,20 +28,20 @@
 body{
  margin:0;
  background:var(--bg);
- color:#222;
+ color:#18324B;
  font-family:Arial,sans-serif;
  padding-bottom:80px;
 }
 
 header{
- background:linear-gradient(135deg,#050505,#292929,#555);
+ background:linear-gradient(135deg,#062B55,#005EB8,#007FFF);
  color:white;
  text-align:center;
  padding:20px 12px;
  position:sticky;
  top:0;
  z-index:10;
- border-bottom:3px solid #c0c0c0;
+ border-bottom:4px solid #FFC400;
 }
 
 header h1{
@@ -53,7 +53,7 @@ header h1{
 header p{
  margin:6px 0 0;
  font-size:12px;
- color:#ddd;
+ color:#EAF4FF;
 }
 
 .container{
@@ -67,17 +67,17 @@ header p{
  padding:17px;
  border-radius:16px;
  margin:12px 0;
- box-shadow:0 4px 18px #0000000c;
- border:1px solid #e1e1e1;
+ box-shadow:0 4px 18px #062B5512;
+ border:1px solid #DCE8F2;
 }
 
 h2{
  font-size:19px;
- color:#171717;
+ color:#062B55;
  margin:5px 0 15px;
 }
 
-h3{font-size:16px}
+h3{font-size:16px;color:#062B55}
 
 p{line-height:1.5}
 
@@ -100,19 +100,20 @@ input,select{
  width:100%;
  padding:13px;
  margin:7px 0;
- border:1px solid #ddd;
+ border:1px solid #D3E1ED;
  border-radius:10px;
  background:white;
+ color:#18324B;
 }
 
 input:focus,select:focus{
  outline:none;
- border-color:#555;
- box-shadow:0 0 0 2px #00000010;
+ border-color:#007FFF;
+ box-shadow:0 0 0 2px #007FFF20;
 }
 
 .red{
- background:#222;
+ background:#007FFF;
  color:white;
 }
 
@@ -122,12 +123,12 @@ input:focus,select:focus{
 }
 
 .gold{
- background:linear-gradient(135deg,#eeeeee,#bdbdbd);
- color:#111;
+ background:linear-gradient(135deg,#FFE477,#FFC400);
+ color:#062B55;
 }
 
 .dark{
- background:#080808;
+ background:#062B55;
  color:white;
 }
 
@@ -136,33 +137,33 @@ input:focus,select:focus{
 .status{
  padding:12px;
  border-radius:10px;
- background:#f0f0f0;
+ background:#EAF3FB;
  margin:10px 0;
  overflow-wrap:anywhere;
  font-size:13px;
 }
 
-.success{background:#dcfce7;color:#166534}
-.error{background:#fee2e2;color:#991b1b}
-.warning{background:#f5f5f5;color:#555;border:1px solid #ddd}
+.success{background:#DCFCE7;color:#166534}
+.error{background:#FEE2E2;color:#991B1B}
+.warning{background:#FFF8DB;color:#725600;border:1px solid #FFE08A}
 
 .small{
  font-size:12px;
- color:#777;
+ color:#71869A;
 }
 
 .payment-box{
- background:#f7f7f7;
+ background:#F2F7FC;
  padding:13px;
  border-radius:12px;
  margin:10px 0;
- border:1px solid #dedede;
+ border:1px solid #D7E6F3;
  overflow-wrap:anywhere;
 }
 
 .payment-number-card{
  background:#fff;
- border:2px solid #555;
+ border:2px solid #007FFF;
  border-radius:13px;
  padding:15px;
  margin:12px 0;
@@ -170,14 +171,14 @@ input:focus,select:focus{
 
 .payment-number-card .operator{
  font-size:14px;
- color:#555;
+ color:#005EB8;
  font-weight:bold;
 }
 
 .payment-number-card .number{
  font-size:25px;
  font-weight:900;
- color:#111;
+ color:#062B55;
  letter-spacing:1px;
  margin:12px 0;
  overflow-wrap:anywhere;
@@ -185,7 +186,7 @@ input:focus,select:focus{
 
 .copy-payment-btn{
  width:100%;
- background:#171717;
+ background:#062B55;
  color:white;
  font-size:15px;
  padding:14px;
@@ -198,31 +199,31 @@ input:focus,select:focus{
 }
 
 .vip-card{
- border:1px solid #c7c7c7;
+ border:1px solid #B8D7F0;
  border-radius:15px;
  padding:15px;
- background:linear-gradient(145deg,#fff,#f0f0f0);
- box-shadow:0 3px 12px #00000008;
+ background:linear-gradient(145deg,#fff,#EDF6FF);
+ box-shadow:0 3px 12px #062B550D;
 }
 
-.vip-card h3{color:#111}
+.vip-card h3{color:#005EB8}
 
 .bottom-nav{
  position:fixed;
  bottom:0;
  left:0;
  width:100%;
- background:white;
+ background:#062B55;
  display:grid;
  grid-template-columns:repeat(4,1fr);
- box-shadow:0 -3px 15px #0002;
+ box-shadow:0 -3px 15px #062B5530;
  z-index:20;
- border-top:1px solid #ddd;
+ border-top:2px solid #FFC400;
 }
 
 .bottom-nav button{
- background:white;
- color:#777;
+ background:#062B55;
+ color:#D7E8F8;
  border-radius:0;
  font-size:11px;
  padding:10px 2px;
@@ -232,11 +233,12 @@ input:focus,select:focus{
  display:block;
  font-size:19px;
  margin-bottom:5px;
+ color:#FFC400;
 }
 
 .bottom-nav button.active{
- color:#000;
- background:#ededed;
+ color:#FFC400;
+ background:#0A3C70;
 }
 
 /* Cacher la navigation sur inscription et connexion */
@@ -249,18 +251,18 @@ body.auth-page{
 }
 
 .stat{
- background:#f7f7f7;
+ background:#F2F7FC;
  padding:13px;
  border-radius:12px;
- border:1px solid #e5e5e5;
+ border:1px solid #DCE8F2;
  font-size:12px;
- color:#777;
+ color:#71869A;
 }
 
 .stat strong{
  display:block;
  font-size:20px;
- color:#111;
+ color:#062B55;
  margin-top:7px;
 }
 
@@ -272,7 +274,7 @@ body.auth-page{
 
 .member-line,.admin-card{
  padding:13px;
- border:1px solid #e5e5e5;
+ border:1px solid #DCE8F2;
  border-radius:12px;
  margin:9px 0;
  background:white;
@@ -292,9 +294,9 @@ body.auth-page{
  font-weight:bold;
 }
 
-.badge-green{background:#dcfce7;color:#166534}
-.badge-red{background:#fee2e2;color:#991b1b}
-.badge-orange{background:#eeeeee;color:#555}
+.badge-green{background:#DCFCE7;color:#166534}
+.badge-red{background:#FEE2E2;color:#991B1B}
+.badge-orange{background:#FFF1BD;color:#755600}
 
 .tabs,.admin-tabs{
  display:flex;
@@ -305,17 +307,17 @@ body.auth-page{
 
 .tabs button,.admin-tabs button{
  white-space:nowrap;
- background:#eee;
- color:#555;
+ background:#EAF2F9;
+ color:#31516D;
 }
 
 .tabs button.selected,.admin-tabs button.selected{
- background:#111;
+ background:#062B55;
  color:white;
 }
 
 .referral-link{
- background:#f0f0f0;
+ background:#EAF3FB;
  padding:12px;
  border-radius:9px;
  overflow-wrap:anywhere;
@@ -326,7 +328,7 @@ body.auth-page{
 .copy-number{
  font-size:18px;
  font-weight:bold;
- color:#111;
+ color:#005EB8;
  overflow-wrap:anywhere;
 }
 
@@ -344,6 +346,7 @@ body.auth-page{
 label{
  font-weight:bold;
  font-size:13px;
+ color:#062B55;
 }
 
 .color-input{
@@ -363,8 +366,8 @@ label{
 }
 
 .whatsapp{background:#168447}
-.telegram{background:#168ac4}
-.customer{background:#222}
+.telegram{background:#0088CC}
+.customer{background:#062B55}
 
 .apk-btn{
  display:block;
@@ -387,7 +390,7 @@ label{
  overflow:hidden;
  border-radius:15px;
  margin:12px 0;
- background:#123;
+ background:#062B55;
 }
 
 .photo-slide{
@@ -411,7 +414,7 @@ label{
  left:0;
  width:100%;
  padding:28px 12px 17px;
- background:linear-gradient(transparent,#000b);
+ background:linear-gradient(transparent,#062B55DD);
  color:white;
  font-weight:bold;
  font-size:17px;
@@ -434,15 +437,16 @@ label{
  background:#ffffff80;
 }
 
-.slider-dots button.active{background:#fff}
+.slider-dots button.active{background:#FFC400}
 
 .level-title{
- background:#eee;
- color:#111;
+ background:#EAF3FB;
+ color:#062B55;
  padding:11px;
  border-radius:10px;
  margin-top:16px;
  font-weight:bold;
+ border-left:4px solid #FFC400;
 }
 
 @media(max-width:430px){
@@ -1162,7 +1166,7 @@ Un revenu disponible reste en attente jusqu'à sa récolte.
 
 </main>
 
-<footer style="text-align:center;padding:20px;color:#777;font-size:12px">
+<footer style="text-align:center;padding:20px;color:#71869A;font-size:12px">
 POWER STATION RDC © 2026
 </footer>
 
@@ -1206,9 +1210,9 @@ let settings={
  airtel:"973087965",airtelName:"BASHANGWA",
  orange:"899532643",orangeName:"JEANCQUELLINE",
  mpesa:"0861823718",mpesaName:"REGINA",
- primary:"#171717",
- gold:"#c0c0c0",
- background:"#f2f2f2",
+ primary:"#007FFF",
+ gold:"#FFC400",
+ background:"#F2F5F8",
  promoFee:0,
  withdrawFee:0,
  withdrawMin:5000,
@@ -1994,8 +1998,6 @@ async function loadActiveProducts(){
   return;
  }
 
- /* Seuls les VIP actifs et non expirés sont affichés */
-
  const now=Date.now();
 
  const acts=(allActs||[]).filter(a=>
@@ -2037,8 +2039,6 @@ async function loadActiveProducts(){
 
   const duration=Number(v.duration_days||35);
   const code=v.code||"VIP";
-
-  /* Revenus encore en attente de récolte pour ce produit */
 
   const rows=(earnings||[]).filter(e=>
    String(e.vip_code||"").toUpperCase()===String(code).toUpperCase()
@@ -2105,10 +2105,6 @@ async function loadActiveProducts(){
 
  });
 
- /* Le compteur s'arrête dès qu'un revenu est disponible.
-    Il ne recommence qu'après la récolte et la création du
-    prochain revenu par le serveur. */
-
  if(countdownTimer)clearInterval(countdownTimer);
 
  countdownTimer=setInterval(()=>{
@@ -2143,19 +2139,11 @@ async function loadActiveProducts(){
    if(timer){
 
     if(ready.length){
-
-     /* Arrêt du compteur : le membre doit récolter */
-
      timer.textContent="EN ATTENTE DE VOTRE RÉCOLTE";
-
     }else if(waiting.length){
-
      timer.textContent=timeLeft(waiting[0].available_at);
-
     }else{
-
      timer.textContent="Aucun revenu en attente";
-
     }
 
    }
@@ -2202,10 +2190,6 @@ async function claimVIPEarnings(activationId){
  message("earningMessage","Récolte demandée : "+money(data)+". Vérifiez votre portefeuille.","success");
 
  await loadWallet();
-
- /* Rechargement des revenus après récolte.
-    Le prochain compteur dépend de la prochaine date
-    disponible créée par la fonction SQL. */
 
  await loadActiveProducts();
 
@@ -3072,7 +3056,7 @@ async function adminAddEarning(){
 function applyTheme(){
 
  document.documentElement.style.setProperty("--primary",settings.primary);
- document.documentElement.style.setProperty("--dark",settings.primary);
+ document.documentElement.style.setProperty("--dark","#062B55");
  document.documentElement.style.setProperty("--gold",settings.gold);
  document.documentElement.style.setProperty("--bg",settings.background);
 
