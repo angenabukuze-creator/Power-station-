@@ -6,7 +6,7 @@
 <title>POWER STATION RDC</title>
 
 <link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#102b50">
+<meta name="theme-color" content="#111111">
 <link rel="apple-touch-icon" href="/icon-192.png">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -14,132 +14,199 @@
 
 <style>
 :root{
- --primary:#1264b5;
- --dark:#102b50;
- --gold:#f2b93b;
- --red:#d83b45;
- --bg:#f1f5fa;
+ --primary:#171717;
+ --dark:#080808;
+ --gold:#c0c0c0;
+ --red:#333333;
+ --bg:#f2f2f2;
  --green:#168447;
- --white:#fff;
+ --silver:#d8d8d8;
 }
+
 *{box-sizing:border-box}
+
 body{
  margin:0;
  background:var(--bg);
- color:#243247;
+ color:#222;
  font-family:Arial,sans-serif;
- padding-bottom:80px
+ padding-bottom:80px;
 }
+
 header{
- background:linear-gradient(120deg,#102b50,#1264b5,#168ac4);
+ background:linear-gradient(135deg,#050505,#292929,#555);
  color:white;
  text-align:center;
- padding:19px;
+ padding:20px 12px;
  position:sticky;
  top:0;
  z-index:10;
- border-bottom:4px solid var(--gold);
- box-shadow:0 3px 12px #0002
+ border-bottom:3px solid #c0c0c0;
 }
-header h1{margin:0;font-size:24px}
-header p{margin:5px 0 0;font-size:12px}
-.container{max-width:950px;margin:auto;padding:12px}
+
+header h1{
+ margin:0;
+ font-size:23px;
+ letter-spacing:1px;
+}
+
+header p{
+ margin:6px 0 0;
+ font-size:12px;
+ color:#ddd;
+}
+
+.container{
+ max-width:950px;
+ margin:auto;
+ padding:12px;
+}
+
 .card{
  background:white;
- padding:16px;
- border-radius:15px;
+ padding:17px;
+ border-radius:16px;
  margin:12px 0;
- box-shadow:0 4px 16px #102b5010;
- border:1px solid #e2eaf3
+ box-shadow:0 4px 18px #0000000c;
+ border:1px solid #e1e1e1;
 }
-h2{font-size:19px;color:var(--dark);margin:5px 0 15px}
+
+h2{
+ font-size:19px;
+ color:#171717;
+ margin:5px 0 15px;
+}
+
 h3{font-size:16px}
+
 p{line-height:1.5}
+
 button,input,select{font:inherit}
+
 button{
  border:0;
  border-radius:10px;
- padding:12px;
+ padding:13px;
  cursor:pointer;
- font-weight:bold
+ font-weight:bold;
 }
-button:disabled{opacity:.5;cursor:not-allowed}
+
+button:disabled{
+ opacity:.5;
+ cursor:not-allowed;
+}
+
 input,select{
  width:100%;
  padding:13px;
  margin:7px 0;
- border:1px solid #d9e1ec;
+ border:1px solid #ddd;
  border-radius:10px;
- background:white
+ background:white;
 }
+
 input:focus,select:focus{
- outline:2px solid #1264b533;
- border-color:#1264b5
+ outline:none;
+ border-color:#555;
+ box-shadow:0 0 0 2px #00000010;
 }
-.red{background:var(--red);color:white}
-.green{background:var(--green);color:white}
-.gold{background:#fff0c2;color:#674800}
-.dark{background:var(--dark);color:white}
+
+.red{
+ background:#222;
+ color:white;
+}
+
+.green{
+ background:#168447;
+ color:white;
+}
+
+.gold{
+ background:linear-gradient(135deg,#eeeeee,#bdbdbd);
+ color:#111;
+}
+
+.dark{
+ background:#080808;
+ color:white;
+}
+
 .hidden{display:none!important}
+
 .status{
  padding:12px;
  border-radius:10px;
- background:#f0f1f5;
+ background:#f0f0f0;
  margin:10px 0;
  overflow-wrap:anywhere;
- font-size:13px
+ font-size:13px;
 }
+
 .success{background:#dcfce7;color:#166534}
 .error{background:#fee2e2;color:#991b1b}
-.warning{background:#fff4d6;color:#815400}
-.small{font-size:12px;color:#777}
+.warning{background:#f5f5f5;color:#555;border:1px solid #ddd}
+
+.small{
+ font-size:12px;
+ color:#777;
+}
+
 .payment-box{
- background:#f1f6ff;
+ background:#f7f7f7;
  padding:13px;
  border-radius:12px;
  margin:10px 0;
- border:1px solid #d5e2ff;
- overflow-wrap:anywhere
+ border:1px solid #dedede;
+ overflow-wrap:anywhere;
 }
+
 .payment-number-card{
  background:#fff;
- border:2px solid #1264b5;
+ border:2px solid #555;
  border-radius:13px;
  padding:15px;
- margin:12px 0
+ margin:12px 0;
 }
+
 .payment-number-card .operator{
  font-size:14px;
  color:#555;
- font-weight:bold
+ font-weight:bold;
 }
+
 .payment-number-card .number{
  font-size:25px;
  font-weight:900;
- color:#102b50;
+ color:#111;
  letter-spacing:1px;
  margin:12px 0;
- overflow-wrap:anywhere
+ overflow-wrap:anywhere;
 }
+
 .copy-payment-btn{
  width:100%;
- background:#1264b5;
+ background:#171717;
  color:white;
  font-size:15px;
- padding:14px
+ padding:14px;
 }
+
 .vip-grid{
  display:grid;
  grid-template-columns:repeat(2,minmax(0,1fr));
- gap:10px
+ gap:10px;
 }
+
 .vip-card{
- border:1px solid #e2c65c;
- border-radius:14px;
- padding:14px;
- background:linear-gradient(145deg,#fff,#fff9df)
+ border:1px solid #c7c7c7;
+ border-radius:15px;
+ padding:15px;
+ background:linear-gradient(145deg,#fff,#f0f0f0);
+ box-shadow:0 3px 12px #00000008;
 }
-.vip-card h3{color:var(--dark)}
+
+.vip-card h3{color:#111}
+
 .bottom-nav{
  position:fixed;
  bottom:0;
@@ -148,116 +215,157 @@ input:focus,select:focus{
  background:white;
  display:grid;
  grid-template-columns:repeat(4,1fr);
- box-shadow:0 -3px 15px #0001;
- z-index:20
+ box-shadow:0 -3px 15px #0002;
+ z-index:20;
+ border-top:1px solid #ddd;
 }
+
 .bottom-nav button{
  background:white;
  color:#777;
  border-radius:0;
  font-size:11px;
- padding:10px 2px
+ padding:10px 2px;
 }
+
 .bottom-nav i{
  display:block;
  font-size:19px;
- margin-bottom:5px
+ margin-bottom:5px;
 }
+
 .bottom-nav button.active{
- color:var(--primary);
- background:#edf4ff
+ color:#000;
+ background:#ededed;
 }
+
+/* Cacher la navigation sur inscription et connexion */
+body.auth-page .bottom-nav{
+ display:none!important;
+}
+
+body.auth-page{
+ padding-bottom:15px;
+}
+
 .stat{
- background:#f8f8fb;
+ background:#f7f7f7;
  padding:13px;
  border-radius:12px;
- border:1px solid #eee;
+ border:1px solid #e5e5e5;
  font-size:12px;
- color:#777
+ color:#777;
 }
+
 .stat strong{
  display:block;
  font-size:20px;
- color:#222;
- margin-top:7px
+ color:#111;
+ margin-top:7px;
 }
+
 .stats{
  display:grid;
  grid-template-columns:repeat(2,minmax(0,1fr));
- gap:9px
+ gap:9px;
 }
+
 .member-line,.admin-card{
  padding:13px;
- border:1px solid #e8e9ef;
+ border:1px solid #e5e5e5;
  border-radius:12px;
  margin:9px 0;
  background:white;
- overflow-wrap:anywhere
+ overflow-wrap:anywhere;
 }
-.member-line p,.admin-card p{font-size:13px;margin:5px 0}
+
+.member-line p,.admin-card p{
+ font-size:13px;
+ margin:5px 0;
+}
+
 .badge{
  display:inline-block;
  padding:5px 9px;
  border-radius:20px;
  font-size:11px;
- font-weight:bold
+ font-weight:bold;
 }
+
 .badge-green{background:#dcfce7;color:#166534}
 .badge-red{background:#fee2e2;color:#991b1b}
-.badge-orange{background:#fff0c2;color:#805600}
+.badge-orange{background:#eeeeee;color:#555}
+
 .tabs,.admin-tabs{
  display:flex;
  gap:7px;
  overflow:auto;
- margin-bottom:12px
+ margin-bottom:12px;
 }
+
 .tabs button,.admin-tabs button{
  white-space:nowrap;
  background:#eee;
- color:#555
+ color:#555;
 }
+
 .tabs button.selected,.admin-tabs button.selected{
- background:var(--dark);
- color:white
+ background:#111;
+ color:white;
 }
+
 .referral-link{
- background:#fff4d6;
+ background:#f0f0f0;
  padding:12px;
  border-radius:9px;
  overflow-wrap:anywhere;
  margin:10px 0;
- font-size:13px
+ font-size:13px;
 }
+
 .copy-number{
  font-size:18px;
  font-weight:bold;
- color:var(--dark);
- overflow-wrap:anywhere
+ color:#111;
+ overflow-wrap:anywhere;
 }
+
 .actions{
  display:flex;
  gap:7px;
  flex-wrap:wrap;
- margin-top:10px
+ margin-top:10px;
 }
+
 .actions button{font-size:12px}
+
 .admin-panel{margin-top:12px}
-label{font-weight:bold;font-size:13px}
-.color-input{height:45px;padding:4px}
-.flag{font-size:24px}
+
+label{
+ font-weight:bold;
+ font-size:13px;
+}
+
+.color-input{
+ height:45px;
+ padding:4px;
+}
+
 .service-btn{
  display:block;
  text-align:center;
  text-decoration:none;
  margin:9px 0;
- padding:14px;
+ padding:15px;
  border-radius:10px;
  color:white;
- font-weight:bold
+ font-weight:bold;
 }
+
 .whatsapp{background:#168447}
 .telegram{background:#168ac4}
-.customer{background:#1264b5}
+.customer{background:#222}
+
 .apk-btn{
  display:block;
  width:100%;
@@ -269,8 +377,9 @@ label{font-weight:bold;font-size:13px}
  border-radius:12px;
  font-weight:bold;
  font-size:16px;
- margin:12px 0
+ margin:12px 0;
 }
+
 .photo-slider{
  position:relative;
  width:100%;
@@ -278,20 +387,24 @@ label{font-weight:bold;font-size:13px}
  overflow:hidden;
  border-radius:15px;
  margin:12px 0;
- background:#123
+ background:#123;
 }
+
 .photo-slide{
  position:absolute;
  inset:0;
  opacity:0;
- transition:opacity .8s ease
+ transition:opacity .8s ease;
 }
+
 .photo-slide.active{opacity:1}
+
 .photo-slide img{
  width:100%;
  height:100%;
- object-fit:cover
+ object-fit:cover;
 }
+
 .photo-caption{
  position:absolute;
  bottom:0;
@@ -301,55 +414,37 @@ label{font-weight:bold;font-size:13px}
  background:linear-gradient(transparent,#000b);
  color:white;
  font-weight:bold;
- font-size:17px
+ font-size:17px;
 }
+
 .slider-dots{
  position:absolute;
  bottom:8px;
  right:12px;
  display:flex;
  gap:6px;
- z-index:3
+ z-index:3;
 }
+
 .slider-dots button{
  width:9px;
  height:9px;
  padding:0;
  border-radius:50%;
- background:#ffffff80
+ background:#ffffff80;
 }
-.slider-dots button.active{background:#ffce00}
+
+.slider-dots button.active{background:#fff}
+
 .level-title{
- background:#edf4ff;
- color:#003399;
+ background:#eee;
+ color:#111;
  padding:11px;
  border-radius:10px;
  margin-top:16px;
- font-weight:bold
+ font-weight:bold;
 }
-.earning-card{
- border:2px solid #e6bd48;
- background:linear-gradient(145deg,#fff,#fff9e8);
- padding:15px;
- border-radius:14px;
- margin:12px 0
-}
-.earning-button{
- width:100%;
- background:#168447;
- color:white;
- padding:15px;
- font-size:15px;
- margin-top:10px
-}
-.earning-wait{
- background:#edf4ff;
- color:#102b50;
- padding:12px;
- border-radius:10px;
- text-align:center;
- font-weight:bold
-}
+
 @media(max-width:430px){
  .vip-grid{grid-template-columns:1fr}
  .container{padding:8px}
@@ -408,18 +503,23 @@ label{font-weight:bold;font-size:13px}
 </div>
 
 <div class="card">
+
 <h2><i class="fa-solid fa-bolt"></i> Bienvenue chez POWER STATION</h2>
 
 <p>POWER STATION RDC est une plateforme numérique permettant aux membres de consulter les offres VIP, effectuer leurs demandes de recharge, suivre leurs produits actifs et consulter leur équipe de parrainage.</p>
 
-<p>Chaque membre peut créer son compte, accéder à son espace personnel, consulter son portefeuille et suivre l'évolution de ses opérations. La plateforme est officiellement lancée le 11.11.2026.</p>
+<p>Chaque membre peut créer son compte, accéder à son espace personnel, consulter son portefeuille et suivre l'évolution de ses opérations.</p>
+
+<p><strong>La plateforme est officiellement lancée le 11.11.2026.</strong></p>
 
 </div>
 
 <div class="card">
+
 <h2>Nos services</h2>
 
 <div class="stats">
+
 <button class="gold" onclick="showPage('shop')">
 <i class="fa-solid fa-gem"></i><br>VIP / Rechargement
 </button>
@@ -435,10 +535,12 @@ label{font-weight:bold;font-size:13px}
 <button class="gold" onclick="showPage('active')">
 <i class="fa-solid fa-bolt"></i><br>Produits actifs
 </button>
+
 </div>
 </div>
 
 <div class="card">
+
 <h2><i class="fa-solid fa-download"></i> Application POWER STATION</h2>
 
 <p>Téléchargez l'application Android POWER STATION sur votre téléphone pour retrouver facilement la plateforme.</p>
@@ -447,27 +549,31 @@ label{font-weight:bold;font-size:13px}
 <i class="fa-brands fa-android"></i> TÉLÉCHARGER L'APPLICATION APK
 </a>
 
-<p class="small" id="apkDownloadInfo"></p>
+<p class="small" id="apkDownloadInfo">Le lien APK doit être configuré.</p>
+
 </div>
 
 <div class="card">
-<h2><i class="fa-solid fa-headset"></i> Nos communautés et assistance</h2>
 
-<a id="whatsappGroup" class="service-btn whatsapp" href="#" target="_blank" rel="noopener">
+<h2><i class="fa-solid fa-headset"></i> Assistance et communautés</h2>
+
+<a id="whatsappGroup" class="service-btn whatsapp" href="https://chat.whatsapp.com/KBYVbUFomvp1t1L0zm041M?s=cl&p=a&iam=2" target="_blank" rel="noopener">
 <i class="fa-brands fa-whatsapp"></i> Groupe WhatsApp
 </a>
 
-<a id="telegramGroup" class="service-btn telegram" href="#" target="_blank" rel="noopener">
+<a id="telegramGroup" class="service-btn telegram" href="https://t.me/+xkKTZJJPqH85" target="_blank" rel="noopener">
 <i class="fa-brands fa-telegram"></i> Groupe Telegram
 </a>
 
-<a id="customerWhatsApp" class="service-btn customer" href="#" target="_blank" rel="noopener">
+<a id="customerWhatsApp" class="service-btn customer" href="https://chat.whatsapp.com/KBYVbUFomvp1t1L0zm041M?s=cl&p=a&iam=2" target="_blank" rel="noopener">
 <i class="fa-brands fa-whatsapp"></i> Service clients WhatsApp
 </a>
 
 </div>
 
 </section>
+
+<!-- INSCRIPTION ET CONNEXION -->
 
 <section id="auth" class="hidden">
 
@@ -479,6 +585,7 @@ label{font-weight:bold;font-size:13px}
 </div>
 
 <div id="signupPanel">
+
 <h2>Créer un compte</h2>
 
 <form id="signupForm">
@@ -498,6 +605,7 @@ label{font-weight:bold;font-size:13px}
 </form>
 
 <div id="signupMessage" class="status hidden"></div>
+
 </div>
 
 <div id="loginPanel" class="hidden">
@@ -515,16 +623,23 @@ label{font-weight:bold;font-size:13px}
 </form>
 
 <div id="loginMessage" class="status hidden"></div>
-</div>
 
+</div>
 </div>
 </section>
 
+<!-- VIP -->
+
 <section id="shop" class="hidden">
+
 <div class="card">
+
 <h2><i class="fa-solid fa-gem"></i> Produits VIP / Rechargement</h2>
+
 <p>Choisissez un produit. La demande d'activation sera soumise à l'administration après déclaration du paiement.</p>
+
 <div id="shopVIP">Chargement...</div>
+
 </div>
 </section>
 
@@ -560,12 +675,18 @@ label{font-weight:bold;font-size:13px}
 </div>
 </section>
 
+<!-- RETRAIT -->
+
 <section id="withdraw" class="hidden">
 
 <div class="card">
+
 <h2>Mon portefeuille</h2>
+
 <div id="walletSummary" class="status">Connectez-vous pour voir votre solde.</div>
+
 <button class="gold" onclick="loadWallet()">Actualiser mon solde</button>
+
 </div>
 
 <div class="card">
@@ -604,6 +725,8 @@ Conditions : disposer d'un VIP actif et effectuer la demande entre 08h00 et 18h0
 
 </section>
 
+<!-- HISTORIQUE -->
+
 <section id="orders" class="hidden">
 
 <div class="card">
@@ -611,19 +734,27 @@ Conditions : disposer d'un VIP actif et effectuer la demande entre 08h00 et 18h0
 <h2>Historique des transactions</h2>
 
 <div class="tabs">
+
 <button class="selected" onclick="historyTab('deposits',this)">Dépôts</button>
+
 <button onclick="historyTab('withdrawals',this)">Retraits</button>
+
 <button onclick="historyTab('bonuses',this)">Bonus</button>
+
 </div>
 
 <button class="gold" onclick="loadOrders()">Actualiser</button>
 
 <div id="historyDeposits"></div>
+
 <div id="historyWithdrawals" class="hidden"></div>
+
 <div id="historyBonuses" class="hidden"></div>
 
 </div>
 </section>
+
+<!-- PRODUITS ACTIFS -->
 
 <section id="active" class="hidden">
 
@@ -632,8 +763,8 @@ Conditions : disposer d'un VIP actif et effectuer la demande entre 08h00 et 18h0
 <h2><i class="fa-solid fa-bolt"></i> Mes produits VIP actifs</h2>
 
 <p class="small">
-Chaque revenu disponible doit être récolté avant le prochain cycle.
-Après une récolte réussie, le prochain cycle de 24 heures commence selon les horaires enregistrés par le serveur.
+Les revenus disponibles sont affichés après le délai de 24 heures.
+Un revenu disponible reste en attente jusqu'à sa récolte.
 </p>
 
 <button class="gold" onclick="loadActiveProducts()">Actualiser</button>
@@ -645,6 +776,8 @@ Après une récolte réussie, le prochain cycle de 24 heures commence selon les 
 </div>
 </section>
 
+<!-- ÉQUIPE -->
+
 <section id="team" class="hidden">
 
 <div class="card">
@@ -654,50 +787,77 @@ Après une récolte réussie, le prochain cycle de 24 heures commence selon les 
 <p>Invitez vos amis avec votre lien personnel d'inscription.</p>
 
 <div class="payment-box">
+
 <strong>Mon code de parrainage</strong>
+
 <div id="myReferralCode" class="copy-number">Chargement...</div>
+
 <button class="red" style="width:100%;margin-top:8px" onclick="copyReferralCode(this)">Copier mon code</button>
+
 </div>
 
 <div class="payment-box">
+
 <strong>Mon lien d'inscription</strong>
+
 <div id="myReferralLink" class="referral-link">Chargement...</div>
+
 <button class="red" style="width:100%" onclick="copyReferralLink(this)">Copier le lien d'inscription</button>
+
 </div>
 
 <h2>Commissions de parrainage</h2>
 
 <div class="stats">
+
 <div class="stat">Niveau 1<strong>15 %</strong></div>
+
 <div class="stat">Niveau 2<strong>2 %</strong></div>
+
 <div class="stat">Niveau 3<strong>1 %</strong></div>
+
 </div>
 
 <h2>Statistiques de mon équipe</h2>
 
 <div class="stats">
+
 <div class="stat">Total inscrits<strong id="teamRegistered">0</strong></div>
+
 <div class="stat">Membres VIP actifs<strong id="teamValidated">0</strong></div>
+
 <div class="stat">Niveau 1 inscrits<strong id="teamLevel1">0</strong></div>
+
 <div class="stat">Niveau 2 inscrits<strong id="teamLevel2">0</strong></div>
+
 <div class="stat">Niveau 3 inscrits<strong id="teamLevel3">0</strong></div>
+
 <div class="stat">Dépôts validés<strong id="teamDepositTotal">0 FC</strong></div>
+
 </div>
 
 <div class="tabs" id="teamTabs">
+
 <button class="selected" onclick="filterTeamLevel('all',this)">Tous</button>
+
 <button onclick="filterTeamLevel(1,this)">Niveau 1</button>
+
 <button onclick="filterTeamLevel(2,this)">Niveau 2</button>
+
 <button onclick="filterTeamLevel(3,this)">Niveau 3</button>
+
 </div>
 
 <h2>Liste de mes membres</h2>
 
 <div id="teamMembers">Chargement...</div>
+
 <div id="teamMessage" class="status">Chargement de votre équipe...</div>
 
 </div>
 </section>
+
+<!-- COMPTE -->
 
 <section id="account" class="hidden">
 
@@ -726,6 +886,8 @@ Après une récolte réussie, le prochain cycle de 24 heures commence selon les 
 </div>
 </section>
 
+<!-- ADMINISTRATION -->
+
 <section id="admin" class="hidden">
 
 <div class="card">
@@ -735,14 +897,20 @@ Après une récolte réussie, le prochain cycle de 24 heures commence selon les 
 <div id="adminStatus" class="status">Vérification...</div>
 
 <div class="admin-tabs">
-<button class="selected" onclick="adminTab('dashboard',this)">Tableau</button>
-<button onclick="adminTab('deposits',this)">Dépôts</button>
-<button onclick="adminTab('withdrawals',this)">Retraits</button>
-<button onclick="adminTab('members',this)">Membres</button>
-<button onclick="adminTab('vip',this)">VIP</button>
-<button onclick="adminTab('settings',this)">Paramètres</button>
-</div>
 
+<button class="selected" onclick="adminTab('dashboard',this)">Tableau</button>
+
+<button onclick="adminTab('deposits',this)">Dépôts</button>
+
+<button onclick="adminTab('withdrawals',this)">Retraits</button>
+
+<button onclick="adminTab('members',this)">Membres</button>
+
+<button onclick="adminTab('vip',this)">VIP</button>
+
+<button onclick="adminTab('settings',this)">Paramètres</button>
+
+</div>
 </div>
 
 <div id="admin-dashboard" class="admin-panel">
@@ -752,13 +920,21 @@ Après une récolte réussie, le prochain cycle de 24 heures commence selon les 
 <h2>Statistiques</h2>
 
 <div class="stats">
+
 <div class="stat">Membres<strong id="adminMemberCount">-</strong></div>
+
 <div class="stat">Déposants<strong id="adminDepositorCount">-</strong></div>
+
 <div class="stat">Total déposé<strong id="adminTotalDeposited">-</strong></div>
+
 <div class="stat">Total retiré<strong id="adminTotalWithdrawn">-</strong></div>
+
 <div class="stat">Dépôts en attente<strong id="adminDepositCount">-</strong></div>
+
 <div class="stat">Retraits en attente<strong id="adminWithdrawalCount">-</strong></div>
+
 <div class="stat">Solde réservé<strong id="adminReserved">-</strong></div>
+
 </div>
 
 <button class="gold" style="width:100%;margin-top:10px" onclick="loadAdminDashboard()">Actualiser</button>
@@ -767,70 +943,109 @@ Après une récolte réussie, le prochain cycle de 24 heures commence selon les 
 </div>
 
 <div id="admin-deposits" class="admin-panel hidden">
+
 <div class="card">
+
 <h2>Demandes de recharge</h2>
+
 <button class="gold" onclick="loadAdminDeposits()">Actualiser</button>
+
 <div id="adminDepositsList"></div>
+
 </div>
 </div>
 
 <div id="admin-withdrawals" class="admin-panel hidden">
+
 <div class="card">
+
 <h2>Demandes de retrait</h2>
+
 <button class="gold" onclick="loadAdminWithdrawals()">Actualiser</button>
+
 <div id="adminWithdrawalsList"></div>
+
 </div>
 </div>
 
 <div id="admin-members" class="admin-panel hidden">
 
 <div class="card">
+
 <h2>Liste des membres</h2>
+
 <button class="gold" onclick="loadAdminMembers()">Actualiser</button>
+
 <input id="memberSearch" placeholder="Rechercher un membre" oninput="filterMembers()">
+
 <div id="adminMembersList"></div>
+
 </div>
 
 <div class="card">
-<h2>Attribuer un bonus</h2>
-<input id="bonusUserId" placeholder="ID du membre">
-<input id="bonusAmount" type="number" placeholder="Montant FC">
-<input id="bonusReason" placeholder="Raison">
-<button class="red" onclick="giveBonus()">Attribuer</button>
-<div id="bonusMessage" class="status hidden"></div>
-</div>
 
+<h2>Attribuer un bonus</h2>
+
+<input id="bonusUserId" placeholder="ID du membre">
+
+<input id="bonusAmount" type="number" placeholder="Montant FC">
+
+<input id="bonusReason" placeholder="Raison">
+
+<button class="red" onclick="giveBonus()">Attribuer</button>
+
+<div id="bonusMessage" class="status hidden"></div>
+
+</div>
 </div>
 
 <div id="admin-vip" class="admin-panel hidden">
 
 <div class="card">
+
 <h2>Catalogue VIP</h2>
+
 <button class="gold" onclick="loadAdminVIP()">Actualiser</button>
+
 <div id="adminVIPList"></div>
+
 </div>
 
 <div class="card">
+
 <h2>Attribuer un VIP</h2>
+
 <input id="vipUserId" placeholder="ID du membre">
+
 <select id="vipProductSelect">
 <option value="">Choisir VIP</option>
 </select>
+
 <input id="vipNote" placeholder="Note">
+
 <button class="red" onclick="assignVIP()">Attribuer VIP</button>
+
 <div id="vipMessage" class="status hidden"></div>
+
 </div>
 
 <div class="card">
-<h2>Enregistrer un revenu VIP</h2>
-<input id="earningUserId" placeholder="ID membre">
-<input id="earningActivationId" placeholder="ID activation">
-<input id="earningAmount" type="number" placeholder="Montant FC">
-<input id="earningDescription" placeholder="Description">
-<button class="green" onclick="adminAddEarning()">Enregistrer revenu</button>
-<div id="adminEarningMessage" class="status hidden"></div>
-</div>
 
+<h2>Enregistrer un revenu VIP</h2>
+
+<input id="earningUserId" placeholder="ID membre">
+
+<input id="earningActivationId" placeholder="ID activation">
+
+<input id="earningAmount" type="number" placeholder="Montant FC">
+
+<input id="earningDescription" placeholder="Description">
+
+<button class="green" onclick="adminAddEarning()">Enregistrer revenu</button>
+
+<div id="adminEarningMessage" class="status hidden"></div>
+
+</div>
 </div>
 
 <div id="admin-settings" class="admin-panel hidden">
@@ -840,59 +1055,75 @@ Après une récolte réussie, le prochain cycle de 24 heures commence selon les 
 <h2>Liens des communautés</h2>
 
 <label>Groupe WhatsApp</label>
+
 <input id="settingWhatsAppGroup">
 
 <label>Groupe Telegram</label>
+
 <input id="settingTelegramGroup">
 
 <label>Service client WhatsApp</label>
+
 <input id="settingCustomerWhatsApp">
 
 <h2>Paramètres de paiement</h2>
 
 <label>Airtel Money</label>
+
 <input id="settingAirtel">
 
 <label>Nom Airtel</label>
+
 <input id="settingAirtelName">
 
 <label>Orange Money</label>
+
 <input id="settingOrange">
 
 <label>Nom Orange</label>
+
 <input id="settingOrangeName">
 
 <label>M-Pesa</label>
+
 <input id="settingMpesa">
 
 <label>Nom M-Pesa</label>
+
 <input id="settingMpesaName">
 
 <h3>Application Android</h3>
 
 <label>Lien de téléchargement APK</label>
-<input id="settingApkUrl" type="url">
+
+<input id="settingApkUrl" type="url" placeholder="https://exemple.com/power-station.apk">
 
 <h3>Couleurs</h3>
 
 <label>Couleur principale</label>
+
 <input class="color-input" type="color" id="settingPrimary">
 
 <label>Couleur secondaire</label>
+
 <input class="color-input" type="color" id="settingGold">
 
 <label>Fond</label>
+
 <input class="color-input" type="color" id="settingBackground">
 
 <h3>Frais et retraits</h3>
 
 <label>Frais promotionnels (%)</label>
+
 <input id="settingPromoFee" type="number">
 
 <label>Frais retrait (%)</label>
+
 <input id="settingWithdrawFee" type="number">
 
 <label>Retrait minimum FC</label>
+
 <input id="settingWithdrawMin" type="number">
 
 <p class="small">Horaires de retrait : 08h00 à 18h00.</p>
@@ -908,6 +1139,7 @@ Après une récolte réussie, le prochain cycle de 24 heures commence selon les 
 <h2>Changer le mot de passe administrateur</h2>
 
 <input id="adminNewPassword" type="password" placeholder="Nouveau mot de passe">
+
 <input id="adminConfirmPassword" type="password" placeholder="Confirmer">
 
 <button class="red" onclick="changeAdminPassword()">Modifier</button>
@@ -917,8 +1149,11 @@ Après une récolte réussie, le prochain cycle de 24 heures commence selon les 
 </div>
 
 <div class="card">
+
 <h2>Modifier les produits VIP</h2>
+
 <div id="vipSettingsList">Chargement...</div>
+
 </div>
 
 </div>
@@ -928,7 +1163,7 @@ Après une récolte réussie, le prochain cycle de 24 heures commence selon les 
 </main>
 
 <footer style="text-align:center;padding:20px;color:#777;font-size:12px">
-🇨🇩 POWER STATION RDC © 2026
+POWER STATION RDC © 2026
 </footer>
 
 <nav class="bottom-nav">
@@ -964,30 +1199,22 @@ let currentUser=null,isAdmin=false,allMembers=[],allVIP=[],selectedVIP=null;
 
 let myReferralCode="",myReferralLink="";
 let countdownTimer=null;
+
 let teamCache=[],teamFilter="all",slideIndex=0,slideTimer=null;
 
 let settings={
- airtel:"973087965",
- airtelName:"BASHANGWA",
- orange:"899532643",
- orangeName:"JEANCQUELLINE",
- mpesa:"0861823718",
- mpesaName:"REGINA",
-
- primary:"#1264b5",
- gold:"#f2b93b",
- background:"#f1f5fa",
-
+ airtel:"973087965",airtelName:"BASHANGWA",
+ orange:"899532643",orangeName:"JEANCQUELLINE",
+ mpesa:"0861823718",mpesaName:"REGINA",
+ primary:"#171717",
+ gold:"#c0c0c0",
+ background:"#f2f2f2",
  promoFee:0,
  withdrawFee:0,
  withdrawMin:5000,
-
  whatsappGroup:"https://chat.whatsapp.com/KBYVbUFomvp1t1L0zm041M?s=cl&p=a&iam=2",
-
  telegramGroup:"https://t.me/+xkKTZJJPqH85",
-
  customerWhatsApp:"https://chat.whatsapp.com/KBYVbUFomvp1t1L0zm041M?s=cl&p=a&iam=2",
-
  apkUrl:""
 };
 
@@ -1004,11 +1231,7 @@ const vipFallback=[
 
 function escapeHTML(v){
  return String(v??"").replace(/[&<>"']/g,c=>({
- "&":"&amp;",
- "<":"&lt;",
- ">":"&gt;",
- '"':"&quot;",
- "'":"&#39;"
+ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
  }[c]));
 }
 
@@ -1070,12 +1293,13 @@ async function checkAdmin(){
 
 function showPage(page,button){
 
- [
- "home","auth","shop","vipDeposit","orders",
- "active","withdraw","team","account","admin"
- ].forEach(id=>$(id).classList.add("hidden"));
+ ["home","auth","shop","vipDeposit","orders","active","withdraw","team","account","admin"].forEach(id=>{
+  $(id).classList.add("hidden");
+ });
 
  $(page).classList.remove("hidden");
+
+ document.body.classList.toggle("auth-page",page==="auth");
 
  document.querySelectorAll(".bottom-nav button").forEach(b=>b.classList.remove("active"));
 
@@ -1084,7 +1308,7 @@ function showPage(page,button){
  }else{
   const m={home:0,shop:1,team:2,account:3};
   if(m[page]!==undefined)
-   document.querySelectorAll(".bottom-nav button")[m[page]].classList.add("active");
+  document.querySelectorAll(".bottom-nav button")[m[page]].classList.add("active");
  }
 
  if(page==="shop")loadVIPProducts();
@@ -1104,6 +1328,7 @@ function showPage(page,button){
 }
 
 function authMode(mode){
+
  let s=mode==="signup";
 
  $("signupPanel").classList.toggle("hidden",!s);
@@ -1111,6 +1336,7 @@ function authMode(mode){
 
  $("signupTab").classList.toggle("selected",s);
  $("loginTab").classList.toggle("selected",!s);
+
 }
 
 function adminTab(tab,button){
@@ -1124,24 +1350,24 @@ function adminTab(tab,button){
  if(button)button.classList.add("selected");
 
  const f={
- dashboard:loadAdminDashboard,
- deposits:loadAdminDeposits,
- withdrawals:loadAdminWithdrawals,
- members:loadAdminMembers,
- vip:loadAdminVIP,
- settings:loadSettingsPanel
+  dashboard:loadAdminDashboard,
+  deposits:loadAdminDeposits,
+  withdrawals:loadAdminWithdrawals,
+  members:loadAdminMembers,
+  vip:loadAdminVIP,
+  settings:loadSettingsPanel
  };
 
  if(f[tab])f[tab]();
 }
 
 async function copyText(text,button){
+
  try{
 
   if(navigator.clipboard&&window.isSecureContext){
    await navigator.clipboard.writeText(text);
   }else{
-
    const t=document.createElement("textarea");
    t.value=text;
    t.style.position="fixed";
@@ -1179,8 +1405,6 @@ function copyReferralLink(b){
  else alert("Lien indisponible.");
 }
 
-/* CARROUSEL */
-
 function goSlide(index){
 
  const slides=document.querySelectorAll(".photo-slide");
@@ -1193,6 +1417,7 @@ function goSlide(index){
  slides.forEach((s,i)=>s.classList.toggle("active",i===slideIndex));
 
  dots.forEach((d,i)=>d.classList.toggle("active",i===slideIndex));
+
 }
 
 function startPhotoSlider(){
@@ -1200,6 +1425,7 @@ function startPhotoSlider(){
  if(slideTimer)clearInterval(slideTimer);
 
  slideTimer=setInterval(()=>goSlide(slideIndex+1),4500);
+
 }
 
 /* INSCRIPTION */
@@ -1233,8 +1459,7 @@ $("signupForm").addEventListener("submit",async e=>{
   }
  });
 
- if(error)
- return message("signupMessage",error.message,"error");
+ if(error)return message("signupMessage",error.message,"error");
 
  if(data.session){
 
@@ -1306,6 +1531,7 @@ async function logout(){
  isAdmin=false;
 
  showPage("home");
+
 }
 
 async function changeMyPassword(){
@@ -1326,12 +1552,13 @@ async function changeMyPassword(){
 
  let {error}=await db.auth.updateUser({password:p});
 
- if(error)return message("passwordMessage",error.message,"error");
+ if(error)
+ return message("passwordMessage",error.message,"error");
 
- $("newPassword").value="";
- $("confirmNewPassword").value="";
+ $("newPassword").value=$("confirmNewPassword").value="";
 
  message("passwordMessage","Mot de passe modifié.","success");
+
 }
 
 async function changeAdminPassword(){
@@ -1344,12 +1571,13 @@ async function changeAdminPassword(){
 
  let {error}=await db.auth.updateUser({password:p});
 
- if(error)return message("adminPasswordMessage",error.message,"error");
+ if(error)
+ return message("adminPasswordMessage",error.message,"error");
 
- $("adminNewPassword").value="";
- $("adminConfirmPassword").value="";
+ $("adminNewPassword").value=$("adminConfirmPassword").value="";
 
  message("adminPasswordMessage","Mot de passe administrateur modifié.","success");
+
 }
 
 /* COMPTE */
@@ -1366,14 +1594,14 @@ async function loadAccount(){
  const [{data:p},{data:w}]=await Promise.all([
 
   db.from("power_station_profiles")
-   .select("full_name,phone")
-   .eq("user_id",currentUser.id)
-   .maybeSingle(),
+  .select("full_name,phone")
+  .eq("user_id",currentUser.id)
+  .maybeSingle(),
 
   db.from("ps_wallets")
-   .select("available_balance")
-   .eq("user_id",currentUser.id)
-   .maybeSingle()
+  .select("available_balance")
+  .eq("user_id",currentUser.id)
+  .maybeSingle()
 
  ]);
 
@@ -1390,6 +1618,7 @@ async function loadAccount(){
  `;
 
  $("adminAccess").classList.toggle("hidden",!await checkAdmin());
+
 }
 
 /* ÉQUIPE */
@@ -1408,6 +1637,7 @@ async function loadTeam(){
   box.textContent="Connectez-vous pour voir votre équipe.";
 
   return message("teamMessage","Connexion obligatoire.","error");
+
  }
 
  box.textContent="Recherche de vos membres...";
@@ -1425,6 +1655,7 @@ async function loadTeam(){
   box.textContent="Erreur de lecture du code : "+ownError.message;
 
   return message("teamMessage",ownError.message,"error");
+
  }
 
  myReferralCode=own?.referral_code||"";
@@ -1432,12 +1663,13 @@ async function loadTeam(){
  if(!myReferralCode){
 
   const {data:profile}=await db
-   .from("power_station_profiles")
-   .select("referral_code")
-   .eq("user_id",currentUser.id)
-   .maybeSingle();
+  .from("power_station_profiles")
+  .select("referral_code")
+  .eq("user_id",currentUser.id)
+  .maybeSingle();
 
   myReferralCode=profile?.referral_code||"";
+
  }
 
  if(!myReferralCode){
@@ -1451,6 +1683,7 @@ async function loadTeam(){
 
   $("myReferralCode").textContent=myReferralCode;
   $("myReferralLink").textContent=myReferralLink;
+
  }
 
  const {data,error}=await db.rpc("ps_get_my_team");
@@ -1469,6 +1702,7 @@ async function loadTeam(){
   $("teamDepositTotal").textContent=money(0);
 
   return message("teamMessage","Erreur de chargement : "+error.message,"error");
+
  }
 
  const result=data||{};
@@ -1482,13 +1716,9 @@ async function loadTeam(){
 
  const total=teamCache.length;
 
- const vipCount=teamCache.filter(m=>
-  m.has_deposit===true&&Number(m.deposit_count)>0
- ).length;
+ const vipCount=teamCache.filter(m=>m.has_deposit===true&&Number(m.deposit_count)>0).length;
 
- const depositTotal=teamCache.reduce((sum,m)=>
-  sum+Number(m.deposit_total||0),0
- );
+ const depositTotal=teamCache.reduce((sum,m)=>sum+Number(m.deposit_total||0),0);
 
  $("teamLevel1").textContent=counts.level1??n1;
  $("teamLevel2").textContent=counts.level2??n2;
@@ -1500,6 +1730,7 @@ async function loadTeam(){
  renderTeamMembers();
 
  message("teamMessage","Équipe actualisée : "+total+" membre(s) répartis sur les trois niveaux.","success");
+
 }
 
 function filterTeamLevel(level,button){
@@ -1511,6 +1742,7 @@ function filterTeamLevel(level,button){
  if(button)button.classList.add("selected");
 
  renderTeamMembers();
+
 }
 
 function renderTeamMembers(){
@@ -1519,17 +1751,14 @@ function renderTeamMembers(){
 
  box.innerHTML="";
 
- const rows=teamCache.filter(m=>
-  teamFilter==="all"||Number(m.level)===Number(teamFilter)
- );
+ const rows=teamCache.filter(m=>teamFilter==="all"||Number(m.level)===Number(teamFilter));
 
  if(!rows.length){
 
-  box.textContent=teamFilter==="all"
-   ?"Aucun membre inscrit pour le moment."
-   :"Aucun membre trouvé dans ce niveau.";
+  box.textContent=teamFilter==="all"?"Aucun membre inscrit pour le moment.":"Aucun membre trouvé dans ce niveau.";
 
   return;
+
  }
 
  rows.forEach((m,index)=>{
@@ -1539,11 +1768,12 @@ function renderTeamMembers(){
   const depositTotal=Number(m.deposit_total||0);
 
   const el=document.createElement("div");
+
   el.className="member-line";
 
   const depositBadge=depositCount>0
-   ?'<span class="badge badge-green">Dépôt validé</span>'
-   :'<span class="badge badge-orange">Aucun dépôt validé</span>';
+  ?'<span class="badge badge-green">Dépôt validé</span>'
+  :'<span class="badge badge-orange">Aucun dépôt validé</span>';
 
   el.innerHTML=`
 
@@ -1566,13 +1796,15 @@ function renderTeamMembers(){
   `;
 
   box.appendChild(el);
+
  });
+
 }
 
 const referralFromUrl=new URLSearchParams(location.search).get("ref");
 
 if(referralFromUrl)
- $("referralCode").value=referralFromUrl.toUpperCase();
+$("referralCode").value=referralFromUrl.toUpperCase();
 
 /* VIP */
 
@@ -1612,16 +1844,18 @@ function renderVIP(products){
   `;
 
   box.appendChild(el);
+
  });
+
 }
 
 async function loadVIPProducts(){
 
  const {data,error}=await db
-  .from("power_station_vip_products")
-  .select("id,code,price_fc,daily_revenue_fc,duration_days,total_revenue_fc,is_active")
-  .eq("is_active",true)
-  .order("id");
+ .from("power_station_vip_products")
+ .select("id,code,price_fc,daily_revenue_fc,duration_days,total_revenue_fc,is_active")
+ .eq("is_active",true)
+ .order("id");
 
  if(error){
   console.error(error);
@@ -1630,9 +1864,8 @@ async function loadVIPProducts(){
  }
 
  renderVIP(data?.length?data:vipFallback);
-}
 
-/* PAIEMENTS */
+}
 
 function renderPaymentNumbers(){
 
@@ -1661,12 +1894,12 @@ function renderPaymentNumbers(){
   </div>
 
  `).join("");
+
 }
 
 function chooseVIP(id,code,price){
 
- if(!id)
- return alert("Le produit VIP doit être chargé depuis Supabase.");
+ if(!id)return alert("Le produit VIP doit être chargé depuis Supabase.");
 
  selectedVIP={id,code,price};
 
@@ -1683,6 +1916,7 @@ function chooseVIP(id,code,price){
  renderPaymentNumbers();
 
  showPage("vipDeposit");
+
 }
 
 async function submitVIPDeposit(){
@@ -1715,25 +1949,24 @@ async function submitVIPDeposit(){
  return message("vipDepositMessage",error.message,"error");
 
  message("vipDepositMessage","Demande envoyée. En attente de validation. Référence : "+data,"success");
+
 }
 
-/* REVENUS VIP : RÉCOLTE ET COMPTEUR */
+/* REVENUS VIP : RÉCOLTE APRÈS 24 HEURES */
 
 function timeLeft(date){
 
  const ms=new Date(date).getTime()-Date.now();
 
- if(ms<=0)return "Disponible maintenant";
+ if(ms<=0)return "Revenu disponible à récolter";
 
  const d=Math.floor(ms/86400000);
  const h=Math.floor(ms%86400000/3600000);
  const m=Math.floor(ms%3600000/60000);
  const s=Math.floor(ms%60000/1000);
 
- return (d?d+"j ":"")+
-  String(h).padStart(2,"0")+"h "+
-  String(m).padStart(2,"0")+"m "+
-  String(s).padStart(2,"0")+"s";
+ return (d?d+"j ":"")+String(h).padStart(2,"0")+"h "+String(m).padStart(2,"0")+"m "+String(s).padStart(2,"0")+"s";
+
 }
 
 async function loadActiveProducts(){
@@ -1749,48 +1982,45 @@ async function loadActiveProducts(){
 
  box.textContent="Chargement des produits actifs...";
 
- const {data:acts,error}=await db
-  .from("ps_vip_activations")
-  .select("id,status,activated_at,expires_at,vip_product_id")
-  .eq("user_id",currentUser.id)
-  .eq("status","active")
-  .order("activated_at",{ascending:false});
+ const {data:allActs,error}=await db
+ .from("ps_vip_activations")
+ .select("id,status,activated_at,expires_at,vip_product_id")
+ .eq("user_id",currentUser.id)
+ .eq("status","active")
+ .order("activated_at",{ascending:false});
 
  if(error){
   box.textContent="Produits actifs indisponibles : "+error.message;
   return;
  }
 
+ /* Seuls les VIP actifs et non expirés sont affichés */
+
  const now=Date.now();
 
- const activeActs=(acts||[]).filter(a=>
+ const acts=(allActs||[]).filter(a=>
   !a.expires_at||new Date(a.expires_at).getTime()>now
  );
 
- if(!activeActs.length){
+ if(!acts.length){
   box.textContent="Aucun VIP actif pour le moment.";
   return;
  }
 
- const ids=[...new Set(activeActs.map(a=>a.vip_product_id).filter(Boolean))];
+ const ids=[...new Set(acts.map(a=>a.vip_product_id).filter(Boolean))];
 
- const [{data:vips,error:vipError},{data:earnings,error:earnError}]=await Promise.all([
+ const [{data:vips},{data:earnings,error:earnError}]=await Promise.all([
 
   db.from("power_station_vip_products")
-   .select("id,code,price_fc,daily_revenue_fc,duration_days")
-   .in("id",ids),
+  .select("id,code,price_fc,daily_revenue_fc,duration_days")
+  .in("id",ids),
 
   db.from("ps_member_earnings")
-   .select("id,vip_code,amount,status,available_at,claimed_at,description")
-   .eq("user_id",currentUser.id)
-   .order("available_at",{ascending:true})
+  .select("id,vip_code,amount,status,available_at,claimed_at,description")
+  .eq("user_id",currentUser.id)
+  .order("available_at",{ascending:true})
 
  ]);
-
- if(vipError){
-  box.textContent="Impossible de lire les produits : "+vipError.message;
-  return;
- }
 
  if(earnError){
   box.textContent="Impossible de lire les revenus : "+earnError.message;
@@ -1801,12 +2031,14 @@ async function loadActiveProducts(){
 
  box.innerHTML="";
 
- activeActs.forEach(a=>{
+ acts.forEach(a=>{
 
   const v=vmap[a.vip_product_id]||{};
 
   const duration=Number(v.duration_days||35);
   const code=v.code||"VIP";
+
+  /* Revenus encore en attente de récolte pour ce produit */
 
   const rows=(earnings||[]).filter(e=>
    String(e.vip_code||"").toUpperCase()===String(code).toUpperCase()
@@ -1823,21 +2055,17 @@ async function loadActiveProducts(){
 
   const next=waiting.length?waiting[0].available_at:null;
 
-  const readyAmount=ready.reduce((s,e)=>
-   s+Number(e.amount||0),0
-  );
+  const readyAmount=ready.reduce((s,e)=>s+Number(e.amount||0),0);
 
   const elapsed=a.activated_at
-   ?Math.min(duration,Math.max(0,Math.floor(
-    (Date.now()-new Date(a.activated_at).getTime())/86400000
-   )))
+   ?Math.min(duration,Math.max(0,Math.floor((Date.now()-new Date(a.activated_at).getTime())/86400000)))
    :0;
 
   const theoreticalTotal=Number(v.daily_revenue_fc||0)*duration;
 
   const el=document.createElement("div");
 
-  el.className="earning-card";
+  el.className="payment-box";
 
   el.innerHTML=`
 
@@ -1859,30 +2087,38 @@ async function loadActiveProducts(){
 
    <p>Expire le : ${a.expires_at?new Date(a.expires_at).toLocaleString("fr-FR"):"-"}</p>
 
-   <div id="earning-state-${a.id}"></div>
+   <p>Revenu disponible à récolter : <strong id="ready-${a.id}">${money(readyAmount)}</strong></p>
 
-   <div id="earning-action-${a.id}"></div>
+   <p>Prochaine récolte : <strong id="timer-${a.id}">${ready.length?"En attente de votre récolte":next?timeLeft(next):"Aucun revenu en attente"}</strong></p>
+
+   <button class="green" id="claim-btn-${a.id}" style="width:100%" ${ready.length?"":"disabled"} onclick="claimVIPEarnings('${a.id}')">
+
+   <i class="fa-solid fa-hand-holding-dollar"></i>
+
+   ${ready.length?"RÉCOLTER "+money(readyAmount):"REVENU PAS ENCORE DISPONIBLE"}
+
+   </button>
 
   `;
 
   box.appendChild(el);
 
-  updateEarningDisplay(a.id,ready,waiting);
-
  });
+
+ /* Le compteur s'arrête dès qu'un revenu est disponible.
+    Il ne recommence qu'après la récolte et la création du
+    prochain revenu par le serveur. */
 
  if(countdownTimer)clearInterval(countdownTimer);
 
  countdownTimer=setInterval(()=>{
 
-  activeActs.forEach(a=>{
+  acts.forEach(a=>{
 
    const v=vmap[a.vip_product_id]||{};
 
-   const code=v.code||"VIP";
-
    const rows=(earnings||[]).filter(e=>
-    String(e.vip_code||"").toUpperCase()===String(code).toUpperCase()
+    String(e.vip_code||"").toUpperCase()===String(v.code||"VIP").toUpperCase()
     &&e.status==="pending"
    );
 
@@ -1894,20 +2130,45 @@ async function loadActiveProducts(){
     new Date(e.available_at).getTime()>Date.now()
    );
 
-   const day=$("day-"+a.id);
+   const timer=$("timer-"+a.id);
+   const btn=$("claim-btn-"+a.id);
+   const readyBox=$("ready-"+a.id);
 
-   if(day&&a.activated_at){
-
-    const duration=Number(v.duration_days||35);
-
-    const elapsed=Math.min(duration,Math.max(0,Math.floor(
-     (Date.now()-new Date(a.activated_at).getTime())/86400000
-    )));
-
-    day.textContent=elapsed+"/"+duration+" jours";
+   if(readyBox){
+    readyBox.textContent=money(
+     ready.reduce((s,e)=>s+Number(e.amount||0),0)
+    );
    }
 
-   updateEarningDisplay(a.id,ready,waiting);
+   if(timer){
+
+    if(ready.length){
+
+     /* Arrêt du compteur : le membre doit récolter */
+
+     timer.textContent="EN ATTENTE DE VOTRE RÉCOLTE";
+
+    }else if(waiting.length){
+
+     timer.textContent=timeLeft(waiting[0].available_at);
+
+    }else{
+
+     timer.textContent="Aucun revenu en attente";
+
+    }
+
+   }
+
+   if(btn){
+
+    btn.disabled=!ready.length;
+
+    btn.innerHTML=ready.length
+     ?"RÉCOLTER "+money(ready.reduce((s,e)=>s+Number(e.amount||0),0))
+     :"REVENU PAS ENCORE DISPONIBLE";
+
+   }
 
   });
 
@@ -1915,90 +2176,7 @@ async function loadActiveProducts(){
 
 }
 
-function updateEarningDisplay(id,ready,waiting){
-
- const state=$("earning-state-"+id);
- const action=$("earning-action-"+id);
-
- if(!state||!action)return;
-
- const amount=ready.reduce((s,e)=>s+Number(e.amount||0),0);
-
- if(ready.length){
-
-  state.innerHTML=`
-
-   <div class="status success">
-
-   <strong>Votre revenu du jour est disponible !</strong>
-
-   <p>Montant à récolter : <strong>${money(amount)}</strong></p>
-
-   </div>
-
-  `;
-
-  action.innerHTML=`
-
-   <button class="earning-button" onclick="claimVIPEarnings('${id}')">
-
-   <i class="fa-solid fa-hand-holding-dollar"></i>
-
-   RÉCOLTER MON REVENU DU JOUR
-
-   </button>
-
-  `;
-
-  return;
- }
-
- if(waiting.length){
-
-  const next=waiting[0].available_at;
-
-  state.innerHTML=`
-
-   <div class="earning-wait">
-
-   <p><i class="fa-solid fa-clock"></i> Prochain revenu dans :</p>
-
-   <strong id="timer-${id}">${timeLeft(next)}</strong>
-
-   </div>
-
-  `;
-
-  action.innerHTML="";
-
-  return;
- }
-
- state.innerHTML=`
-
-  <div class="earning-wait">
-
-  Aucun revenu disponible pour le moment.
-
-  </div>
-
- `;
-
- action.innerHTML="";
-}
-
-/*
- IMPORTANT :
- La fonction SQL ps_claim_vip_earnings doit vérifier côté serveur :
- - que le VIP appartient au membre connecté ;
- - que le VIP est actif et non expiré ;
- - que le revenu est disponible ;
- - que le revenu n'a pas déjà été récolté ;
- - que la récolte est unique ;
- - que le prochain cycle de 24 heures commence après la récolte réussie.
-
- Le navigateur ne crédite jamais lui-même le portefeuille.
-*/
+/* RÉCOLTE */
 
 async function claimVIPEarnings(activationId){
 
@@ -2006,12 +2184,8 @@ async function claimVIPEarnings(activationId){
 
  if(!currentUser)return showPage("auth");
 
- if(!confirm("Confirmer la récolte de votre revenu disponible ?"))
+ if(!confirm("Confirmer la récolte des revenus disponibles pour ce produit ?"))
  return;
-
- const buttons=document.querySelectorAll(".earning-button");
-
- buttons.forEach(b=>b.disabled=true);
 
  const {data,error}=await db.rpc("ps_claim_vip_earnings",{
   p_vip_activation_id:activationId
@@ -2021,15 +2195,20 @@ async function claimVIPEarnings(activationId){
 
   message("earningMessage",error.message,"error");
 
-  await loadActiveProducts();
-
   return;
+
  }
 
- message("earningMessage","Récolte effectuée : "+money(data)+". Vérifiez votre portefeuille.","success");
+ message("earningMessage","Récolte demandée : "+money(data)+". Vérifiez votre portefeuille.","success");
 
  await loadWallet();
+
+ /* Rechargement des revenus après récolte.
+    Le prochain compteur dépend de la prochaine date
+    disponible créée par la fonction SQL. */
+
  await loadActiveProducts();
+
 }
 
 /* RETRAITS */
@@ -2037,11 +2216,11 @@ async function claimVIPEarnings(activationId){
 async function hasActiveVIP(){
 
  const {data,error}=await db
-  .from("ps_vip_activations")
-  .select("id,status,expires_at")
-  .eq("user_id",currentUser.id)
-  .eq("status","active")
-  .limit(20);
+ .from("ps_vip_activations")
+ .select("id,status,expires_at")
+ .eq("user_id",currentUser.id)
+ .eq("status","active")
+ .limit(20);
 
  if(error)throw error;
 
@@ -2050,6 +2229,7 @@ async function hasActiveVIP(){
  return (data||[]).some(v=>
   !v.expires_at||new Date(v.expires_at).getTime()>now
  );
+
 }
 
 function isWithdrawalTime(){
@@ -2067,6 +2247,7 @@ function isWithdrawalTime(){
  const minutes=h*60+m;
 
  return minutes>=480&&minutes<1080;
+
 }
 
 async function loadWallet(){
@@ -2077,12 +2258,13 @@ async function loadWallet(){
  return $("walletSummary").textContent="Connectez-vous.";
 
  const {data,error}=await db
-  .from("ps_wallets")
-  .select("available_balance,reserved_balance,total_deposited,total_withdrawn,total_bonus")
-  .eq("user_id",currentUser.id)
-  .maybeSingle();
+ .from("ps_wallets")
+ .select("available_balance,reserved_balance,total_deposited,total_withdrawn,total_bonus")
+ .eq("user_id",currentUser.id)
+ .maybeSingle();
 
- if(error)return $("walletSummary").textContent=error.message;
+ if(error)
+ return $("walletSummary").textContent=error.message;
 
  if(!data)
  return $("walletSummary").textContent="Portefeuille non créé.";
@@ -2100,6 +2282,7 @@ async function loadWallet(){
  Bonus : ${money(data.total_bonus)}
 
  `;
+
 }
 
 async function submitWithdrawal(){
@@ -2136,18 +2319,21 @@ async function submitWithdrawal(){
   p_name:name
  });
 
- if(error)return message("withdrawMessage",error.message,"error");
+ if(error)
+ return message("withdrawMessage",error.message,"error");
 
  ({error}=await db.rpc("ps_submit_withdrawal",{
   p_amount:amount
  }));
 
- if(error)return message("withdrawMessage",error.message,"error");
+ if(error)
+ return message("withdrawMessage",error.message,"error");
 
  message("withdrawMessage","Demande envoyée. Elle sera vérifiée par l'administration.","success");
 
  await loadWallet();
  await loadMyWithdrawals();
+
 }
 
 async function loadMyWithdrawals(){
@@ -2156,14 +2342,13 @@ async function loadMyWithdrawals(){
 
  const box=$("myWithdrawals");
 
- if(!currentUser)
- return box.textContent="Connectez-vous.";
+ if(!currentUser)return box.textContent="Connectez-vous.";
 
  const {data,error}=await db
-  .from("ps_withdrawal_requests")
-  .select("*")
-  .eq("user_id",currentUser.id)
-  .order("created_at",{ascending:false});
+ .from("ps_withdrawal_requests")
+ .select("*")
+ .eq("user_id",currentUser.id)
+ .order("created_at",{ascending:false});
 
  if(error)return box.textContent=error.message;
 
@@ -2177,22 +2362,24 @@ async function loadMyWithdrawals(){
 
   e.innerHTML=`
 
-   <b>Retrait : ${money(r.amount)}</b>
+  <b>Retrait : ${money(r.amount)}</b>
 
-   <p>À recevoir : ${money(r.net_amount)}</p>
+  <p>À recevoir : ${money(r.net_amount)}</p>
 
-   <p>${escapeHTML(r.provider)} — ${escapeHTML(r.mobile_money_number)}</p>
+  <p>${escapeHTML(r.provider)} — ${escapeHTML(r.mobile_money_number)}</p>
 
-   <p>Statut : ${badge(r.status)}</p>
+  <p>Statut : ${badge(r.status)}</p>
 
-   <p>${new Date(r.created_at).toLocaleString("fr-FR")}</p>
+  <p>${new Date(r.created_at).toLocaleString("fr-FR")}</p>
 
   `;
 
   box.appendChild(e);
+
  });
 
  if(!data?.length)box.textContent="Aucun retrait.";
+
 }
 
 /* HISTORIQUE */
@@ -2206,6 +2393,7 @@ function historyTab(t,b){
  document.querySelectorAll("#orders .tabs button").forEach(x=>x.classList.remove("selected"));
 
  b.classList.add("selected");
+
 }
 
 async function loadOrders(){
@@ -2219,6 +2407,7 @@ async function loadOrders(){
   loadWithdrawalHistory(),
   loadBonusHistory()
  ]);
+
 }
 
 async function loadDepositHistory(){
@@ -2226,10 +2415,10 @@ async function loadDepositHistory(){
  const b=$("historyDeposits");
 
  const {data,error}=await db
-  .from("ps_deposit_requests")
-  .select("*")
-  .eq("user_id",currentUser.id)
-  .order("created_at",{ascending:false});
+ .from("ps_deposit_requests")
+ .select("*")
+ .eq("user_id",currentUser.id)
+ .order("created_at",{ascending:false});
 
  if(error)return b.textContent=error.message;
 
@@ -2254,9 +2443,11 @@ async function loadDepositHistory(){
   `;
 
   b.appendChild(e);
+
  });
 
  if(!data?.length)b.textContent="Aucun dépôt.";
+
 }
 
 async function loadWithdrawalHistory(){
@@ -2264,10 +2455,10 @@ async function loadWithdrawalHistory(){
  const b=$("historyWithdrawals");
 
  const {data,error}=await db
-  .from("ps_withdrawal_requests")
-  .select("*")
-  .eq("user_id",currentUser.id)
-  .order("created_at",{ascending:false});
+ .from("ps_withdrawal_requests")
+ .select("*")
+ .eq("user_id",currentUser.id)
+ .order("created_at",{ascending:false});
 
  if(error)return b.textContent=error.message;
 
@@ -2292,9 +2483,11 @@ async function loadWithdrawalHistory(){
   `;
 
   b.appendChild(e);
+
  });
 
  if(!data?.length)b.textContent="Aucun retrait.";
+
 }
 
 async function loadBonusHistory(){
@@ -2302,10 +2495,10 @@ async function loadBonusHistory(){
  const b=$("historyBonuses");
 
  const {data,error}=await db
-  .from("ps_wallet_transactions")
-  .select("*")
-  .eq("user_id",currentUser.id)
-  .order("created_at",{ascending:false});
+ .from("ps_wallet_transactions")
+ .select("*")
+ .eq("user_id",currentUser.id)
+ .order("created_at",{ascending:false});
 
  if(error)return b.textContent=error.message;
 
@@ -2333,9 +2526,11 @@ async function loadBonusHistory(){
   `;
 
   b.appendChild(e);
+
  });
 
  if(!rows.length)b.textContent="Aucun bonus ou commission.";
+
 }
 
 /* ADMINISTRATION */
@@ -2349,11 +2544,13 @@ async function openAdmin(){
   showPage("account");
 
   return;
+
  }
 
  $("adminStatus").textContent="Accès SUPER ADMIN autorisé.";
 
  adminTab("dashboard",document.querySelector(".admin-tabs button"));
+
 }
 
 async function adminReady(){
@@ -2364,6 +2561,7 @@ async function adminReady(){
  }
 
  return true;
+
 }
 
 async function loadAdminDashboard(){
@@ -2375,25 +2573,28 @@ async function loadAdminDashboard(){
   db.rpc("ps_admin_list_members"),
 
   db.from("ps_deposit_requests")
-   .select("id",{count:"exact",head:true})
-   .eq("status","pending"),
+  .select("id",{count:"exact",head:true})
+  .eq("status","pending"),
 
   db.from("ps_withdrawal_requests")
-   .select("id",{count:"exact",head:true})
-   .in("status",["pending","processing"]),
+  .select("id",{count:"exact",head:true})
+  .in("status",["pending","processing"]),
 
   db.from("ps_wallets")
-   .select("available_balance,reserved_balance,total_deposited,total_withdrawn"),
+  .select("available_balance,reserved_balance,total_deposited,total_withdrawn"),
 
   db.from("ps_wallets")
-   .select("user_id",{count:"exact",head:true})
-   .gt("total_deposited",0)
+  .select("user_id",{count:"exact",head:true})
+  .gt("total_deposited",0)
 
  ]);
 
  $("adminMemberCount").textContent=m.data?.length??"-";
+
  $("adminDepositCount").textContent=d.count??"-";
+
  $("adminWithdrawalCount").textContent=w.count??"-";
+
  $("adminDepositorCount").textContent=dep.count??"-";
 
  const rows=wallets.data||[];
@@ -2409,6 +2610,7 @@ async function loadAdminDashboard(){
  $("adminReserved").textContent=money(
   rows.reduce((s,x)=>s+Number(x.reserved_balance||0),0)
  );
+
 }
 
 async function getProfileMap(ids){
@@ -2416,11 +2618,12 @@ async function getProfileMap(ids){
  if(!ids.length)return {};
 
  const {data}=await db
-  .from("power_station_profiles")
-  .select("user_id,full_name,phone")
-  .in("user_id",ids);
+ .from("power_station_profiles")
+ .select("user_id,full_name,phone")
+ .in("user_id",ids);
 
  return Object.fromEntries((data||[]).map(p=>[p.user_id,p]));
+
 }
 
 async function loadAdminDeposits(){
@@ -2432,15 +2635,13 @@ async function loadAdminDeposits(){
  b.textContent="Chargement...";
 
  const {data,error}=await db
-  .from("ps_deposit_requests")
-  .select("*")
-  .order("created_at",{ascending:false});
+ .from("ps_deposit_requests")
+ .select("*")
+ .order("created_at",{ascending:false});
 
  if(error)return b.textContent=error.message;
 
- const pm=await getProfileMap([
-  ...new Set((data||[]).map(x=>x.user_id))
- ]);
+ const pm=await getProfileMap([...new Set((data||[]).map(x=>x.user_id))]);
 
  b.innerHTML="";
 
@@ -2484,13 +2685,17 @@ async function loadAdminDeposits(){
    no.onclick=()=>reviewDeposit(d.id,false);
 
    a.append(ok,no);
+
    e.append(a);
+
   }
 
   b.append(e);
+
  });
 
  if(!data?.length)b.textContent="Aucun dépôt.";
+
 }
 
 async function reviewDeposit(id,approve){
@@ -2510,6 +2715,7 @@ async function reviewDeposit(id,approve){
 
  loadAdminDeposits();
  loadAdminDashboard();
+
 }
 
 async function loadAdminWithdrawals(){
@@ -2519,15 +2725,13 @@ async function loadAdminWithdrawals(){
  const b=$("adminWithdrawalsList");
 
  const {data,error}=await db
-  .from("ps_withdrawal_requests")
-  .select("*")
-  .order("created_at",{ascending:false});
+ .from("ps_withdrawal_requests")
+ .select("*")
+ .order("created_at",{ascending:false});
 
  if(error)return b.textContent=error.message;
 
- const pm=await getProfileMap([
-  ...new Set((data||[]).map(x=>x.user_id))
- ]);
+ const pm=await getProfileMap([...new Set((data||[]).map(x=>x.user_id))]);
 
  b.innerHTML="";
 
@@ -2573,13 +2777,17 @@ async function loadAdminWithdrawals(){
    no.onclick=()=>rejectWithdrawal(r.id);
 
    a.append(ok,no);
+
    e.append(a);
+
   }
 
   b.append(e);
+
  });
 
  if(!data?.length)b.textContent="Aucun retrait.";
+
 }
 
 async function confirmWithdrawal(id){
@@ -2603,6 +2811,7 @@ async function confirmWithdrawal(id){
 
  loadAdminWithdrawals();
  loadAdminDashboard();
+
 }
 
 async function rejectWithdrawal(id){
@@ -2623,6 +2832,7 @@ async function rejectWithdrawal(id){
  alert(data||"Retrait rejeté.");
 
  loadAdminWithdrawals();
+
 }
 
 async function loadAdminMembers(){
@@ -2644,16 +2854,16 @@ async function loadAdminMembers(){
  const [a,w]=await Promise.all([
 
   ids.length
-   ?db.from("ps_vip_activations")
-    .select("user_id,vip_product_id,status,expires_at")
-    .in("user_id",ids)
-   :Promise.resolve({data:[]}),
+  ?db.from("ps_vip_activations")
+   .select("user_id,vip_product_id,status,expires_at")
+   .in("user_id",ids)
+  :Promise.resolve({data:[]}),
 
   ids.length
-   ?db.from("ps_wallets")
-    .select("user_id,available_balance")
-    .in("user_id",ids)
-   :Promise.resolve({data:[]})
+  ?db.from("ps_wallets")
+   .select("user_id,available_balance")
+   .in("user_id",ids)
+  :Promise.resolve({data:[]})
 
  ]);
 
@@ -2661,15 +2871,12 @@ async function loadAdminMembers(){
 
  (a.data||[]).forEach(x=>{
 
-  if(x.status==="active"&&
-  (!x.expires_at||new Date(x.expires_at)>new Date()))
+  if(x.status==="active"&&(!x.expires_at||new Date(x.expires_at)>new Date()))
   am[x.user_id]=x;
 
  });
 
- const wm=Object.fromEntries(
-  (w.data||[]).map(x=>[x.user_id,x])
- );
+ const wm=Object.fromEntries((w.data||[]).map(x=>[x.user_id,x]));
 
  allMembers=allMembers.map(m=>({
 
@@ -2684,6 +2891,7 @@ async function loadAdminMembers(){
  }));
 
  renderAdminMembers(allMembers);
+
 }
 
 function renderAdminMembers(rows){
@@ -2719,9 +2927,11 @@ function renderAdminMembers(rows){
   `;
 
   b.append(e);
+
  });
 
  if(!rows.length)b.textContent="Aucun membre.";
+
 }
 
 function selectMember(id){
@@ -2731,6 +2941,7 @@ function selectMember(id){
  $("earningUserId").value=id;
 
  alert("Membre sélectionné.");
+
 }
 
 function filterMembers(){
@@ -2739,8 +2950,9 @@ function filterMembers(){
 
  renderAdminMembers(allMembers.filter(m=>
   [m.full_name,m.phone,m.user_id,m.referral_code]
-   .some(v=>String(v||"").toLowerCase().includes(q))
+  .some(v=>String(v||"").toLowerCase().includes(q))
  ));
+
 }
 
 async function giveBonus(){
@@ -2760,18 +2972,17 @@ async function giveBonus(){
  if(error)return message("bonusMessage",error.message,"error");
 
  message("bonusMessage",data||"Bonus attribué.","success");
-}
 
-/* ADMIN VIP */
+}
 
 async function loadAdminVIP(){
 
  if(!await adminReady())return;
 
  const {data,error}=await db
-  .from("power_station_vip_products")
-  .select("*")
-  .order("id");
+ .from("power_station_vip_products")
+ .select("*")
+ .order("id");
 
  if(error)return $("adminVIPList").textContent=error.message;
 
@@ -2786,7 +2997,6 @@ async function loadAdminVIP(){
   let o=document.createElement("option");
 
   o.value=v.id;
-
   o.textContent=v.code+" — "+money(v.price_fc);
 
   $("vipProductSelect").append(o);
@@ -2812,6 +3022,7 @@ async function loadAdminVIP(){
   $("adminVIPList").append(e);
 
  });
+
 }
 
 async function assignVIP(){
@@ -2831,6 +3042,7 @@ async function assignVIP(){
  if(error)return message("vipMessage",error.message,"error");
 
  message("vipMessage","VIP attribué : "+data,"success");
+
 }
 
 async function adminAddEarning(){
@@ -2852,6 +3064,7 @@ async function adminAddEarning(){
  if(error)return message("adminEarningMessage",error.message,"error");
 
  message("adminEarningMessage","Revenu enregistré. "+data,"success");
+
 }
 
 /* PARAMÈTRES */
@@ -2859,12 +3072,10 @@ async function adminAddEarning(){
 function applyTheme(){
 
  document.documentElement.style.setProperty("--primary",settings.primary);
-
- document.documentElement.style.setProperty("--dark","#102b50");
-
+ document.documentElement.style.setProperty("--dark",settings.primary);
  document.documentElement.style.setProperty("--gold",settings.gold);
-
  document.documentElement.style.setProperty("--bg",settings.background);
+
 }
 
 function applyCommunityLinks(){
@@ -2879,7 +3090,9 @@ function applyCommunityLinks(){
 
   const a=$(id);
 
-  if(url&&/^https:\/\/(chat\.whatsapp\.com|wa\.me|t\.me)\//i.test(url)){
+  const valid=url&&/^https:\/\/(chat\.whatsapp\.com|wa\.me|t\.me)\//i.test(url);
+
+  if(valid){
 
    a.href=url;
    a.style.opacity="1";
@@ -2892,7 +3105,9 @@ function applyCommunityLinks(){
    a.style.pointerEvents="none";
 
   }
+
  });
+
 }
 
 function applyAPKLink(){
@@ -2914,8 +3129,10 @@ function applyAPKLink(){
   btn.style.opacity=".5";
   btn.style.pointerEvents="auto";
 
-  info.textContent="Le lien APK n'est pas encore configuré.";
+  info.textContent="Le lien APK n'est pas encore configuré. L'administration doit ajouter le lien de téléchargement.";
+
  }
+
 }
 
 function downloadAPK(e){
@@ -2927,9 +3144,11 @@ function downloadAPK(e){
   alert("Le lien de téléchargement APK n'a pas encore été ajouté par l'administration.");
 
   return false;
+
  }
 
  return true;
+
 }
 
 function loadLocalSettings(){
@@ -2944,14 +3163,18 @@ function loadLocalSettings(){
  }catch(e){}
 
  applyTheme();
+
  renderPaymentNumbers();
+
  applyCommunityLinks();
+
  applyAPKLink();
 
  $("withdrawRules").textContent=
-  "Minimum : "+money(settings.withdrawMin)+
-  ". Frais affichés : "+settings.withdrawFee+
-  " %. Retraits : 08h00–18h00.";
+ "Minimum : "+money(settings.withdrawMin)+
+ ". Frais affichés : "+settings.withdrawFee+
+ " %. Retraits : 08h00–18h00.";
+
 }
 
 function loadSettingsPanel(){
@@ -2982,6 +3205,7 @@ function loadSettingsPanel(){
  $("settingApkUrl").value=settings.apkUrl||"";
 
  loadVIPSettings();
+
 }
 
 function saveLocalSettings(){
@@ -3018,14 +3242,16 @@ function saveLocalSettings(){
  localStorage.setItem("power_station_settings",JSON.stringify(settings));
 
  applyTheme();
+
  renderPaymentNumbers();
+
  applyCommunityLinks();
+
  applyAPKLink();
 
  message("settingsMessage","Paramètres enregistrés sur cet appareil.","success");
-}
 
-/* MODIFICATION DES PRODUITS VIP */
+}
 
 function loadVIPSettings(){
 
@@ -3053,22 +3279,20 @@ function loadVIPSettings(){
     <h3>${escapeHTML(v.code)}</h3>
 
     <label>Prix FC</label>
+
     <input type="number" id="price-${v.id}" value="${v.price_fc}">
 
     <label>Revenu journalier FC</label>
+
     <input type="number" id="daily-${v.id}" value="${v.daily_revenue_fc}">
 
     <label>Durée jours</label>
+
     <input type="number" id="days-${v.id}" value="${v.duration_days}">
 
-    <p>Total calculé :
-    <strong id="total-${v.id}">
-    ${money(Number(v.daily_revenue_fc||0)*Number(v.duration_days||35))}
-    </strong></p>
+    <p>Total calculé : <strong id="total-${v.id}">${money(Number(v.daily_revenue_fc||0)*Number(v.duration_days||35))}</strong></p>
 
-    <button class="green" onclick="saveVIPProduct('${v.id}')">
-    Enregistrer ${escapeHTML(v.code)}
-    </button>
+    <button class="green" onclick="saveVIPProduct('${v.id}')">Enregistrer ${escapeHTML(v.code)}</button>
 
     <div id="save-${v.id}" class="status hidden"></div>
 
@@ -3083,15 +3307,15 @@ function loadVIPSettings(){
   });
 
  });
+
 }
 
 function updateVIPTotal(id){
 
- const total=
-  Number($("daily-"+id).value||0)*
-  Number($("days-"+id).value||0);
+ const total=Number($("daily-"+id).value||0)*Number($("days-"+id).value||0);
 
  $("total-"+id).textContent=money(total);
+
 }
 
 async function saveVIPProduct(id){
@@ -3106,27 +3330,24 @@ async function saveVIPProduct(id){
 
   duration_days:Number($("days-"+id).value),
 
-  total_revenue_fc:
-   Number($("daily-"+id).value)*
-   Number($("days-"+id).value)
+  total_revenue_fc:Number($("daily-"+id).value)*Number($("days-"+id).value)
 
  };
 
- if(values.price_fc<=0||
- values.daily_revenue_fc<0||
- values.duration_days<=0)
+ if(values.price_fc<=0||values.daily_revenue_fc<0||values.duration_days<=0)
  return message("save-"+id,"Vérifiez les montants et la durée.","error");
 
  const {error}=await db
-  .from("power_station_vip_products")
-  .update(values)
-  .eq("id",id);
+ .from("power_station_vip_products")
+ .update(values)
+ .eq("id",id);
 
  if(error)return message("save-"+id,error.message,"error");
 
  message("save-"+id,"Produit modifié. Total recalculé : "+money(values.total_revenue_fc),"success");
 
  loadVIPProducts();
+
 }
 
 /* DÉMARRAGE */
@@ -3146,10 +3367,10 @@ async function saveVIPProduct(id){
   authMode("signup");
 
   showPage("auth");
+
  }
 
- if(currentUser)
- await checkAdmin();
+ if(currentUser)await checkAdmin();
 
 })();
 
