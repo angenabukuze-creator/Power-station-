@@ -217,7 +217,6 @@ label{font-weight:bold;font-size:13px}
 <button class="red" style="width:100%" onclick="submitWithdrawal()">Envoyer ma demande</button>
 <div id="withdrawMessage" class="status hidden"></div>
 </div>
-<div class="card"><h2>Mes demandes de retrait</h2><div id="myWithdrawals"></div></div>
 </section>
 
 <section id="orders" class="hidden">
@@ -254,7 +253,7 @@ label{font-weight:bold;font-size:13px}
 <h2>Statistiques de mon équipe</h2>
 <div class="stats">
 <div class="stat">Total inscrits<strong id="teamRegistered">0</strong></div>
-<div class="stat">Membres VIP actifs<strong id="teamValidated">0</strong></div>
+<div class="stat">Membres ayant déposé<strong id="teamValidated">0</strong></div>
 <div class="stat">Niveau 1 inscrits<strong id="teamLevel1">0</strong></div>
 <div class="stat">Niveau 2 inscrits<strong id="teamLevel2">0</strong></div>
 <div class="stat">Niveau 3 inscrits<strong id="teamLevel3">0</strong></div>
@@ -460,12 +459,27 @@ const vipFallback=[
 function escapeHTML(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 function money(v){return Number(v||0).toLocaleString("fr-FR")+" FC";}
 function message(id,t,type=""){const e=$(id);if(!e)return;e.textContent=t;e.className="status";if(type)e.classList.add(type);}
+
 function badge(s){
- s=String(s||"").toLowerCase();
- if(["active","success","approved","claimed","paid","validated","confirmed","completed"].includes(s))return '<span class="badge badge-green">Actif / Succès</span>';
- if(["rejected","blocked"].includes(s))return '<span class="badge badge-red">Bloqué / Rejeté</span>';
+ s=String(s||"").toLowerCase().trim();
+ if(["success","approved","paid","validated","confirmed","completed","claimed"].includes(s))
+  return '<span class="badge badge-green">Succès</span>';
+ if(["rejected","blocked"].includes(s))
+  return '<span class="badge badge-red">Rejeté</span>';
+ if(["active"].includes(s))
+  return '<span class="badge badge-green">Actif</span>';
+ if(["pending","processing","waiting"].includes(s))
+  return '<span class="badge badge-orange">En attente</span>';
  return '<span class="badge badge-orange">En attente</span>';
 }
+
+function formatDateTime(v){
+ if(!v)return "-";
+ const d=new Date(v);
+ if(Number.isNaN(d.getTime()))return "-";
+ return d.toLocaleString("fr-FR",{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit",second:"2-digit"});
+}
+
 function formatPhone(v){
  let p=String(v||"").trim().replace(/[\s()-]/g,"");
  if(p.startsWith("00"))p="+"+p.slice(2);
@@ -485,8 +499,13 @@ function showPage(page,button){
  $(page).classList.remove("hidden");document.body.classList.toggle("auth-page",page==="auth");
  document.querySelectorAll(".bottom-nav button").forEach(b=>b.classList.remove("active"));
  if(button)button.classList.add("active");else{const m={home:0,shop:1,team:2,account:3};if(m[page]!==undefined)document.querySelectorAll(".bottom-nav button")[m[page]].classList.add("active");}
- if(page==="shop")loadVIPProducts();if(page==="team")loadTeam();if(page==="active")loadActiveProducts();
- if(page==="withdraw"){loadWallet();loadMyWithdrawals();}if(page==="orders")loadOrders();if(page==="account")loadAccount();if(page==="admin")openAdmin();
+ if(page==="shop")loadVIPProducts();
+ if(page==="team")loadTeam();
+ if(page==="active")loadActiveProducts();
+ if(page==="withdraw")loadWallet();
+ if(page==="orders")loadOrders();
+ if(page==="account")loadAccount();
+ if(page==="admin")openAdmin();
  window.scrollTo(0,0);
 }
 function authMode(mode){
@@ -574,22 +593,41 @@ async function loadTeam(){
  if(error){teamCache=[];box.textContent="Impossible de charger les trois niveaux : "+error.message;["teamRegistered","teamValidated","teamLevel1","teamLevel2","teamLevel3"].forEach(id=>$(id).textContent="0");$("teamDepositTotal").textContent=money(0);return message("teamMessage",error.message,"error");}
  const result=data||{},counts=result.counts||{};teamCache=Array.isArray(result.members)?result.members:[];
  const n1=teamCache.filter(m=>Number(m.level)===1).length,n2=teamCache.filter(m=>Number(m.level)===2).length,n3=teamCache.filter(m=>Number(m.level)===3).length,total=teamCache.length;
- const vipCount=teamCache.filter(m=>m.has_deposit===true&&Number(m.deposit_count)>0).length,depositTotal=teamCache.reduce((sum,m)=>sum+Number(m.deposit_total||0),0);
- $("teamLevel1").textContent=counts.level1??n1;$("teamLevel2").textContent=counts.level2??n2;$("teamLevel3").textContent=counts.level3??n3;
- $("teamRegistered").textContent=counts.total??total;$("teamValidated").textContent=vipCount;$("teamDepositTotal").textContent=money(depositTotal);
- renderTeamMembers();message("teamMessage","Équipe actualisée : "+total+" membre(s).","success");
+ const depositedMembers=teamCache.filter(m=>Number(m.deposit_count)>0).length;
+ const depositTotal=teamCache.reduce((sum,m)=>sum+Number(m.deposit_total||0),0);
+ $("teamLevel1").textContent=counts.level1??n1;
+ $("teamLevel2").textContent=counts.level2??n2;
+ $("teamLevel3").textContent=counts.level3??n3;
+ $("teamRegistered").textContent=counts.total??total;
+ $("teamValidated").textContent=depositedMembers;
+ $("teamDepositTotal").textContent=money(depositTotal);
+ renderTeamMembers();
+ message("teamMessage","Équipe actualisée : "+total+" membre(s).","success");
 }
-function filterTeamLevel(level,button){teamFilter=level;document.querySelectorAll("#teamTabs button").forEach(b=>b.classList.remove("selected"));if(button)button.classList.add("selected");renderTeamMembers();}
+function filterTeamLevel(level,button){
+ teamFilter=level;
+ document.querySelectorAll("#teamTabs button").forEach(b=>b.classList.remove("selected"));
+ if(button)button.classList.add("selected");
+ renderTeamMembers();
+}
 function renderTeamMembers(){
- const box=$("teamMembers");box.innerHTML="";const rows=teamCache.filter(m=>teamFilter==="all"||Number(m.level)===Number(teamFilter));
+ const box=$("teamMembers");box.innerHTML="";
+ const rows=teamCache.filter(m=>teamFilter==="all"||Number(m.level)===Number(teamFilter));
  if(!rows.length){box.textContent=teamFilter==="all"?"Aucun membre inscrit pour le moment.":"Aucun membre trouvé dans ce niveau.";return;}
  rows.forEach((m,index)=>{
-  const el=document.createElement("div");el.className="member-line";const count=Number(m.deposit_count||0);
-  el.innerHTML=`<div class="level-title">NIVEAU ${Number(m.level)} — MEMBRE ${index+1}</div><p><b>Nom :</b> ${escapeHTML(m.full_name||"Non renseigné")}</p><p><b>Téléphone :</b> ${escapeHTML(m.phone||"Non disponible")}</p><p><b>Inscription :</b> ${m.created_at?new Date(m.created_at).toLocaleString("fr-FR"):"-"}</p><p><b>Dépôts validés :</b> ${count}</p><p><b>Total dépôts :</b> ${money(m.deposit_total)}</p>`;
+  const el=document.createElement("div");el.className="member-line";
+  const count=Number(m.deposit_count||0);
+  el.innerHTML=`<div class="level-title">NIVEAU ${Number(m.level)} — MEMBRE ${index+1}</div>
+  <p><b>Nom :</b> ${escapeHTML(m.full_name||"Non renseigné")}</p>
+  <p><b>Téléphone :</b> ${escapeHTML(m.phone||"Non disponible")}</p>
+  <p><b>Inscription :</b> ${formatDateTime(m.created_at)}</p>
+  <p><b>Dépôts validés :</b> ${count}</p>
+  <p><b>Total dépôts :</b> ${money(m.deposit_total)}</p>`;
   box.appendChild(el);
  });
 }
-const referralFromUrl=new URLSearchParams(location.search).get("ref");if(referralFromUrl)$("referralCode").value=referralFromUrl.toUpperCase();
+const referralFromUrl=new URLSearchParams(location.search).get("ref");
+if(referralFromUrl)$("referralCode").value=referralFromUrl.toUpperCase();
 
 /* VIP */
 function totalVIP(v){return Number(v.daily_revenue_fc||0)*Number(v.duration_days||35);}
@@ -603,7 +641,8 @@ function renderVIP(products){
 }
 async function loadVIPProducts(){
  const {data,error}=await db.from("power_station_vip_products").select("id,code,price_fc,daily_revenue_fc,duration_days,total_revenue_fc,is_active").eq("is_active",true).order("id");
- if(error){console.error(error);renderVIP(vipFallback);return;}renderVIP(data?.length?data:vipFallback);
+ if(error){console.error(error);renderVIP(vipFallback);return;}
+ renderVIP(data?.length?data:vipFallback);
 }
 function renderPaymentNumbers(){
  const rows=[["Airtel Money",settings.airtel,settings.airtelName],["Orange Money",settings.orange,settings.orangeName],["M-Pesa",settings.mpesa,settings.mpesaName]];
@@ -611,7 +650,8 @@ function renderPaymentNumbers(){
 }
 function chooseVIP(id,code,price){
  if(!id)return alert("Le produit VIP doit être chargé depuis Supabase.");
- selectedVIP={id,code,price};$("chosenVIP").innerHTML=`<strong>${escapeHTML(code)}</strong><p>Montant à payer : <b>${money(price)}</b></p><p>Activation après validation administrative.</p>`;
+ selectedVIP={id,code,price};
+ $("chosenVIP").innerHTML=`<strong>${escapeHTML(code)}</strong><p>Montant à payer : <b>${money(price)}</b></p><p>Activation après validation administrative.</p>`;
  renderPaymentNumbers();showPage("vipDeposit");
 }
 async function submitVIPDeposit(){
@@ -619,7 +659,8 @@ async function submitVIPDeposit(){
  let method=$("vipPaymentMethod").value,sender=formatPhone($("vipSenderPhone").value),reference=$("vipTransactionReference").value.trim();
  if(!method||!sender||!reference)return message("vipDepositMessage","Complétez tous les champs.","error");
  const {data,error}=await db.rpc("ps_submit_vip_deposit",{p_vip_product_id:selectedVIP.id,p_method:method,p_sender_phone:sender,p_reference:reference,p_proof_path:null});
- if(error)return message("vipDepositMessage",error.message,"error");message("vipDepositMessage","Demande envoyée. En attente de validation. Référence : "+data,"success");
+ if(error)return message("vipDepositMessage",error.message,"error");
+ message("vipDepositMessage","Demande envoyée. En attente de validation. Référence : "+data,"success");
 }
 
 /* PRODUITS ACTIFS ET RÉCOLTE */
@@ -631,7 +672,8 @@ function timeLeft(date){
 function dateFormat(date){return date?new Date(date).toLocaleString("fr-FR"):"Pas encore récolté";}
 async function loadActiveProducts(){
  await checkSession();const box=$("activeProducts");if(!currentUser){box.textContent="Connectez-vous.";return;}
- if(countdownTimer){clearInterval(countdownTimer);countdownTimer=null;}box.textContent="Chargement...";
+ if(countdownTimer){clearInterval(countdownTimer);countdownTimer=null;}
+ box.textContent="Chargement...";
  const {data:allActs,error}=await db.from("ps_vip_activations").select("id,status,activated_at,expires_at,vip_product_id").eq("user_id",currentUser.id).eq("status","active").order("activated_at",{ascending:false});
  if(error){box.textContent=error.message;return;}
  const acts=(allActs||[]).filter(a=>!a.expires_at||new Date(a.expires_at).getTime()>Date.now());
@@ -703,7 +745,8 @@ function isWithdrawalTime(){
 async function loadWallet(){
  await checkSession();if(!currentUser)return $("walletSummary").textContent="Connectez-vous.";
  const {data,error}=await db.from("ps_wallets").select("available_balance,reserved_balance,total_deposited,total_withdrawn,total_bonus").eq("user_id",currentUser.id).maybeSingle();
- if(error)return $("walletSummary").textContent=error.message;if(!data)return $("walletSummary").textContent="Portefeuille non créé.";
+ if(error)return $("walletSummary").textContent=error.message;
+ if(!data)return $("walletSummary").textContent="Portefeuille non créé.";
  $("walletSummary").innerHTML=`<b>Solde disponible : ${money(data.available_balance)}</b><br>Solde réservé : ${money(data.reserved_balance)}<br>Total dépôts : ${money(data.total_deposited)}<br>Total retraits : ${money(data.total_withdrawn)}<br>Bonus : ${money(data.total_bonus)}`;
 }
 async function submitWithdrawal(){
@@ -717,14 +760,8 @@ async function submitWithdrawal(){
  if(error)return message("withdrawMessage",error.message,"error");
  ({error}=await db.rpc("ps_submit_withdrawal",{p_amount:amount}));
  if(error)return message("withdrawMessage",error.message,"error");
- message("withdrawMessage","Demande envoyée à l'administration.","success");await loadWallet();await loadMyWithdrawals();
-}
-async function loadMyWithdrawals(){
- await checkSession();const box=$("myWithdrawals");if(!currentUser)return box.textContent="Connectez-vous.";
- const {data,error}=await db.from("ps_withdrawal_requests").select("*").eq("user_id",currentUser.id).order("created_at",{ascending:false});
- if(error)return box.textContent=error.message;box.innerHTML="";
- (data||[]).forEach(r=>{const e=document.createElement("div");e.className="payment-box";e.innerHTML=`<b>Retrait : ${money(r.amount)}</b><p>À recevoir : ${money(r.net_amount)}</p><p>${escapeHTML(r.provider)} — ${escapeHTML(r.mobile_money_number)}</p><p>${badge(r.status)}</p><p>${new Date(r.created_at).toLocaleString("fr-FR")}</p>`;box.appendChild(e);});
- if(!data?.length)box.textContent="Aucun retrait.";
+ message("withdrawMessage","Demande envoyée à l'administration.","success");
+ await loadWallet();
 }
 
 /* HISTORIQUE */
@@ -732,33 +769,62 @@ function historyTab(t,b){
  ["deposits","withdrawals","bonuses"].forEach(x=>$("history"+x[0].toUpperCase()+x.slice(1)).classList.toggle("hidden",x!==t));
  document.querySelectorAll("#orders .tabs button").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");
 }
-async function loadOrders(){await checkSession();if(!currentUser)return;await Promise.all([loadDepositHistory(),loadWithdrawalHistory(),loadBonusHistory()]);}
+async function loadOrders(){
+ await checkSession();if(!currentUser)return;
+ await Promise.all([loadDepositHistory(),loadWithdrawalHistory(),loadBonusHistory()]);
+}
 async function loadDepositHistory(){
- const b=$("historyDeposits"),{data,error}=await db.from("ps_deposit_requests").select("*").eq("user_id",currentUser.id).order("created_at",{ascending:false});
- if(error)return b.textContent=error.message;b.innerHTML="";
- (data||[]).forEach(r=>{const e=document.createElement("div");e.className="payment-box";e.innerHTML=`<div class="compact-line"><b>Dépôt ${money(r.amount)}</b>${badge(r.status)}</div><div class="compact-line">${escapeHTML(r.payment_method)} · ${escapeHTML(r.transaction_reference)}</div>`;b.append(e);});
+ const b=$("historyDeposits");
+ const {data,error}=await db.from("ps_deposit_requests").select("*").eq("user_id",currentUser.id).order("created_at",{ascending:false});
+ if(error)return b.textContent=error.message;
+ b.innerHTML="";
+ (data||[]).forEach(r=>{
+  const e=document.createElement("div");e.className="payment-box";
+  e.innerHTML=`<div class="compact-line"><b>Dépôt ${money(r.amount)}</b>${badge(r.status)}</div>
+  <div class="compact-line">${escapeHTML(r.payment_method||"-")} · ${escapeHTML(r.transaction_reference||"-")}</div>
+  <div class="compact-line"><span>Date et heure</span><strong>${formatDateTime(r.created_at)}</strong></div>`;
+  b.append(e);
+ });
  if(!data?.length)b.textContent="Aucun dépôt.";
 }
 async function loadWithdrawalHistory(){
- const b=$("historyWithdrawals"),{data,error}=await db.from("ps_withdrawal_requests").select("*").eq("user_id",currentUser.id).order("created_at",{ascending:false});
- if(error)return b.textContent=error.message;b.innerHTML="";
- (data||[]).forEach(r=>{const e=document.createElement("div");e.className="payment-box";e.innerHTML=`<div class="compact-line"><b>Retrait ${money(r.amount)}</b>${badge(r.status)}</div><div class="compact-line">Net : ${money(r.net_amount)} · ${escapeHTML(r.provider)}</div>`;b.append(e);});
+ const b=$("historyWithdrawals");
+ const {data,error}=await db.from("ps_withdrawal_requests").select("*").eq("user_id",currentUser.id).order("created_at",{ascending:false});
+ if(error)return b.textContent=error.message;
+ b.innerHTML="";
+ (data||[]).forEach(r=>{
+  const e=document.createElement("div");e.className="payment-box";
+  e.innerHTML=`<div class="compact-line"><b>Retrait ${money(r.amount)}</b>${badge(r.status)}</div>
+  <div class="compact-line">Net : ${money(r.net_amount)} · ${escapeHTML(r.provider||"-")}</div>
+  <div class="compact-line"><span>Date et heure</span><strong>${formatDateTime(r.created_at)}</strong></div>`;
+  b.append(e);
+ });
  if(!data?.length)b.textContent="Aucun retrait.";
 }
 async function loadBonusHistory(){
- const b=$("historyBonuses"),{data,error}=await db.from("ps_wallet_transactions").select("*").eq("user_id",currentUser.id).order("created_at",{ascending:false});
+ const b=$("historyBonuses");
+ const {data,error}=await db.from("ps_wallet_transactions").select("*").eq("user_id",currentUser.id).order("created_at",{ascending:false});
  if(error)return b.textContent=error.message;
  const rows=(data||[]).filter(x=>String(x.transaction_type).toLowerCase().includes("bonus")||String(x.transaction_type).toLowerCase().includes("commission"));
- b.innerHTML="";rows.forEach(r=>{const e=document.createElement("div");e.className="payment-box";e.innerHTML=`<div class="compact-line"><b>Crédit ${money(r.amount)}</b>${badge(r.status)}</div><div class="small">${escapeHTML(r.description)}</div>`;b.append(e);});
+ b.innerHTML="";
+ rows.forEach(r=>{
+  const e=document.createElement("div");e.className="payment-box";
+  e.innerHTML=`<div class="compact-line"><b>Crédit ${money(r.amount)}</b>${badge(r.status)}</div>
+  <div class="small">${escapeHTML(r.description||"")}</div>
+  <div class="compact-line"><span>Date et heure</span><strong>${formatDateTime(r.created_at)}</strong></div>`;
+  b.append(e);
+ });
  if(!rows.length)b.textContent="Aucun bonus ou commission.";
 }
 
 /* ADMIN */
 async function openAdmin(){
  if(!await checkAdmin()){$("adminStatus").textContent="Accès refusé : compte non administrateur.";showPage("account");return;}
- $("adminStatus").textContent="Accès SUPER ADMIN autorisé.";adminTab("dashboard",document.querySelector(".admin-tabs button"));
+ $("adminStatus").textContent="Accès SUPER ADMIN autorisé.";
+ adminTab("dashboard",document.querySelector(".admin-tabs button"));
 }
 async function adminReady(){if(!await checkAdmin()){alert("Accès administrateur refusé.");return false;}return true;}
+
 async function loadAdminDashboard(){
  if(!await adminReady())return;
  const [m,d,w,wallets,dep]=await Promise.all([
@@ -768,90 +834,169 @@ async function loadAdminDashboard(){
   db.from("ps_wallets").select("available_balance,reserved_balance,total_deposited,total_withdrawn"),
   db.from("ps_wallets").select("user_id",{count:"exact",head:true}).gt("total_deposited",0)
  ]);
- $("adminMemberCount").textContent=m.data?.length??"-";$("adminDepositCount").textContent=d.count??"-";$("adminWithdrawalCount").textContent=w.count??"-";$("adminDepositorCount").textContent=dep.count??"-";
- const rows=wallets.data||[];$("adminTotalDeposited").textContent=money(rows.reduce((s,x)=>s+Number(x.total_deposited||0),0));
- $("adminTotalWithdrawn").textContent=money(rows.reduce((s,x)=>s+Number(x.total_withdrawn||0),0));$("adminReserved").textContent=money(rows.reduce((s,x)=>s+Number(x.reserved_balance||0),0));
+ if(m.error){$("adminMemberCount").textContent="Erreur";console.error("Liste membres :",m.error.message);}
+ else $("adminMemberCount").textContent=m.data?.length??0;
+ $("adminDepositCount").textContent=d.count??"-";
+ $("adminWithdrawalCount").textContent=w.count??"-";
+ $("adminDepositorCount").textContent=dep.count??"-";
+ const rows=wallets.data||[];
+ $("adminTotalDeposited").textContent=money(rows.reduce((s,x)=>s+Number(x.total_deposited||0),0));
+ $("adminTotalWithdrawn").textContent=money(rows.reduce((s,x)=>s+Number(x.total_withdrawn||0),0));
+ $("adminReserved").textContent=money(rows.reduce((s,x)=>s+Number(x.reserved_balance||0),0));
 }
+
 async function getProfileMap(ids){
- if(!ids.length)return{};const {data}=await db.from("power_station_profiles").select("user_id,full_name,phone").in("user_id",ids);
+ if(!ids.length)return{};
+ const {data}=await db.from("power_station_profiles").select("user_id,full_name,phone").in("user_id",ids);
  return Object.fromEntries((data||[]).map(p=>[p.user_id,p]));
 }
+
 async function loadAdminDeposits(){
- if(!await adminReady())return;const b=$("adminDepositsList");b.textContent="Chargement...";
+ if(!await adminReady())return;
+ const b=$("adminDepositsList");b.textContent="Chargement...";
  const {data,error}=await db.from("ps_deposit_requests").select("*").order("created_at",{ascending:false});
- if(error)return b.textContent=error.message;const pm=await getProfileMap([...new Set((data||[]).map(x=>x.user_id))]);b.innerHTML="";
+ if(error)return b.textContent=error.message;
+ const pm=await getProfileMap([...new Set((data||[]).map(x=>x.user_id))]);b.innerHTML="";
  (data||[]).forEach(d=>{
   const p=pm[d.user_id]||{},e=document.createElement("div");e.className="admin-card";
-  e.innerHTML=`<b>Dépôt : ${money(d.amount)}</b><p>Membre : ${escapeHTML(p.full_name)}</p><p>Téléphone : ${escapeHTML(p.phone)}</p><p>Expéditeur : ${escapeHTML(d.sender_phone)}</p><p>Référence : ${escapeHTML(d.transaction_reference)}</p><p>${badge(d.status)}</p>`;
-  if(d.status==="pending"){const a=document.createElement("div");a.className="actions";const ok=document.createElement("button");ok.className="green";ok.textContent="Valider";ok.onclick=()=>reviewDeposit(d.id,true);const no=document.createElement("button");no.className="red";no.textContent="Rejeter";no.onclick=()=>reviewDeposit(d.id,false);a.append(ok,no);e.append(a);}b.append(e);
+  e.innerHTML=`<b>Dépôt : ${money(d.amount)}</b>
+  <p>Membre : ${escapeHTML(p.full_name||"Membre")}</p>
+  <p>Téléphone : ${escapeHTML(p.phone||"-")}</p>
+  <p>Expéditeur : ${escapeHTML(d.sender_phone||"-")}</p>
+  <p>Référence : ${escapeHTML(d.transaction_reference||"-")}</p>
+  <p>Statut : ${badge(d.status)}</p>
+  <p>Date et heure : <strong>${formatDateTime(d.created_at)}</strong></p>
+  ${d.reviewed_at?`<p>Examiné le : ${formatDateTime(d.reviewed_at)}</p>`:""}`;
+  if(d.status==="pending"){
+   const a=document.createElement("div");a.className="actions";
+   const ok=document.createElement("button");ok.className="green";ok.textContent="Valider";ok.onclick=()=>reviewDeposit(d.id,true);
+   const no=document.createElement("button");no.className="red";no.textContent="Rejeter";no.onclick=()=>reviewDeposit(d.id,false);
+   a.append(ok,no);e.append(a);
+  }
+  b.append(e);
  });
  if(!data?.length)b.textContent="Aucun dépôt.";
 }
+
 async function reviewDeposit(id,approve){
  if(!await adminReady()||!confirm(approve?"Confirmer la réception réelle du paiement ?":"Rejeter cette demande ?"))return;
- const {data,error}=await db.rpc("ps_admin_review_deposit",{p_deposit_id:id,p_approve:approve});if(error)return alert(error.message);
+ const {data,error}=await db.rpc("ps_admin_review_deposit",{p_deposit_id:id,p_approve:approve});
+ if(error)return alert(error.message);
  alert(data||"Opération effectuée.");loadAdminDeposits();loadAdminDashboard();
 }
+
 async function loadAdminWithdrawals(){
- if(!await adminReady())return;const b=$("adminWithdrawalsList");
+ if(!await adminReady())return;
+ const b=$("adminWithdrawalsList");
  const {data,error}=await db.from("ps_withdrawal_requests").select("*").order("created_at",{ascending:false});
- if(error)return b.textContent=error.message;const pm=await getProfileMap([...new Set((data||[]).map(x=>x.user_id))]);b.innerHTML="";
+ if(error)return b.textContent=error.message;
+ const pm=await getProfileMap([...new Set((data||[]).map(x=>x.user_id))]);b.innerHTML="";
  (data||[]).forEach(r=>{
   const p=pm[r.user_id]||{},e=document.createElement("div");e.className="admin-card";
-  e.innerHTML=`<b>Retrait : ${money(r.amount)}</b><p>Membre : ${escapeHTML(p.full_name)}</p><p>Téléphone : ${escapeHTML(p.phone)}</p><p>Numéro : ${escapeHTML(r.mobile_money_number)}</p><p>Bénéficiaire : ${escapeHTML(r.account_holder_name)}</p><p>À payer : ${money(r.net_amount)}</p><p>${badge(r.status)}</p>`;
-  if(["pending","processing"].includes(r.status)){const a=document.createElement("div");a.className="actions";const ok=document.createElement("button");ok.className="green";ok.textContent="Paiement effectué — confirmer";ok.onclick=()=>confirmWithdrawal(r.id);const no=document.createElement("button");no.className="red";no.textContent="Rejeter";no.onclick=()=>rejectWithdrawal(r.id);a.append(ok,no);e.append(a);}b.append(e);
+  e.innerHTML=`<b>Retrait : ${money(r.amount)}</b>
+  <p>Membre : ${escapeHTML(p.full_name||"Membre")}</p>
+  <p>Téléphone : ${escapeHTML(p.phone||"-")}</p>
+  <p>Numéro : ${escapeHTML(r.mobile_money_number||"-")}</p>
+  <p>Bénéficiaire : ${escapeHTML(r.account_holder_name||"-")}</p>
+  <p>À payer : ${money(r.net_amount)}</p>
+  <p>Statut : ${badge(r.status)}</p>
+  <p>Date et heure : <strong>${formatDateTime(r.created_at)}</strong></p>
+  ${r.reviewed_at?`<p>Examiné le : ${formatDateTime(r.reviewed_at)}</p>`:""}
+  ${r.paid_at?`<p>Payé le : ${formatDateTime(r.paid_at)}</p>`:""}`;
+  if(["pending","processing"].includes(r.status)){
+   const a=document.createElement("div");a.className="actions";
+   const ok=document.createElement("button");ok.className="green";ok.textContent="Paiement effectué — confirmer";ok.onclick=()=>confirmWithdrawal(r.id);
+   const no=document.createElement("button");no.className="red";no.textContent="Rejeter";no.onclick=()=>rejectWithdrawal(r.id);
+   a.append(ok,no);e.append(a);
+  }
+  b.append(e);
  });
  if(!data?.length)b.textContent="Aucun retrait.";
 }
+
 async function confirmWithdrawal(id){
  if(!await adminReady()||!confirm("Avez-vous réellement envoyé l'argent au client ?"))return;
  let note=prompt("Référence du paiement :");if(note===null)return;
- const {data,error}=await db.rpc("ps_admin_confirm_withdrawal",{p_withdrawal_id:id,p_admin_note:note});if(error)return alert(error.message);
+ const {data,error}=await db.rpc("ps_admin_confirm_withdrawal",{p_withdrawal_id:id,p_admin_note:note});
+ if(error)return alert(error.message);
  alert(data||"Retrait confirmé.");loadAdminWithdrawals();loadAdminDashboard();
 }
 async function rejectWithdrawal(id){
- if(!await adminReady())return;let reason=prompt("Motif du rejet :");if(reason===null)return;
- const {data,error}=await db.rpc("ps_admin_reject_withdrawal",{p_withdrawal_id:id,p_reason:reason});if(error)return alert(error.message);
+ if(!await adminReady())return;
+ let reason=prompt("Motif du rejet :");if(reason===null)return;
+ const {data,error}=await db.rpc("ps_admin_reject_withdrawal",{p_withdrawal_id:id,p_reason:reason});
+ if(error)return alert(error.message);
  alert(data||"Retrait rejeté.");loadAdminWithdrawals();
 }
 
 /* LISTE ET ACTIONS MEMBRES */
 async function loadAdminMembers(){
- if(!await adminReady())return;const b=$("adminMembersList");b.textContent="Chargement...";
- const {data,error}=await db.rpc("ps_admin_list_members");if(error)return b.textContent=error.message;
- allMembers=data||[];const ids=allMembers.map(m=>m.user_id).filter(Boolean);
+ if(!await adminReady())return;
+ const b=$("adminMembersList");b.textContent="Chargement...";
+ const {data,error}=await db.rpc("ps_admin_list_members");
+ if(error){b.textContent="Erreur de chargement : "+error.message;return;}
+ allMembers=data||[];
+ const ids=allMembers.map(m=>m.user_id).filter(Boolean);
+
  const [a,w,p]=await Promise.all([
   ids.length?db.from("ps_vip_activations").select("user_id,vip_product_id,status,expires_at").in("user_id",ids):Promise.resolve({data:[]}),
   ids.length?db.from("ps_wallets").select("user_id,available_balance").in("user_id",ids):Promise.resolve({data:[]}),
-  ids.length?db.from("power_station_profiles").select("user_id,is_blocked,is_promoter,block_reason").in("user_id",ids):Promise.resolve({data:[]})
+  ids.length?db.from("power_station_profiles").select("user_id,is_blocked,is_promoter").in("user_id",ids):Promise.resolve({data:[]})
  ]);
+
  const am={},wm=Object.fromEntries((w.data||[]).map(x=>[x.user_id,x])),pm=Object.fromEntries((p.data||[]).map(x=>[x.user_id,x]));
- (a.data||[]).forEach(x=>{if(x.status==="active"&&(!x.expires_at||new Date(x.expires_at)>new Date()))am[x.user_id]=x;});
- allMembers=allMembers.map(m=>({...m,available_balance:wm[m.user_id]?.available_balance??m.available_balance??0,active_vip:am[m.user_id]?.vip_product_id||null,is_blocked:pm[m.user_id]?.is_blocked===true||m.is_blocked===true||m.blocked===true,is_promoter:pm[m.user_id]?.is_promoter===true||m.is_promoter===true,block_reason:pm[m.user_id]?.block_reason||""}));
- $("memberCountTotal").textContent=allMembers.length;$("memberCountBlocked").textContent=allMembers.filter(m=>m.is_blocked).length;$("memberCountPromoters").textContent=allMembers.filter(m=>m.is_promoter).length;
+ (a.data||[]).forEach(x=>{
+  if(x.status==="active"&&(!x.expires_at||new Date(x.expires_at)>new Date()))am[x.user_id]=x;
+ });
+
+ allMembers=allMembers.map(m=>({
+  ...m,
+  available_balance:wm[m.user_id]?.available_balance??m.available_balance??0,
+  active_vip:am[m.user_id]?.vip_product_id||null,
+  is_blocked:pm[m.user_id]?.is_blocked===true||m.is_blocked===true,
+  is_promoter:pm[m.user_id]?.is_promoter===true||m.is_promoter===true
+ }));
+
+ $("memberCountTotal").textContent=allMembers.length;
+ $("memberCountBlocked").textContent=allMembers.filter(m=>m.is_blocked).length;
+ $("memberCountPromoters").textContent=allMembers.filter(m=>m.is_promoter).length;
  renderAdminMembers(allMembers);
 }
+
 function renderAdminMembers(rows){
  const b=$("adminMembersList");b.innerHTML="";
  rows.forEach(m=>{
   const e=document.createElement("div");e.className="member-line";
-  e.innerHTML=`<b>${escapeHTML(m.full_name||"Membre")}</b><p>Téléphone : ${escapeHTML(m.phone)}</p><p>ID : ${escapeHTML(m.user_id)}</p><p>Code : ${escapeHTML(m.referral_code)}</p><p>Solde : ${money(m.available_balance)}</p><p>VIP actif : ${escapeHTML(m.active_vip||"Aucun")}</p><p>Compte : ${m.is_blocked?'<span class="badge badge-red">BLOQUÉ</span>':'<span class="badge badge-green">ACTIF</span>'} ${m.is_promoter?'<span class="badge badge-orange">PROMOTEUR</span>':""}</p><button class="gold" onclick="selectMember('${escapeHTML(m.user_id)}')">Gérer ce membre</button>`;
+  e.innerHTML=`<b>${escapeHTML(m.full_name||"Membre")}</b>
+  <p>Téléphone : ${escapeHTML(m.phone||"-")}</p>
+  <p>Email : ${escapeHTML(m.email||"-")}</p>
+  <p>ID : ${escapeHTML(m.user_id)}</p>
+  <p>Code : ${escapeHTML(m.referral_code||"-")}</p>
+  <p>Inscription : ${formatDateTime(m.created_at)}</p>
+  <p>Solde : ${money(m.available_balance)}</p>
+  <p>VIP actif : ${escapeHTML(m.active_vip||"Aucun")}</p>
+  <p>Compte : ${m.is_blocked?'<span class="badge badge-red">BLOQUÉ</span>':'<span class="badge badge-green">ACTIF</span>'} ${m.is_promoter?'<span class="badge badge-orange">PROMOTEUR</span>':""}</p>
+  <button class="gold" onclick="selectMember('${escapeHTML(m.user_id)}')">Gérer ce membre</button>`;
   b.append(e);
  });
  if(!rows.length)b.textContent="Aucun membre.";
 }
+
 function selectMember(id){
  selectedMember=allMembers.find(m=>m.user_id===id);if(!selectedMember)return;
  $("selectedMemberId").value=id;$("bonusUserId").value=id;$("vipUserId").value=id;$("earningUserId").value=id;
  $("selectedMemberInfo").innerHTML=`<b>${escapeHTML(selectedMember.full_name||"Membre")}</b><br>${escapeHTML(selectedMember.phone||"")}<br>ID : ${escapeHTML(id)}<br>Compte : ${selectedMember.is_blocked?"Bloqué":"Actif"}<br>Promoteur : ${selectedMember.is_promoter?"Oui":"Non"}`;
  message("memberActionMessage","Membre sélectionné.","success");
 }
+
 function filterMembers(){
  const q=$("memberSearch").value.toLowerCase();
- renderAdminMembers(allMembers.filter(m=>[m.full_name,m.phone,m.user_id,m.referral_code].some(v=>String(v||"").toLowerCase().includes(q))));
+ renderAdminMembers(allMembers.filter(m=>[m.full_name,m.phone,m.user_id,m.referral_code,m.email].some(v=>String(v||"").toLowerCase().includes(q))));
 }
+
 async function toggleSelectedBlock(){
- if(!await adminReady())return;const id=$("selectedMemberId").value;if(!id)return alert("Sélectionnez un membre.");
+ if(!await adminReady())return;
+ const id=$("selectedMemberId").value;if(!id)return alert("Sélectionnez un membre.");
  const member=allMembers.find(m=>m.user_id===id);if(!member)return;
  const blocked=!member.is_blocked,reason=blocked?(prompt("Motif du blocage :")||"Blocage administrateur"):null;
  if(blocked&&!confirm("Confirmer le blocage de ce membre ?"))return;
@@ -860,8 +1005,10 @@ async function toggleSelectedBlock(){
  message("memberActionMessage",blocked?"Membre bloqué dans son profil.":"Membre débloqué dans son profil.","success");
  await loadAdminMembers();selectMember(id);
 }
+
 async function toggleSelectedPromoter(){
- if(!await adminReady())return;const id=$("selectedMemberId").value;if(!id)return alert("Sélectionnez un membre.");
+ if(!await adminReady())return;
+ const id=$("selectedMemberId").value;if(!id)return alert("Sélectionnez un membre.");
  const member=allMembers.find(m=>m.user_id===id);if(!member)return;
  const promoter=!member.is_promoter;
  if(!confirm(promoter?"Désigner ce membre comme promoteur ?":"Retirer le statut promoteur ?"))return;
@@ -870,8 +1017,10 @@ async function toggleSelectedPromoter(){
  message("memberActionMessage",promoter?"Membre désigné promoteur.":"Statut promoteur retiré.","success");
  await loadAdminMembers();selectMember(id);
 }
+
 async function adminResetMemberPassword(){
- if(!await adminReady())return;const id=$("selectedMemberId").value,p=$("memberNewPassword").value,c=$("memberConfirmPassword").value;
+ if(!await adminReady())return;
+ const id=$("selectedMemberId").value,p=$("memberNewPassword").value,c=$("memberConfirmPassword").value;
  if(!id)return message("memberActionMessage","Sélectionnez un membre.","error");
  if(!/^\d{6}$/.test(p)||p!==c)return message("memberActionMessage","Le nouveau mot de passe doit contenir 6 chiffres identiques dans les deux champs.","error");
  if(!confirm("Confirmer la réinitialisation du mot de passe de ce membre ?"))return;
@@ -880,30 +1029,38 @@ async function adminResetMemberPassword(){
  $("memberNewPassword").value=$("memberConfirmPassword").value="";
  message("memberActionMessage","Mot de passe du membre réinitialisé.","success");
 }
+
 async function giveBonus(){
  if(!await adminReady())return;
  const {data,error}=await db.rpc("ps_admin_give_bonus",{p_user_id:$("bonusUserId").value.trim(),p_amount:Number($("bonusAmount").value),p_reason:$("bonusReason").value.trim()});
- if(error)return message("bonusMessage",error.message,"error");message("bonusMessage",data||"Bonus attribué.","success");
+ if(error)return message("bonusMessage",error.message,"error");
+ message("bonusMessage",data||"Bonus attribué.","success");
 }
 
 /* VIP ADMIN */
 async function loadAdminVIP(){
- if(!await adminReady())return;const {data,error}=await db.from("power_station_vip_products").select("*").order("id");
- if(error)return $("adminVIPList").textContent=error.message;allVIP=data||[];$("vipProductSelect").innerHTML='<option value="">Choisir VIP</option>';$("adminVIPList").innerHTML="";
+ if(!await adminReady())return;
+ const {data,error}=await db.from("power_station_vip_products").select("*").order("id");
+ if(error)return $("adminVIPList").textContent=error.message;
+ allVIP=data||[];$("vipProductSelect").innerHTML='<option value="">Choisir VIP</option>';$("adminVIPList").innerHTML="";
  allVIP.forEach(v=>{
   const o=document.createElement("option");o.value=v.id;o.textContent=v.code+" — "+money(v.price_fc);$("vipProductSelect").append(o);
-  const e=document.createElement("div");e.className="payment-box";e.innerHTML=`<b>${escapeHTML(v.code)}</b><p>Prix : ${money(v.price_fc)}</p><p>Revenu journalier : ${money(v.daily_revenue_fc)}</p><p>Durée : ${v.duration_days} jours</p><p>Total : ${money(v.total_revenue_fc||totalVIP(v))}</p>`;$("adminVIPList").append(e);
+  const e=document.createElement("div");e.className="payment-box";
+  e.innerHTML=`<b>${escapeHTML(v.code)}</b><p>Prix : ${money(v.price_fc)}</p><p>Revenu journalier : ${money(v.daily_revenue_fc)}</p><p>Durée : ${v.duration_days} jours</p><p>Total : ${money(v.total_revenue_fc||totalVIP(v))}</p>`;
+  $("adminVIPList").append(e);
  });
 }
 async function assignVIP(){
  if(!await adminReady())return;
  const {data,error}=await db.rpc("ps_admin_assign_vip",{p_user_id:$("vipUserId").value.trim(),p_vip_product_id:Number($("vipProductSelect").value),p_note:$("vipNote").value.trim()||null});
- if(error)return message("vipMessage",error.message,"error");message("vipMessage","VIP attribué : "+data,"success");
+ if(error)return message("vipMessage",error.message,"error");
+ message("vipMessage","VIP attribué : "+data,"success");
 }
 async function adminAddEarning(){
  if(!await adminReady())return;
  const {data,error}=await db.rpc("ps_admin_add_vip_earning",{p_user_id:$("earningUserId").value.trim(),p_vip_activation_id:$("earningActivationId").value.trim(),p_amount:Number($("earningAmount").value),p_description:$("earningDescription").value.trim()||null});
- if(error)return message("adminEarningMessage",error.message,"error");message("adminEarningMessage","Revenu enregistré. "+data,"success");
+ if(error)return message("adminEarningMessage",error.message,"error");
+ message("adminEarningMessage","Revenu enregistré. "+data,"success");
 }
 
 /* PARAMÈTRES GLOBAUX */
@@ -914,7 +1071,11 @@ function applyTheme(){
 }
 function applyCommunityLinks(){
  const links=[["whatsappGroup",settings.whatsappGroup],["telegramGroup",settings.telegramGroup],["customerWhatsApp",settings.customerWhatsApp]];
- links.forEach(([id,url])=>{const a=$(id),valid=url&&/^https:\/\/(chat\.whatsapp\.com|wa\.me|t\.me)\//i.test(url);if(valid){a.href=url;a.style.opacity="1";a.style.pointerEvents="auto";}else{a.href="#";a.style.opacity=".5";a.style.pointerEvents="none";}});
+ links.forEach(([id,url])=>{
+  const a=$(id),valid=url&&/^https:\/\/(chat\.whatsapp\.com|wa\.me|t\.me)\//i.test(url);
+  if(valid){a.href=url;a.style.opacity="1";a.style.pointerEvents="auto";}
+  else{a.href="#";a.style.opacity=".5";a.style.pointerEvents="none";}
+ });
 }
 function applyAPKLink(){
  const btn=$("apkDownloadButton"),info=$("apkDownloadInfo");
@@ -922,7 +1083,8 @@ function applyAPKLink(){
  else{btn.href="#";btn.style.opacity=".5";info.textContent="Le lien APK n'est pas encore configuré.";}
 }
 function downloadAPK(e){
- if(!settings.apkUrl||!/^https:\/\//i.test(settings.apkUrl)){e.preventDefault();alert("Le lien APK n'a pas encore été ajouté.");return false;}return true;
+ if(!settings.apkUrl||!/^https:\/\//i.test(settings.apkUrl)){e.preventDefault();alert("Le lien APK n'a pas encore été ajouté.");return false;}
+ return true;
 }
 function applySettings(){
  applyTheme();renderPaymentNumbers();applyCommunityLinks();applyAPKLink();
@@ -969,21 +1131,37 @@ async function saveGlobalSettings(){
 function loadVIPSettings(){
  const b=$("vipSettingsList");b.textContent="Chargement...";
  db.from("power_station_vip_products").select("*").order("id").then(({data,error})=>{
-  if(error)return b.textContent=error.message;b.innerHTML="";
+  if(error)return b.textContent=error.message;
+  b.innerHTML="";
   (data||[]).forEach(v=>{
    const e=document.createElement("div");e.className="admin-card";
-   e.innerHTML=`<h3>${escapeHTML(v.code)}</h3><label>Prix FC</label><input type="number" id="price-${v.id}" value="${v.price_fc}"><label>Revenu journalier FC</label><input type="number" id="daily-${v.id}" value="${v.daily_revenue_fc}"><label>Durée jours</label><input type="number" id="days-${v.id}" value="${v.duration_days}"><p>Total calculé : <strong id="total-${v.id}">${money(Number(v.daily_revenue_fc||0)*Number(v.duration_days||35))}</strong></p><button class="green" onclick="saveVIPProduct('${v.id}')">Enregistrer ${escapeHTML(v.code)}</button><div id="save-${v.id}" class="status hidden"></div>`;
-   b.append(e);$("daily-"+v.id).addEventListener("input",()=>updateVIPTotal(v.id));$("days-"+v.id).addEventListener("input",()=>updateVIPTotal(v.id));
+   e.innerHTML=`<h3>${escapeHTML(v.code)}</h3>
+   <label>Prix FC</label><input type="number" id="price-${v.id}" value="${v.price_fc}">
+   <label>Revenu journalier FC</label><input type="number" id="daily-${v.id}" value="${v.daily_revenue_fc}">
+   <label>Durée jours</label><input type="number" id="days-${v.id}" value="${v.duration_days}">
+   <p>Total calculé : <strong id="total-${v.id}">${money(Number(v.daily_revenue_fc||0)*Number(v.duration_days||35))}</strong></p>
+   <button class="green" onclick="saveVIPProduct('${v.id}')">Enregistrer ${escapeHTML(v.code)}</button>
+   <div id="save-${v.id}" class="status hidden"></div>`;
+   b.append(e);
+   $("daily-"+v.id).addEventListener("input",()=>updateVIPTotal(v.id));
+   $("days-"+v.id).addEventListener("input",()=>updateVIPTotal(v.id));
   });
  });
 }
 function updateVIPTotal(id){$("total-"+id).textContent=money(Number($("daily-"+id).value||0)*Number($("days-"+id).value||0));}
 async function saveVIPProduct(id){
  if(!await adminReady())return;
- const values={price_fc:Number($("price-"+id).value),daily_revenue_fc:Number($("daily-"+id).value),duration_days:Number($("days-"+id).value),total_revenue_fc:Number($("daily-"+id).value)*Number($("days-"+id).value)};
+ const values={
+  price_fc:Number($("price-"+id).value),
+  daily_revenue_fc:Number($("daily-"+id).value),
+  duration_days:Number($("days-"+id).value),
+  total_revenue_fc:Number($("daily-"+id).value)*Number($("days-"+id).value)
+ };
  if(values.price_fc<=0||values.daily_revenue_fc<0||values.duration_days<=0)return message("save-"+id,"Vérifiez les montants et la durée.","error");
  const {error}=await db.from("power_station_vip_products").update(values).eq("id",id);
- if(error)return message("save-"+id,error.message,"error");message("save-"+id,"Produit modifié. Total : "+money(values.total_revenue_fc),"success");loadVIPProducts();
+ if(error)return message("save-"+id,error.message,"error");
+ message("save-"+id,"Produit modifié. Total : "+money(values.total_revenue_fc),"success");
+ loadVIPProducts();
 }
 
 /* DÉMARRAGE */
@@ -992,8 +1170,14 @@ async function saveVIPProduct(id){
  if(referralFromUrl){authMode("signup");showPage("auth");}
  if(currentUser)await checkAdmin();
 })();
+
 if("serviceWorker" in navigator){
- window.addEventListener("load",async()=>{try{const registration=await navigator.serviceWorker.register("/sw.js");console.log("POWER STATION RDC : Service Worker activé",registration.scope);}catch(error){console.error("Erreur Service Worker :",error);}});
+ window.addEventListener("load",async()=>{
+  try{
+   const registration=await navigator.serviceWorker.register("/sw.js");
+   console.log("POWER STATION RDC : Service Worker activé",registration.scope);
+  }catch(error){console.error("Erreur Service Worker :",error);}
+ });
 }
 </script>
 </body>
