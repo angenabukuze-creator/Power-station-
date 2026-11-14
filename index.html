@@ -235,7 +235,7 @@ label{font-weight:bold;font-size:13px}
 <section id="active" class="hidden">
 <div class="card">
 <h2><i class="fa-solid fa-bolt"></i> Mes produits VIP actifs</h2>
-<p class="small">Chaque récolte devient disponible après 24 heures.</p>
+<p class="small">Chaque récolte devient disponible après 24 heures. Une récolte maximum par période.</p>
 <button class="gold" onclick="loadActiveProducts()">Actualiser</button>
 <div id="activeProducts">Connectez-vous pour consulter vos produits.</div>
 <div id="earningMessage" class="status hidden"></div>
@@ -432,6 +432,7 @@ const $=id=>document.getElementById(id);
 let currentUser=null,isAdmin=false,allMembers=[],allVIP=[],selectedVIP=null;
 let selectedMember=null,myReferralCode="",myReferralLink="";
 let countdownTimer=null,teamCache=[],teamFilter="all",slideIndex=0,slideTimer=null;
+let activeRefreshTimer=null;
 
 let settings={
  airtel:"973087965",airtelName:"BASHANGWA",
@@ -473,13 +474,18 @@ function badge(s){
  return '<span class="badge badge-orange">En attente</span>';
 }
 
+/* Dates affichées selon l'heure de Kinshasa */
 function formatDateTime(v){
  if(!v)return "-";
  const d=new Date(v);
  if(Number.isNaN(d.getTime()))return "-";
- return d.toLocaleString("fr-FR",{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit",second:"2-digit"});
+ return new Intl.DateTimeFormat("fr-FR",{
+  timeZone:"Africa/Kinshasa",
+  day:"2-digit",month:"2-digit",year:"numeric",
+  hour:"2-digit",minute:"2-digit",second:"2-digit",
+  hourCycle:"h23"
+ }).format(d);
 }
-
 function formatPhone(v){
  let p=String(v||"").trim().replace(/[\s()-]/g,"");
  if(p.startsWith("00"))p="+"+p.slice(2);
@@ -665,71 +671,209 @@ async function submitVIPDeposit(){
 
 /* PRODUITS ACTIFS ET RÉCOLTE */
 function timeLeft(date){
- const ms=new Date(date).getTime()-Date.now();if(ms<=0)return "Récolte disponible maintenant";
+ const ms=new Date(date).getTime()-Date.now();
+ if(ms<=0)return "Récolte disponible maintenant";
  const d=Math.floor(ms/86400000),h=Math.floor(ms%86400000/3600000),m=Math.floor(ms%3600000/60000),s=Math.floor(ms%60000/1000);
  return (d?d+" j ":"")+h+" h "+m+" min "+s+" s";
 }
-function dateFormat(date){return date?new Date(date).toLocaleString("fr-FR"):"Pas encore récolté";}
+function dateFormat(date){return date?formatDateTime(date):"Pas encore récolté";}
+
+/* Une récolte appartient à une activation précise, pas seulement à son code VIP. */
+function earningsForActivation(allEarnings,activationId){
+ return allEarnings.filter(e=>String(e.vip_activation_id||"")===String(activationId));
+}
+function getEarningState(rows,now=Date.now()){
+ const pending=rows.filter(e=>String(e.status||"").toLowerCase()==="pending");
+ const claimed=rows.filter(e=>String(e.status||"").toLowerCase()==="claimed"||e.claimed_at);
+ const missed=rows.filter(e=>String(e.status||"").toLowerCase()==="missed");
+ const ready=pending.filter(e=>{
+  const start=new Date(e.available_at).getTime();
+  return Number.isFinite(start)&&now>=start&&now<start+86400000;
+ });
+ const waiting=pending.filter(e=>new Date(e.available_at).getTime()>now)
+  .sort((a,b)=>new Date(a.available_at)-new Date(b.available_at));
+ const expiredPending=pending.filter(e=>{
+  const start=new Date(e.available_at).getTime();
+  return Number.isFinite(start)&&now>=start+86400000;
+ });
+ const next=waiting[0]||null;
+ const available=ready.length?ready[0]:null;
+ return {pending,claimed,missed,ready,waiting,expiredPending,next,available};
+}
+
 async function loadActiveProducts(){
- await checkSession();const box=$("activeProducts");if(!currentUser){box.textContent="Connectez-vous.";return;}
+ await checkSession();
+ const box=$("activeProducts");
+ if(!currentUser){box.textContent="Connectez-vous.";return;}
  if(countdownTimer){clearInterval(countdownTimer);countdownTimer=null;}
+ if(activeRefreshTimer){clearInterval(activeRefreshTimer);activeRefreshTimer=null;}
  box.textContent="Chargement...";
- const {data:allActs,error}=await db.from("ps_vip_activations").select("id,status,activated_at,expires_at,vip_product_id").eq("user_id",currentUser.id).eq("status","active").order("activated_at",{ascending:false});
+
+ const {data:allActs,error}=await db.from("ps_vip_activations")
+  .select("id,status,activated_at,expires_at,vip_product_id")
+  .eq("user_id",currentUser.id)
+  .eq("status","active")
+  .order("activated_at",{ascending:false});
+
  if(error){box.textContent=error.message;return;}
- const acts=(allActs||[]).filter(a=>!a.expires_at||new Date(a.expires_at).getTime()>Date.now());
+
+ const now=Date.now();
+ const acts=(allActs||[]).filter(a=>!a.expires_at||new Date(a.expires_at).getTime()>now);
  if(!acts.length){box.textContent="Aucun VIP actif pour le moment.";return;}
+
  const ids=[...new Set(acts.map(a=>a.vip_product_id).filter(Boolean))];
+
  const [{data:vips,error:ve},{data:earnings,error:ee}]=await Promise.all([
-  db.from("power_station_vip_products").select("id,code,price_fc,daily_revenue_fc,duration_days,total_revenue_fc").in("id",ids),
-  db.from("ps_member_earnings").select("id,vip_code,amount,status,available_at,claimed_at,description").eq("user_id",currentUser.id).order("available_at",{ascending:true})
+  db.from("power_station_vip_products")
+   .select("id,code,price_fc,daily_revenue_fc,duration_days,total_revenue_fc")
+   .in("id",ids),
+  db.from("ps_member_earnings")
+   .select("id,vip_activation_id,vip_code,amount,status,available_at,claimed_at,description,day_number")
+   .eq("user_id",currentUser.id)
+   .order("available_at",{ascending:true})
  ]);
- if(ve){box.textContent=ve.message;return;}if(ee){box.textContent=ee.message;return;}
- const vmap=Object.fromEntries((vips||[]).map(v=>[v.id,v])),allEarnings=earnings||[];box.innerHTML="";
+
+ if(ve){box.textContent=ve.message;return;}
+ if(ee){box.textContent=ee.message;return;}
+
+ const vmap=Object.fromEntries((vips||[]).map(v=>[String(v.id),v]));
+ const allEarnings=earnings||[];
+ box.innerHTML="";
+
  acts.forEach(a=>{
-  const v=vmap[a.vip_product_id]||{},duration=Number(v.duration_days||35),code=v.code||"VIP";
-  const rows=allEarnings.filter(e=>String(e.vip_code||"").toUpperCase()===String(code).toUpperCase());
-  const pending=rows.filter(e=>String(e.status).toLowerCase()==="pending");
-  const ready=pending.filter(e=>new Date(e.available_at).getTime()<=Date.now());
-  const waiting=pending.filter(e=>new Date(e.available_at).getTime()>Date.now());
-  const last=rows.filter(e=>e.claimed_at||String(e.status).toLowerCase()==="claimed").sort((x,y)=>new Date(y.claimed_at||0)-new Date(x.claimed_at||0))[0];
-  const next=waiting.sort((x,y)=>new Date(x.available_at)-new Date(y.available_at))[0]?.available_at||null;
-  const amount=ready.reduce((s,e)=>s+Number(e.amount||0),0),daily=Number(v.daily_revenue_fc||0);
-  const elapsed=a.activated_at?Math.min(duration,Math.max(0,Math.floor((Date.now()-new Date(a.activated_at).getTime())/86400000))):0;
-  const progress=duration?Math.min(100,Math.round(elapsed/duration*100)):0;
-  const el=document.createElement("div");el.className="active-vip-card";
-  el.innerHTML=`<div class="active-vip-header"><div class="active-vip-title"><i class="fa-solid fa-gem"></i> ${escapeHTML(code)}</div><div class="active-vip-status">● ACTIF</div></div>
+  const v=vmap[String(a.vip_product_id)]||{};
+  const duration=Number(v.duration_days||35);
+  const code=v.code||"VIP";
+  const rows=earningsForActivation(allEarnings,a.id);
+  const state=getEarningState(rows);
+  const daily=Number(v.daily_revenue_fc||0);
+  const amount=state.ready.length?Number(state.ready[0].amount||0):0;
+  const last=state.claimed.slice().sort((x,y)=>
+   new Date(y.claimed_at||0)-new Date(x.claimed_at||0)
+  )[0]||null;
+  const next=state.next?.available_at||null;
+  const claimedCount=state.claimed.length;
+  const missedCount=state.missed.length;
+  const progress=Math.min(100,Math.round((claimedCount/duration)*100));
+
+  const el=document.createElement("div");
+  el.className="active-vip-card";
+  el.innerHTML=`
+  <div class="active-vip-header">
+   <div class="active-vip-title"><i class="fa-solid fa-gem"></i> ${escapeHTML(code)}</div>
+   <div class="active-vip-status">● ACTIF</div>
+  </div>
   <div class="vip-detail-row"><span>Prix</span><strong>${money(v.price_fc)}</strong></div>
   <div class="vip-detail-row"><span>Activé le</span><strong>${dateFormat(a.activated_at)}</strong></div>
   <div class="vip-detail-row"><span>Fin prévue</span><strong>${dateFormat(a.expires_at)}</strong></div>
-  <div class="vip-daily-amount"><span>Montant quotidien</span><strong>${money(daily)}</strong></div>
+  <div class="vip-daily-amount"><span>Montant quotidien prévu</span><strong>${money(daily)}</strong></div>
   <div class="vip-detail-row"><span>Total indicatif (${duration} jours)</span><strong>${money(v.total_revenue_fc||daily*duration)}</strong></div>
-  <div class="vip-detail-row"><span>Progression</span><strong id="day-${a.id}">${elapsed}/${duration} jours</strong></div>
+  <div class="vip-detail-row"><span>Récoltes validées</span><strong id="claimed-${a.id}">${claimedCount}/${duration}</strong></div>
+  <div class="vip-detail-row"><span>Récoltes manquées</span><strong id="missed-${a.id}">${missedCount}</strong></div>
   <div class="vip-progress"><div id="progress-${a.id}" style="width:${progress}%"></div></div>
   <div class="vip-detail-row"><span>Dernière récolte</span><strong id="last-${a.id}">${last?dateFormat(last.claimed_at):"Aucune"}</strong></div>
   <div class="vip-detail-row"><span>Montant par récolte</span><strong>${money(daily)}</strong></div>
   <div class="vip-detail-row"><span>Revenu disponible</span><strong id="ready-${a.id}">${money(amount)}</strong></div>
-  <div class="vip-countdown ${ready.length?"ready":""}" id="timer-${a.id}">${ready.length?"REVENUS DISPONIBLES":next?"🔒 RÉCOLTE APRÈS 24 H — "+timeLeft(next):"Aucun revenu en attente"}</div>
-  <button class="vip-claim-button" id="claim-btn-${a.id}" ${ready.length?"":"disabled"} onclick="claimVIPEarnings('${a.id}')">${ready.length?"RÉCOLTER "+money(amount):"🔒 RÉCOLTE APRÈS 24 H"}</button>`;
+  <div class="vip-countdown ${state.ready.length?"ready":""}" id="timer-${a.id}">
+   ${state.ready.length?"RÉCOLTE DISPONIBLE":next?"🔒 PROCHAINE RÉCOLTE — "+timeLeft(next):"Aucun revenu disponible"}
+  </div>
+  <button class="vip-claim-button" id="claim-btn-${a.id}" ${state.ready.length?"":"disabled"}
+   onclick="claimVIPEarnings('${a.id}')">
+   ${state.ready.length?"RÉCOLTER "+money(amount):"🔒 RÉCOLTE NON DISPONIBLE"}
+  </button>`;
   box.appendChild(el);
  });
+
+ /* Le compte à rebours est recalculé chaque seconde avec l'heure réelle. */
  countdownTimer=setInterval(()=>{
   acts.forEach(a=>{
-   const v=vmap[a.vip_product_id]||{},code=v.code||"VIP";
-   const rows=allEarnings.filter(e=>String(e.vip_code||"").toUpperCase()===String(code).toUpperCase());
-   const pending=rows.filter(e=>String(e.status).toLowerCase()==="pending"),ready=pending.filter(e=>new Date(e.available_at).getTime()<=Date.now());
-   const waiting=pending.filter(e=>new Date(e.available_at).getTime()>Date.now()).sort((x,y)=>new Date(x.available_at)-new Date(y.available_at));
-   const timer=$("timer-"+a.id),btn=$("claim-btn-"+a.id),readyBox=$("ready-"+a.id),amount=ready.reduce((s,e)=>s+Number(e.amount||0),0);
+   const rows=earningsForActivation(allEarnings,a.id);
+   const state=getEarningState(rows);
+   const timer=$("timer-"+a.id);
+   const btn=$("claim-btn-"+a.id);
+   const readyBox=$("ready-"+a.id);
+   const claimedBox=$("claimed-"+a.id);
+   const missedBox=$("missed-"+a.id);
+   const progressBox=$("progress-"+a.id);
+   const lastBox=$("last-"+a.id);
+   const amount=state.ready.length?Number(state.ready[0].amount||0):0;
+   const duration=Number(vmap[String(a.vip_product_id)]?.duration_days||35);
+
    if(readyBox)readyBox.textContent=money(amount);
-   if(timer){timer.className="vip-countdown "+(ready.length?"ready":"");timer.textContent=ready.length?"REVENUS DISPONIBLES":waiting.length?"🔒 RÉCOLTE APRÈS 24 H — "+timeLeft(waiting[0].available_at):"Aucun revenu en attente";}
-   if(btn){btn.disabled=!ready.length;btn.textContent=ready.length?"RÉCOLTER "+money(amount):"🔒 RÉCOLTE APRÈS 24 H";}
+   if(claimedBox)claimedBox.textContent=state.claimed.length+"/"+duration;
+   if(missedBox)missedBox.textContent=state.missed.length;
+   if(progressBox)progressBox.style.width=Math.min(100,Math.round(state.claimed.length/duration*100))+"%";
+
+   const last=state.claimed.slice().sort((x,y)=>
+    new Date(y.claimed_at||0)-new Date(x.claimed_at||0)
+   )[0];
+   if(lastBox)lastBox.textContent=last?dateFormat(last.claimed_at):"Aucune";
+
+   if(timer){
+    timer.className="vip-countdown "+(state.ready.length?"ready":"");
+    timer.textContent=state.ready.length
+     ?"RÉCOLTE DISPONIBLE"
+     :state.next
+      ?"🔒 PROCHAINE RÉCOLTE — "+timeLeft(state.next.available_at)
+      :"Aucun revenu disponible";
+   }
+   if(btn){
+    btn.disabled=!state.ready.length;
+    btn.textContent=state.ready.length
+     ?"RÉCOLTER "+money(amount)
+     :"🔒 RÉCOLTE NON DISPONIBLE";
+   }
   });
  },1000);
+
+ /* Recharge les statuts depuis Supabase périodiquement pour actualiser les récoltes manquées. */
+ activeRefreshTimer=setInterval(async()=>{
+  if(!currentUser||$("active").classList.contains("hidden"))return;
+  const {data,error}=await db.from("ps_member_earnings")
+   .select("id,vip_activation_id,vip_code,amount,status,available_at,claimed_at,description,day_number")
+   .eq("user_id",currentUser.id)
+   .order("available_at",{ascending:true});
+  if(!error&&data){
+   allEarnings.splice(0,allEarnings.length,...data);
+   acts.forEach(a=>{
+    const rows=earningsForActivation(allEarnings,a.id);
+    const state=getEarningState(rows);
+    const claimedBox=$("claimed-"+a.id);
+    const missedBox=$("missed-"+a.id);
+    const progressBox=$("progress-"+a.id);
+    const lastBox=$("last-"+a.id);
+    const duration=Number(vmap[String(a.vip_product_id)]?.duration_days||35);
+    if(claimedBox)claimedBox.textContent=state.claimed.length+"/"+duration;
+    if(missedBox)missedBox.textContent=state.missed.length;
+    if(progressBox)progressBox.style.width=Math.min(100,Math.round(state.claimed.length/duration*100))+"%";
+    const last=state.claimed.slice().sort((x,y)=>new Date(y.claimed_at||0)-new Date(x.claimed_at||0))[0];
+    if(lastBox)lastBox.textContent=last?dateFormat(last.claimed_at):"Aucune";
+   });
+  }
+ },60000);
 }
+
 async function claimVIPEarnings(activationId){
- await checkSession();if(!currentUser)return showPage("auth");if(!confirm("Confirmer la récolte des revenus disponibles ?"))return;
- const {data,error}=await db.rpc("ps_claim_vip_earnings",{p_vip_activation_id:activationId});
- if(error){message("earningMessage",error.message,"error");return;}
- message("earningMessage","Récolte demandée : "+money(data)+".","success");await loadWallet();await loadActiveProducts();
+ await checkSession();
+ if(!currentUser)return showPage("auth");
+ if(!confirm("Confirmer la récolte de la récompense disponible ?"))return;
+
+ const button=$("claim-btn-"+activationId);
+ if(button)button.disabled=true;
+
+ const {data,error}=await db.rpc("ps_claim_vip_earnings",{
+  p_vip_activation_id:activationId
+ });
+
+ if(error){
+  message("earningMessage",error.message,"error");
+  if(button)button.disabled=false;
+  return;
+ }
+
+ message("earningMessage","Récolte traitée : "+money(data)+".","success");
+ await loadWallet();
+ await loadActiveProducts();
 }
 
 /* RETRAITS */
@@ -1166,7 +1310,11 @@ async function saveVIPProduct(id){
 
 /* DÉMARRAGE */
 (async function init(){
- loadLocalSettings();startPhotoSlider();await loadGlobalSettings();await checkSession();await loadVIPProducts();
+ loadLocalSettings();
+ startPhotoSlider();
+ await loadGlobalSettings();
+ await checkSession();
+ await loadVIPProducts();
  if(referralFromUrl){authMode("signup");showPage("auth");}
  if(currentUser)await checkAdmin();
 })();
