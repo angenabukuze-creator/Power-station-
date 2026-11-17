@@ -117,7 +117,6 @@ label{font-weight:bold;font-size:13px}
 .slider-dots button{width:9px;height:9px;padding:0;border-radius:50%;background:#FFFFFF80}
 .slider-dots button.active{background:#087FE5}
 
-/* ACTUALITÉS DÉFILANTES */
 .news-bar{
 display:flex;align-items:center;
 background:#062B55;color:white;
@@ -135,7 +134,6 @@ padding:0 14px;font-size:20px;
 .news-track span{margin-right:65px}
 @keyframes newsScroll{from{transform:translateX(0)}to{transform:translateX(-100%)}}
 
-/* FENÊTRE DE BIENVENUE */
 .welcome-overlay{
 position:fixed;inset:0;background:#031B38E8;
 z-index:1000;display:flex;align-items:center;
@@ -167,16 +165,55 @@ color:white;text-align:center;padding:20px;
 .vip-daily-amount{background:#EAF4FF;border:1px solid #BBD9F3;padding:13px;border-radius:12px;margin:12px 0;text-align:center}
 .vip-daily-amount span{display:block;color:#52718D;font-size:12px}
 .vip-daily-amount strong{display:block;color:var(--primary);font-size:23px;margin-top:5px}
-.vip-countdown{background:#EAF4FF;border:1px solid #BBD9F3;color:#07569A;padding:13px;border-radius:12px;margin:12px 0;text-align:center;font-weight:bold}
-.vip-countdown.ready{background:#DCFCE7;border-color:#86D6A2;color:#166534}
-.vip-claim-button{width:100%;background:#087FE5;color:white;font-size:15px;padding:15px}
-.vip-claim-button:disabled{background:#DCE8F2;color:#71869A}
 .vip-progress{width:100%;height:9px;background:#EAF1F7;border-radius:20px;overflow:hidden;margin:8px 0 12px}
 .vip-progress div{height:100%;background:linear-gradient(90deg,#087FE5,#062B55);border-radius:20px}
 .admin-tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
 .admin-tools button{font-size:12px}
 .compact-line{display:flex;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px solid #EDF3F8;font-size:12px}
 .compact-line:last-child{border-bottom:0}
+
+/* TOTAL REÇU ET TOTAL ATTENDU */
+.earning-summary{
+display:grid;
+grid-template-columns:repeat(2,minmax(0,1fr));
+gap:10px;
+margin:12px 0;
+}
+.earning-summary-card{
+border-radius:14px;
+padding:16px 12px;
+color:white;
+background:linear-gradient(135deg,#062B55,#087FE5);
+box-shadow:0 4px 14px #062B5520;
+}
+.earning-summary-card.received{
+background:linear-gradient(135deg,#126B3B,#20A45D);
+}
+.earning-summary-card span{
+display:block;
+font-size:12px;
+opacity:.9;
+}
+.earning-summary-card strong{
+display:block;
+font-size:19px;
+margin-top:9px;
+overflow-wrap:anywhere;
+}
+.earning-summary-card i{
+font-size:20px;
+margin-bottom:8px;
+}
+.earning-note{
+background:#EAF4FF;
+color:#16446D;
+border:1px solid #BBD9F3;
+padding:12px;
+border-radius:10px;
+font-size:12px;
+line-height:1.5;
+margin:10px 0;
+}
 
 /* OPTIONS DANS MOI */
 .account-option{
@@ -200,6 +237,7 @@ border-radius:12px;padding:14px;margin:12px 0;
 .card{padding:13px}
 .photo-slider{height:180px}
 .vip-detail-row{font-size:12px}
+.earning-summary-card strong{font-size:16px}
 }
 </style>
 </head>
@@ -231,7 +269,6 @@ border-radius:12px;padding:14px;margin:12px 0;
 </div>
 </div>
 
-<!-- CLOCHETTE ET ANNONCES -->
 <div class="news-bar">
 <div class="news-icon"><i class="fa-solid fa-bell"></i></div>
 <div class="news-window">
@@ -395,20 +432,47 @@ Chargement de votre compte Mobile Money...
 </div>
 </section>
 
-<!-- MES ÉQUIPEMENTS ET REVENUS -->
+<!-- MES ÉQUIPEMENTS ET REVENUS AUTOMATIQUES -->
 <section id="active" class="hidden">
+
 <div class="card">
 <h2><i class="fa-solid fa-toolbox"></i> Mes équipements</h2>
-<p class="small">Consultez vos équipements VIP et leur état.</p>
-<button class="gold" onclick="loadActiveProducts()">Actualiser</button>
+<p class="small">Retrouvez ici vos produits VIP activés, leur durée d'exécution et les revenus déjà reçus.</p>
+
+<div class="earning-summary">
+<div class="earning-summary-card received">
+<i class="fa-solid fa-circle-check"></i>
+<span>Total reçu</span>
+<strong id="totalReceived">0 FC</strong>
+</div>
+
+<div class="earning-summary-card">
+<i class="fa-solid fa-hourglass-half"></i>
+<span>Total attendu</span>
+<strong id="totalExpected">0 FC</strong>
+</div>
+</div>
+
+<button class="gold" style="width:100%" onclick="loadActiveProducts()">
+<i class="fa-solid fa-rotate"></i> Actualiser mes équipements
+</button>
+
 <div id="activeProducts">Connectez-vous pour consulter vos équipements.</div>
 </div>
 
 <div class="card">
 <h2><i class="fa-solid fa-chart-line"></i> Revenus quotidien</h2>
-<p class="small">Les revenus disponibles peuvent être récoltés après leur période de 24 heures.</p>
-<div id="earningMessage" class="status hidden"></div>
+
+<div class="vip-daily-amount">
+<span>Total de revenu que vous pouvez gagner par jour</span>
+<strong id="dailyTotalRevenue">0 FC / jour</strong>
 </div>
+
+<div id="earningMessage" class="earning-note">
+Les revenus VIP sont versés automatiquement après chaque période de 24 heures. Aucune récolte manuelle n'est nécessaire.
+</div>
+</div>
+
 </section>
 
 <!-- ÉQUIPE -->
@@ -471,7 +535,6 @@ Chargement de votre compte Mobile Money...
 </div>
 </div>
 
-<!-- OPTION COMPTE DE RETRAIT -->
 <div class="card">
 <button class="account-option" onclick="toggleAccountSection('payoutSection')">
 <span><i class="fa-solid fa-building-columns"></i> &nbsp; Ajouter / Modifier mon compte de retrait</span>
@@ -504,7 +567,6 @@ Chargement de votre compte Mobile Money...
 </div>
 </div>
 
-<!-- OPTION MOT DE PASSE -->
 <div class="card">
 <button class="account-option" onclick="toggleAccountSection('passwordSection')">
 <span><i class="fa-solid fa-lock"></i> &nbsp; Modifier mon mot de passe</span>
@@ -788,7 +850,7 @@ const $=id=>document.getElementById(id);
 
 let currentUser=null,isAdmin=false,allMembers=[],allVIP=[],selectedVIP=null;
 let selectedMember=null,myReferralCode="",myReferralLink="";
-let countdownTimer=null,teamCache=[],teamFilter="all",slideIndex=0,slideTimer=null;
+let teamCache=[],teamFilter="all",slideIndex=0,slideTimer=null;
 let activeRefreshTimer=null;
 let savedPayout=null;
 let welcomeConfirmed=false;
@@ -843,7 +905,7 @@ return '<span class="badge badge-green">Actif</span>';
 return '<span class="badge badge-orange">En attente</span>';
 }
 
-/* DATE ET HEURE 24H DE KINSHASA */
+/* DATE ET HEURE DE KINSHASA */
 function formatDateTime(v){
 if(!v)return "-";
 const d=new Date(v);
@@ -851,7 +913,8 @@ if(Number.isNaN(d.getTime()))return "-";
 return new Intl.DateTimeFormat("fr-FR",{
 timeZone:"Africa/Kinshasa",
 day:"2-digit",month:"2-digit",year:"numeric",
-hour:"2-digit",minute:"2-digit",second:"2-digit",
+hour:"2-digit",minute:"2-digit",
+second:"2-digit",
 hourCycle:"h23"
 }).format(d);
 }
@@ -1485,56 +1548,26 @@ if(error)return message("vipDepositMessage",error.message,"error");
 message("vipDepositMessage","Demande envoyée. En attente de validation. Référence : "+data,"success");
 }
 
-/* PRODUITS ACTIFS ET RÉCOLTES */
-function timeLeft(date){
-
-const ms=new Date(date).getTime()-Date.now();
-
-if(ms<=0)return "Récolte disponible maintenant";
-
-const d=Math.floor(ms/86400000);
-const h=Math.floor(ms%86400000/3600000);
-const m=Math.floor(ms%3600000/60000);
-const s=Math.floor(ms%60000/1000);
-
-return (d?d+" j ":"")+h+" h "+m+" min "+s+" s";
-}
-
-function dateFormat(date){
-return date?formatDateTime(date):"Pas encore récolté";
-}
-
+/* MES ÉQUIPEMENTS — VERSEMENTS AUTOMATIQUES */
 function earningsForActivation(allEarnings,activationId){
 return allEarnings.filter(e=>String(e.vip_activation_id||"")===String(activationId));
 }
 
-function getEarningState(rows,now=Date.now()){
+function sumAmounts(rows){
+return rows.reduce((sum,row)=>sum+Number(row.amount||0),0);
+}
 
-const pending=rows.filter(e=>String(e.status||"").toLowerCase()==="pending");
+function renderEarningSummary(earnings){
+const rows=earnings||[];
 
-const claimed=rows.filter(e=>
-String(e.status||"").toLowerCase()==="claimed"||e.claimed_at
-);
+const received=rows
+.filter(e=>String(e.status||"").toLowerCase()==="claimed"||!!e.claimed_at);
 
-const missed=rows.filter(e=>String(e.status||"").toLowerCase()==="missed");
+const pending=rows
+.filter(e=>String(e.status||"").toLowerCase()==="pending");
 
-const ready=pending.filter(e=>{
-const start=new Date(e.available_at).getTime();
-return Number.isFinite(start)&&now>=start&&now<start+86400000;
-});
-
-const waiting=pending.filter(e=>new Date(e.available_at).getTime()>now)
-.sort((a,b)=>new Date(a.available_at)-new Date(b.available_at));
-
-const expiredPending=pending.filter(e=>{
-const start=new Date(e.available_at).getTime();
-return Number.isFinite(start)&&now>=start+86400000;
-});
-
-const next=waiting[0]||null;
-const available=ready.length?ready[0]:null;
-
-return{pending,claimed,missed,ready,waiting,expiredPending,next,available};
+$("totalReceived").textContent=money(sumAmounts(received));
+$("totalExpected").textContent=money(sumAmounts(pending));
 }
 
 async function loadActiveProducts(){
@@ -1545,12 +1578,10 @@ const box=$("activeProducts");
 
 if(!currentUser){
 box.textContent="Connectez-vous.";
+$("totalReceived").textContent=money(0);
+$("totalExpected").textContent=money(0);
+$("dailyTotalRevenue").textContent=money(0)+" / jour";
 return;
-}
-
-if(countdownTimer){
-clearInterval(countdownTimer);
-countdownTimer=null;
 }
 
 if(activeRefreshTimer){
@@ -1558,7 +1589,7 @@ clearInterval(activeRefreshTimer);
 activeRefreshTimer=null;
 }
 
-box.textContent="Chargement...";
+box.textContent="Chargement de vos équipements...";
 
 const {data:allActs,error}=await db.from("ps_vip_activations")
 .select("id,status,activated_at,expires_at,vip_product_id")
@@ -1567,7 +1598,7 @@ const {data:allActs,error}=await db.from("ps_vip_activations")
 .order("activated_at",{ascending:false});
 
 if(error){
-box.textContent=error.message;
+box.textContent="Erreur : "+error.message;
 return;
 }
 
@@ -1579,6 +1610,9 @@ const acts=(allActs||[]).filter(a=>
 
 if(!acts.length){
 box.textContent="Aucun équipement VIP actif pour le moment.";
+$("totalReceived").textContent=money(0);
+$("totalExpected").textContent=money(0);
+$("dailyTotalRevenue").textContent=money(0)+" / jour";
 return;
 }
 
@@ -1597,11 +1631,29 @@ db.from("ps_member_earnings")
 
 ]);
 
-if(ve){box.textContent=ve.message;return;}
-if(ee){box.textContent=ee.message;return;}
+if(ve){
+box.textContent="Erreur produits VIP : "+ve.message;
+return;
+}
+
+if(ee){
+box.textContent="Erreur revenus : "+ee.message;
+return;
+}
 
 const vmap=Object.fromEntries((vips||[]).map(v=>[String(v.id),v]));
 const allEarnings=earnings||[];
+
+renderEarningSummary(allEarnings);
+
+let dailyTotal=0;
+
+acts.forEach(a=>{
+const v=vmap[String(a.vip_product_id)]||{};
+dailyTotal+=Number(v.daily_revenue_fc||0);
+});
+
+$("dailyTotalRevenue").textContent=money(dailyTotal)+" / jour";
 
 box.innerHTML="";
 
@@ -1611,18 +1663,22 @@ const v=vmap[String(a.vip_product_id)]||{};
 const duration=Number(v.duration_days||35);
 const code=v.code||"VIP";
 const rows=earningsForActivation(allEarnings,a.id);
-const state=getEarningState(rows);
+
+const receivedRows=rows.filter(e=>
+String(e.status||"").toLowerCase()==="claimed"||!!e.claimed_at
+);
+
+const pendingRows=rows.filter(e=>
+String(e.status||"").toLowerCase()==="pending"
+);
+
+const receivedAmount=sumAmounts(receivedRows);
+const expectedAmount=sumAmounts(pendingRows);
 const daily=Number(v.daily_revenue_fc||0);
-const amount=state.ready.length?Number(state.ready[0].amount||0):0;
+const totalRevenue=Number(v.total_revenue_fc||daily*duration);
 
-const last=state.claimed.slice().sort((x,y)=>
-new Date(y.claimed_at||0)-new Date(x.claimed_at||0)
-)[0]||null;
-
-const next=state.next?.available_at||null;
-const claimedCount=state.claimed.length;
-const missedCount=state.missed.length;
-const progress=Math.min(100,Math.round((claimedCount/duration)*100));
+const executedDays=receivedRows.length;
+const progress=Math.min(100,Math.round((executedDays/duration)*100));
 
 const el=document.createElement("div");
 el.className="active-vip-card";
@@ -1630,171 +1686,125 @@ el.className="active-vip-card";
 el.innerHTML=`
 
 <div class="active-vip-header">
-<div class="active-vip-title"><i class="fa-solid fa-gem"></i> ${escapeHTML(code)}</div>
-<div class="active-vip-status">● ACTIF</div>
+<div class="active-vip-title">
+<i class="fa-solid fa-gem"></i> ${escapeHTML(code)}
+</div>
+<div class="active-vip-status">● ACTIVÉ</div>
 </div>
 
-<div class="vip-detail-row"><span>Prix</span><strong>${money(v.price_fc)}</strong></div>
+<div class="vip-detail-row">
+<span>Produit activé</span>
+<strong>${escapeHTML(code)}</strong>
+</div>
 
-<div class="vip-detail-row"><span>Activé le</span><strong>${dateFormat(a.activated_at)}</strong></div>
+<div class="vip-detail-row">
+<span>Prix d'achat</span>
+<strong>${money(v.price_fc)}</strong>
+</div>
 
-<div class="vip-detail-row"><span>Fin prévue</span><strong>${dateFormat(a.expires_at)}</strong></div>
+<div class="vip-detail-row">
+<span>Jours d'exécution</span>
+<strong>${executedDays} / ${duration} jours</strong>
+</div>
+
+<div class="vip-progress">
+<div style="width:${progress}%"></div>
+</div>
+
+<div class="vip-detail-row">
+<span>Revenu généré</span>
+<strong style="color:#168447">${money(receivedAmount)}</strong>
+</div>
+
+<div class="vip-detail-row">
+<span>Revenu total prévu</span>
+<strong>${money(totalRevenue)}</strong>
+</div>
+
+<div class="vip-detail-row">
+<span>Revenu restant attendu</span>
+<strong>${money(expectedAmount)}</strong>
+</div>
 
 <div class="vip-daily-amount">
-<span>Montant quotidien prévu</span>
-<strong>${money(daily)}</strong>
+<span>Revenu quotidien de cet équipement</span>
+<strong>${money(daily)} / jour</strong>
 </div>
 
-<div class="vip-detail-row"><span>Total indicatif (${duration} jours)</span><strong>${money(v.total_revenue_fc||daily*duration)}</strong></div>
-
-<div class="vip-detail-row"><span>Récoltes validées</span><strong id="claimed-${a.id}">${claimedCount}/${duration}</strong></div>
-
-<div class="vip-detail-row"><span>Récoltes manquées</span><strong id="missed-${a.id}">${missedCount}</strong></div>
-
-<div class="vip-progress"><div id="progress-${a.id}" style="width:${progress}%"></div></div>
-
-<div class="vip-detail-row"><span>Dernière récolte</span><strong id="last-${a.id}">${last?dateFormat(last.claimed_at):"Aucune"}</strong></div>
-
-<div class="vip-detail-row"><span>Montant par récolte</span><strong>${money(daily)}</strong></div>
-
-<div class="vip-detail-row"><span>Revenu disponible</span><strong id="ready-${a.id}">${money(amount)}</strong></div>
-
-<div class="vip-countdown ${state.ready.length?"ready":""}" id="timer-${a.id}">
-${state.ready.length?"RÉCOLTE DISPONIBLE":next?"🔒 PROCHAINE RÉCOLTE — "+timeLeft(next):"Aucun revenu disponible"}
+<div class="vip-detail-row">
+<span>Date d'activation</span>
+<strong>${formatDateTime(a.activated_at)}</strong>
 </div>
 
-<button class="vip-claim-button" id="claim-btn-${a.id}" ${state.ready.length?"":"disabled"} onclick="claimVIPEarnings('${a.id}')">
-${state.ready.length?"RÉCOLTER "+money(amount):"🔒 RÉCOLTE NON DISPONIBLE"}
-</button>
+<div class="vip-detail-row">
+<span>Date de fin</span>
+<strong>${formatDateTime(a.expires_at)}</strong>
+</div>
+
+<div class="earning-note">
+<i class="fa-solid fa-clock"></i>
+Les revenus sont crédités automatiquement après chaque période de 24 heures. Vous n'avez rien à récolter manuellement.
+</div>
 `;
 
 box.appendChild(el);
 });
 
-countdownTimer=setInterval(()=>{
-
-acts.forEach(a=>{
-
-const rows=earningsForActivation(allEarnings,a.id);
-const state=getEarningState(rows);
-
-const timer=$("timer-"+a.id);
-const btn=$("claim-btn-"+a.id);
-const readyBox=$("ready-"+a.id);
-const claimedBox=$("claimed-"+a.id);
-const missedBox=$("missed-"+a.id);
-const progressBox=$("progress-"+a.id);
-const lastBox=$("last-"+a.id);
-
-const amount=state.ready.length?Number(state.ready[0].amount||0):0;
-const duration=Number(vmap[String(a.vip_product_id)]?.duration_days||35);
-
-if(readyBox)readyBox.textContent=money(amount);
-
-if(claimedBox)claimedBox.textContent=state.claimed.length+"/"+duration;
-if(missedBox)missedBox.textContent=state.missed.length;
-
-if(progressBox)
-progressBox.style.width=Math.min(100,Math.round(state.claimed.length/duration*100))+"%";
-
-const last=state.claimed.slice().sort((x,y)=>
-new Date(y.claimed_at||0)-new Date(x.claimed_at||0)
-)[0];
-
-if(lastBox)
-lastBox.textContent=last?dateFormat(last.claimed_at):"Aucune";
-
-if(timer){
-
-timer.className="vip-countdown "+(state.ready.length?"ready":"");
-
-timer.textContent=state.ready.length
-?"RÉCOLTE DISPONIBLE"
-:state.next
-?"🔒 PROCHAINE RÉCOLTE — "+timeLeft(state.next.available_at)
-:"Aucun revenu disponible";
-}
-
-if(btn){
-btn.disabled=!state.ready.length;
-btn.textContent=state.ready.length
-?"RÉCOLTER "+money(amount)
-:"🔒 RÉCOLTE NON DISPONIBLE";
-}
-
-});
-
-},1000);
-
+/* ACTUALISATION AUTOMATIQUE DE L'AFFICHAGE */
 activeRefreshTimer=setInterval(async()=>{
 
 if(!currentUser||$("active").classList.contains("hidden"))return;
 
-const {data,error}=await db.from("ps_member_earnings")
+const {data:newEarnings,error:newError}=await db.from("ps_member_earnings")
 .select("id,vip_activation_id,vip_code,amount,status,available_at,claimed_at,description,day_number")
 .eq("user_id",currentUser.id)
 .order("available_at",{ascending:true});
 
-if(!error&&data){
-
-allEarnings.splice(0,allEarnings.length,...data);
-
-acts.forEach(a=>{
-
-const rows=earningsForActivation(allEarnings,a.id);
-const state=getEarningState(rows);
-
-const claimedBox=$("claimed-"+a.id);
-const missedBox=$("missed-"+a.id);
-const progressBox=$("progress-"+a.id);
-const lastBox=$("last-"+a.id);
-
-const duration=Number(vmap[String(a.vip_product_id)]?.duration_days||35);
-
-if(claimedBox)claimedBox.textContent=state.claimed.length+"/"+duration;
-if(missedBox)missedBox.textContent=state.missed.length;
-
-if(progressBox)
-progressBox.style.width=Math.min(100,Math.round(state.claimed.length/duration*100))+"%";
-
-const last=state.claimed.slice().sort((x,y)=>
-new Date(y.claimed_at||0)-new Date(x.claimed_at||0)
-)[0];
-
-if(lastBox)lastBox.textContent=last?dateFormat(last.claimed_at):"Aucune";
-
-});
-
-}
-
-},60000);
-}
-
-async function claimVIPEarnings(activationId){
-
-await checkSession();
-
-if(!currentUser)return showPage("auth");
-
-if(!confirm("Confirmer la récolte de la récompense disponible ?"))return;
-
-const button=$("claim-btn-"+activationId);
-if(button)button.disabled=true;
-
-const {data,error}=await db.rpc("ps_claim_vip_earnings",{
-p_vip_activation_id:activationId
-});
-
-if(error){
-message("earningMessage",error.message,"error");
-if(button)button.disabled=false;
+if(newError){
+console.error("Actualisation des revenus :",newError.message);
 return;
 }
 
-message("earningMessage","Récolte traitée : "+money(data)+".","success");
+const refreshed=newEarnings||[];
 
-await loadWallet();
-await loadActiveProducts();
+renderEarningSummary(refreshed);
+
+const cards=box.querySelectorAll(".active-vip-card");
+
+acts.forEach((a,index)=>{
+
+const card=cards[index];
+if(!card)return;
+
+const v=vmap[String(a.vip_product_id)]||{};
+const duration=Number(v.duration_days||35);
+const rows=earningsForActivation(refreshed,a.id);
+
+const receivedRows=rows.filter(e=>
+String(e.status||"").toLowerCase()==="claimed"||!!e.claimed_at
+);
+
+const pendingRows=rows.filter(e=>
+String(e.status||"").toLowerCase()==="pending"
+);
+
+const receivedAmount=sumAmounts(receivedRows);
+const expectedAmount=sumAmounts(pendingRows);
+const executedDays=receivedRows.length;
+const progress=Math.min(100,Math.round((executedDays/duration)*100));
+
+const details=card.querySelectorAll(".vip-detail-row");
+
+if(details[2])details[2].querySelector("strong").textContent=executedDays+" / "+duration+" jours";
+if(details[3])details[3].querySelector("strong").textContent=money(receivedAmount);
+if(details[4])details[4].querySelector("strong").textContent=money(Number(v.total_revenue_fc||Number(v.daily_revenue_fc||0)*duration));
+if(details[5])details[5].querySelector("strong").textContent=money(expectedAmount);
+
+const progressBar=card.querySelector(".vip-progress div");
+if(progressBar)progressBar.style.width=progress+"%";
+});
+
+},60000);
 }
 
 /* RETRAITS */
@@ -1900,7 +1910,6 @@ return message("withdrawMessage","Le montant minimum est de "+money(settings.wit
 if(!savedPayout.account_holder_name||!savedPayout.mobile_money_number||!savedPayout.provider)
 return message("withdrawMessage","Votre compte Mobile Money enregistré est incomplet. Modifiez-le dans MOI.","error");
 
-/* Le compte est déjà enregistré : aucune nouvelle saisie demandée. */
 const {error}=await db.rpc("ps_submit_withdrawal",{
 p_amount:amount
 });
@@ -2899,7 +2908,6 @@ savedPayout=null;
 }
 
 });
-
 </script>
 </body>
 </html>
