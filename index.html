@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>POWER STATION RDC</title>
+<title>LSACE</title>
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#062B55">
 <link rel="apple-touch-icon" href="/icon-192.png">
@@ -159,6 +159,26 @@ label{font-weight:bold;font-size:13px}
 .about-section:last-child{border-bottom:0}
 .about-section h3{margin-bottom:7px}
 
+.daily-feature-box{
+background:#F4F9FF;
+border:1px solid #BBD9F3;
+border-radius:13px;
+padding:15px;
+margin:12px 0;
+}
+.daily-feature-box h3{margin:0 0 8px;color:var(--dark)}
+.daily-feature-box p{font-size:13px;color:#52718D}
+.feature-result{
+background:#EAF4FF;
+border:1px solid #BBD9F3;
+border-radius:10px;
+padding:12px;
+margin-top:10px;
+font-size:13px;
+color:#16446D;
+overflow-wrap:anywhere;
+}
+
 @media(max-width:430px){
 .vip-grid{grid-template-columns:1fr}
 .container{padding:8px}
@@ -173,7 +193,7 @@ label{font-weight:bold;font-size:13px}
 <body class="home-page">
 
 <header>
-<h1><i class="fa-solid fa-bolt"></i> POWER STATION RDC</h1>
+<h1><i class="fa-solid fa-bolt"></i> LSACE</h1>
 <p>Énergie • Innovation • Opportunités</p>
 </header>
 
@@ -182,11 +202,11 @@ label{font-weight:bold;font-size:13px}
 <section id="home">
 
 <div class="photo-slider" id="photoSlider">
-<div class="photo-slide active"><img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1200&auto=format&fit=crop" alt="Énergie"><div class="photo-caption">POWER STATION RDC — Énergie et innovation</div></div>
+<div class="photo-slide active"><img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1200&auto=format&fit=crop" alt="Énergie"><div class="photo-caption">LSACE — Énergie et innovation</div></div>
 <div class="photo-slide"><img src="https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?w=1200&auto=format&fit=crop" alt="Électricité"><div class="photo-caption">Construisons ensemble un avenir énergétique</div></div>
 <div class="photo-slide"><img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1200&auto=format&fit=crop" alt="Panneaux solaires"><div class="photo-caption">Innovation et nouvelles technologies</div></div>
 <div class="photo-slide"><img src="https://images.unsplash.com/photo-1497440001374-f26997328c1b?w=1200&auto=format&fit=crop" alt="Énergie renouvelable"><div class="photo-caption">Une plateforme numérique pour nos membres</div></div>
-<div class="photo-slide"><img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1200&auto=format&fit=crop&sat=-50" alt="Centrale énergétique"><div class="photo-caption">POWER STATION RDC — Bienvenue</div></div>
+<div class="photo-slide"><img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1200&auto=format&fit=crop&sat=-50" alt="Centrale énergétique"><div class="photo-caption">LSACE — Bienvenue</div></div>
 <div class="slider-dots" id="sliderDots">
 <button class="active" onclick="goSlide(0)"></button>
 <button onclick="goSlide(1)"></button>
@@ -222,8 +242,8 @@ label{font-weight:bold;font-size:13px}
 </div>
 
 <div class="card">
-<h2><i class="fa-solid fa-download"></i> Application POWER STATION</h2>
-<p>Téléchargez l'application Android POWER STATION sur votre téléphone.</p>
+<h2><i class="fa-solid fa-download"></i> Application LSACE</h2>
+<p>Téléchargez l'application Android LSACE sur votre téléphone.</p>
 <a id="apkDownloadButton" class="apk-btn" href="#" onclick="return downloadAPK(event)"><i class="fa-brands fa-android"></i> TÉLÉCHARGER L'APPLICATION APK</a>
 <p class="small" id="apkDownloadInfo">Le lien APK doit être configuré.</p>
 </div>
@@ -440,6 +460,45 @@ label{font-weight:bold;font-size:13px}
 </div>
 </div>
 
+<!-- NOUVELLE OPTION : POINTAGE QUOTIDIEN -->
+<div class="card">
+<button class="account-option" onclick="toggleAccountSection('dailyCheckinSection')">
+<span><i class="fa-solid fa-calendar-check"></i> &nbsp; Pointage quotidien</span>
+<i class="fa-solid fa-chevron-down arrow"></i>
+</button>
+
+<div id="dailyCheckinSection" class="hidden">
+<div class="daily-feature-box">
+<h3><i class="fa-solid fa-calendar-check"></i> Pointage quotidien LSACE</h3>
+<p>Effectuez votre pointage quotidien depuis votre espace membre.</p>
+<p class="small">Le pointage est soumis aux règles et aux paramètres du service.</p>
+<button id="dailyCheckinButton" class="gold" style="width:100%" onclick="performDailyCheckin()">
+<i class="fa-solid fa-check"></i> Effectuer mon pointage
+</button>
+<div id="dailyCheckinMessage" class="feature-result hidden"></div>
+</div>
+</div>
+</div>
+
+<!-- NOUVELLE OPTION : BONUS CADEAU -->
+<div class="card">
+<button class="account-option" onclick="toggleAccountSection('giftBonusSection')">
+<span><i class="fa-solid fa-gift"></i> &nbsp; Bonus cadeau</span>
+<i class="fa-solid fa-chevron-down arrow"></i>
+</button>
+
+<div id="giftBonusSection" class="hidden">
+<div class="daily-feature-box">
+<h3><i class="fa-solid fa-gift"></i> Bonus cadeau LSACE</h3>
+<p>Consultez et réclamez votre bonus cadeau lorsqu'une récompense est disponible pour votre compte.</p>
+<button id="giftBonusButton" class="gold" style="width:100%" onclick="claimGiftBonus()">
+<i class="fa-solid fa-gift"></i> Réclamer mon bonus cadeau
+</button>
+<div id="giftBonusMessage" class="feature-result hidden"></div>
+</div>
+</div>
+</div>
+
 <div class="card">
 <button class="account-option" onclick="toggleAccountSection('payoutSection')">
 <span><i class="fa-solid fa-building-columns"></i> &nbsp; Ajouter / Modifier mon compte de retrait</span>
@@ -489,7 +548,7 @@ label{font-weight:bold;font-size:13px}
 <div id="aboutSection" class="hidden">
 
 <div class="about-section">
-<h3>POWER STATION RDC</h3>
+<h3>LSACE</h3>
 <p>La plateforme rassemble dans un même espace les offres disponibles, le suivi des opérations, les outils d’équipe et l’assistance.</p>
 <p>Depuis votre compte, vous pouvez consulter les offres, suivre vos dépôts et retraits, vérifier l’activité de vos produits et retrouver les informations utiles à votre utilisation du service.</p>
 </div>
@@ -520,7 +579,7 @@ label{font-weight:bold;font-size:13px}
 <div class="about-section">
 <h3>À propos des informations affichées</h3>
 <p>Les produits, frais, limites et modalités peuvent évoluer. Avant de valider une opération, vérifiez toujours les conditions affichées à l’écran et dans votre compte.</p>
-<p class="small">Les images POWER STATION présentes sur cette page sont illustratives. Cette plateforme est un service distinct et ne prétend pas être détenue, exploitée ou approuvée par une marque tierce.</p>
+<p class="small">Les images LSACE présentes sur cette page sont illustratives. Cette plateforme est un service distinct et ne prétend pas être détenue, exploitée ou approuvée par une marque tierce.</p>
 </div>
 
 </div>
@@ -538,7 +597,7 @@ label{font-weight:bold;font-size:13px}
 <section id="admin" class="hidden">
 
 <div class="card">
-<h2><i class="fa-solid fa-shield-halved"></i> SUPER ADMIN — POWER STATION</h2>
+<h2><i class="fa-solid fa-shield-halved"></i> SUPER ADMIN — LSACE</h2>
 <div id="adminStatus" class="status">Vérification...</div>
 <div class="admin-tabs">
 <button class="selected" onclick="adminTab('dashboard',this)">Tableau</button>
@@ -706,7 +765,7 @@ label{font-weight:bold;font-size:13px}
 </main>
 
 <footer style="text-align:center;padding:20px;color:#71869A;font-size:12px">
-POWER STATION RDC © 2026
+LSACE © 2026
 </footer>
 
 <nav class="bottom-nav">
@@ -720,16 +779,16 @@ POWER STATION RDC © 2026
 <div class="welcome-box">
 <div class="welcome-header">
 <i class="fa-solid fa-bolt" style="font-size:32px"></i>
-<h2>POWER STATION RDC</h2>
+<h2>LSACE</h2>
 <p>Bienvenue dans votre espace membre</p>
 </div>
 <div class="welcome-content">
 <h3>Chers membres, bienvenue !</h3>
-<p>POWER STATION RDC est une plateforme numérique permettant aux membres de consulter les offres VIP, effectuer leurs demandes de recharge, suivre leurs équipements actifs et consulter leur équipe de parrainage.</p>
+<p>LSACE est une plateforme numérique permettant aux membres de consulter les offres VIP, effectuer leurs demandes de recharge, suivre leurs équipements actifs et consulter leur équipe de parrainage.</p>
 <p>Chaque membre peut consulter son portefeuille, ses transactions et ses revenus quotidiens.</p>
 <p><strong>La plateforme est officiellement lancée le 11.11.2026.</strong></p>
 <p>Veuillez lire attentivement les informations de votre espace membre avant de continuer.</p>
-<p><strong>Merci de faire confiance à POWER STATION RDC.</strong></p>
+<p><strong>Merci de faire confiance à LSACE.</strong></p>
 </div>
 <div class="welcome-footer">
 <button onclick="confirmWelcome()"><i class="fa-solid fa-check-circle"></i> J'AI BIEN LU ET JE CONFIRME</button>
@@ -790,6 +849,13 @@ e.className="status";
 if(type)e.classList.add(type);
 }
 
+function featureMessage(id,text){
+const e=$(id);
+if(!e)return;
+e.textContent=text;
+e.classList.remove("hidden");
+}
+
 function badge(s){
 s=String(s||"").toLowerCase().trim();
 if(["success","approved","paid","validated","confirmed","completed","claimed"].includes(s))
@@ -847,6 +913,95 @@ $("welcomeOverlay").classList.add("hidden");
 
 function toggleAccountSection(id){
 $(id).classList.toggle("hidden");
+}
+
+/* POINTAGE QUOTIDIEN */
+async function performDailyCheckin(){
+await checkSession();
+
+if(!currentUser){
+featureMessage("dailyCheckinMessage","Veuillez vous connecter pour effectuer votre pointage.");
+return;
+}
+
+const btn=$("dailyCheckinButton");
+btn.disabled=true;
+btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Vérification du pointage...';
+
+try{
+/*
+Cette fonction RPC doit être créée dans Supabase :
+ps_daily_checkin()
+Elle doit vérifier la date du dernier pointage et empêcher
+un deuxième pointage le même jour.
+*/
+const {data,error}=await db.rpc("ps_daily_checkin");
+
+if(error){
+featureMessage("dailyCheckinMessage","Pointage indisponible : "+error.message);
+return;
+}
+
+let resultText="Votre pointage quotidien a été traité.";
+if(typeof data==="string")resultText=data;
+else if(data&&typeof data==="object"){
+resultText=data.message||data.msg||resultText;
+if(data.amount!==undefined)resultText+=" Bonus : "+money(data.amount);
+}
+
+featureMessage("dailyCheckinMessage",resultText);
+await loadWallet();
+}catch(error){
+featureMessage("dailyCheckinMessage","Erreur : "+error.message);
+}finally{
+btn.disabled=false;
+btn.innerHTML='<i class="fa-solid fa-check"></i> Effectuer mon pointage';
+}
+}
+
+/* BONUS CADEAU */
+async function claimGiftBonus(){
+await checkSession();
+
+if(!currentUser){
+featureMessage("giftBonusMessage","Veuillez vous connecter pour consulter votre bonus cadeau.");
+return;
+}
+
+const btn=$("giftBonusButton");
+btn.disabled=true;
+btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Vérification...';
+
+try{
+/*
+Cette fonction RPC doit être créée dans Supabase :
+ps_claim_gift_bonus()
+Elle doit vérifier l'éligibilité du membre et empêcher
+la réclamation multiple d'un même bonus.
+*/
+const {data,error}=await db.rpc("ps_claim_gift_bonus");
+
+if(error){
+featureMessage("giftBonusMessage","Bonus indisponible : "+error.message);
+return;
+}
+
+let resultText="Votre demande de bonus cadeau a été traitée.";
+if(typeof data==="string")resultText=data;
+else if(data&&typeof data==="object"){
+resultText=data.message||data.msg||resultText;
+if(data.amount!==undefined)resultText+=" Montant : "+money(data.amount);
+}
+
+featureMessage("giftBonusMessage",resultText);
+await loadWallet();
+await loadBonusHistory();
+}catch(error){
+featureMessage("giftBonusMessage","Erreur : "+error.message);
+}finally{
+btn.disabled=false;
+btn.innerHTML='<i class="fa-solid fa-gift"></i> Réclamer mon bonus cadeau';
+}
 }
 
 function showPage(page,button){
@@ -1998,7 +2153,7 @@ if("serviceWorker" in navigator){
 window.addEventListener("load",async()=>{
 try{
 const registration=await navigator.serviceWorker.register("/sw.js");
-console.log("POWER STATION RDC : Service Worker activé",registration.scope);
+console.log("LSACE : Service Worker activé",registration.scope);
 }catch(error){console.error("Erreur Service Worker :",error);}
 });
 }
