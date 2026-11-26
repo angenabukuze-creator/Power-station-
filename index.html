@@ -4,9 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>LSACE</title>
+
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#062B55">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="LSACE">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="apple-touch-icon" href="/icon-192.png">
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
@@ -97,6 +103,23 @@ label{font-weight:bold;font-size:13px}
 .service-btn{display:block;text-align:center;text-decoration:none;margin:9px 0;padding:15px;border-radius:10px;color:white;font-weight:bold}
 .whatsapp,.telegram,.customer{background:var(--dark)}
 .apk-btn{display:block;width:100%;text-align:center;text-decoration:none;background:var(--primary);color:white;padding:16px;border-radius:12px;font-weight:bold;font-size:16px;margin:12px 0}
+.install-btn{display:block;width:100%;background:linear-gradient(135deg,#062B55,#087FE5);color:white;padding:16px;border-radius:12px;font-weight:bold;font-size:16px;margin:12px 0}
+.install-instructions{background:#EAF4FF;border:1px solid #BBD9F3;color:#16446D;padding:13px;border-radius:12px;font-size:13px;line-height:1.6;margin-top:10px}
+
+.home-intro p{font-size:14px}
+.home-contact-link{display:block;text-align:center;text-decoration:none;background:#062B55;color:white;padding:13px;border-radius:10px;margin:9px 0;font-weight:bold}
+.home-contact-link i{margin-right:7px}
+.home-contact-link.primary{background:#087FE5}
+
+.investment-table-wrap{width:100%;overflow-x:auto;margin-top:12px;border:1px solid #DCE8F2;border-radius:12px}
+.investment-table{width:100%;min-width:650px;border-collapse:collapse;background:white;font-size:13px}
+.investment-table th{background:#062B55;color:white;padding:13px 10px;text-align:center;white-space:nowrap}
+.investment-table td{padding:12px 9px;text-align:center;border-bottom:1px solid #E5EEF7;white-space:nowrap}
+.investment-table tr:nth-child(even){background:#F2F7FC}
+.investment-table tr:last-child td{border-bottom:0}
+.investment-table td:first-child{font-weight:bold;color:#087FE5}
+.investment-table td strong{color:#062B55}
+.table-note{font-size:11px;color:#71869A;line-height:1.5;margin-top:10px}
 
 .photo-slider{position:relative;width:100%;height:220px;overflow:hidden;border-radius:15px;margin:12px 0;background:#062B55}
 .photo-slide{position:absolute;inset:0;opacity:0;transition:opacity .8s}
@@ -206,6 +229,7 @@ overflow-wrap:anywhere;
 .vip-detail-row{font-size:12px}
 .earning-summary-card strong{font-size:16px}
 .gift-admin-grid{grid-template-columns:1fr}
+.investment-table{font-size:12px}
 }
 </style>
 </head>
@@ -246,9 +270,55 @@ overflow-wrap:anywhere;
 <span>850846927 vient de retiré 120000fc</span>
 <span>991276543 vient de retiré 210500fc</span>
 <span>0816923467 vien de retiré 56000Fc</span>
-<span>993467865 vient d'active P3 de 27000Fc</span>
+<span>993467865 vient d'active P3 de 27000fc</span>
 </div>
 </div>
+</div>
+
+<!-- ACCUEIL ET TABLEAU DES INVESTISSEMENTS -->
+<div class="card home-intro">
+<h2><i class="fa-solid fa-house"></i> Bienvenue chez LSACE</h2>
+
+<p>LSACE est une plateforme numérique permettant aux membres de consulter les offres VIP, effectuer leurs demandes de recharge, suivre leurs équipements actifs et consulter leur équipe de parrainage.</p>
+
+<p>Chaque membre peut créer son compte, accéder à son espace personnel, consulter son portefeuille et suivre ses opérations.</p>
+
+<h3><i class="fa-solid fa-headset"></i> Rejoignez notre communauté</h3>
+
+<a class="home-contact-link primary" href="https://chat.whatsapp.com/Grnt021ErF9ErtwMZzUKGz?s=cl&p=a&iam=2" target="_blank" rel="noopener">
+<i class="fa-brands fa-whatsapp"></i> Rejoindre le groupe WhatsApp officiel
+</a>
+
+<a class="home-contact-link" href="https://wa.me/243965136330" target="_blank" rel="noopener">
+<i class="fa-brands fa-whatsapp"></i> Service clients WhatsApp : +243 965 136 330
+</a>
+
+<a class="home-contact-link" href="https://t.me/+xkKTZJJPqH85NDNk" target="_blank" rel="noopener">
+<i class="fa-brands fa-telegram"></i> Groupe Telegram
+</a>
+
+<h2 style="margin-top:22px"><i class="fa-solid fa-chart-column"></i> Tableau des investissements VIP</h2>
+
+<div class="investment-table-wrap">
+<table class="investment-table">
+<thead>
+<tr>
+<th>VIP</th>
+<th>Prix</th>
+<th>Revenu journalier</th>
+<th>Revenu total</th>
+<th>Validité</th>
+</tr>
+</thead>
+<tbody id="homeInvestmentTable">
+<tr><td colspan="5">Chargement du catalogue VIP...</td></tr>
+</tbody>
+</table>
+</div>
+
+<p class="table-note">
+Les montants affichés correspondent aux conditions indiquées pour chaque produit dans le catalogue. Consultez les informations du produit avant toute opération. Les revenus affichés ne constituent pas une garantie de gain.
+</p>
 </div>
 
 <div class="card">
@@ -268,11 +338,18 @@ overflow-wrap:anywhere;
 <p class="small" id="apkDownloadInfo">Le lien APK doit être configuré.</p>
 </div>
 
+<!-- INSTALLATION DE L'APPLICATION SUR CHROME -->
 <div class="card">
-<h2><i class="fa-solid fa-headset"></i> Assistance et communautés</h2>
-<a id="whatsappGroup" class="service-btn whatsapp" href="#" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Groupe WhatsApp</a>
-<a id="telegramGroup" class="service-btn telegram" href="#" target="_blank" rel="noopener"><i class="fa-brands fa-telegram"></i> Groupe Telegram</a>
-<a id="customerWhatsApp" class="service-btn customer" href="#" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Service clients WhatsApp</a>
+<h2><i class="fa-solid fa-mobile-screen-button"></i> Installer LSACE sur votre téléphone</h2>
+<p>Ajoutez LSACE à l'écran d'accueil de votre Android pour ouvrir la plateforme comme une application.</p>
+
+<button id="installAppButton" class="install-btn" type="button" onclick="installLSACE()">
+<i class="fa-solid fa-download"></i> INSTALLER LSACE
+</button>
+
+<div id="installAppStatus" class="install-instructions">
+Sur Chrome Android, appuyez sur les trois points <strong>⋮</strong> en haut à droite, puis choisissez <strong>« Installer l'application »</strong> ou <strong>« Ajouter à l'écran d'accueil »</strong>.
+</div>
 </div>
 
 </section>
@@ -856,8 +933,7 @@ LSACE © 2026
 <div class="welcome-content">
 <h3>Chers membres, bienvenue !</h3>
 <p>LSACE est une plateforme numérique permettant aux membres de consulter les offres VIP, effectuer leurs demandes de recharge, suivre leurs équipements actifs et consulter leur équipe de parrainage.</p>
-<p>Chaque membre peut consulter son portefeuille, ses transactions et ses revenus quotidiens.</p>
-<p><strong>La plateforme est officiellement lancée le 11.11.2026.</strong></p>
+<p>Chaque membre peut consulter son portefeuille, ses transactions et les informations de ses produits actifs.</p>
 <p>Veuillez lire attentivement les informations de votre espace membre avant de continuer.</p>
 <p><strong>Merci de faire confiance à LSACE.</strong></p>
 </div>
@@ -880,6 +956,10 @@ let teamCache=[],teamFilter="all",slideIndex=0,slideTimer=null;
 let activeRefreshTimer=null;
 let savedPayout=null;
 let welcomeConfirmed=false;
+let deferredInstallPrompt=null;
+
+const NEW_WHATSAPP_GROUP="https://chat.whatsapp.com/Grnt021ErF9ErtwMZzUKGz?s=cl&p=a&iam=2";
+const NEW_CUSTOMER_WHATSAPP="https://wa.me/243965136330";
 
 let settings={
  airtel:"973087965",airtelName:"BASHANGWA",
@@ -887,9 +967,9 @@ let settings={
  mpesa:"0861823718",mpesaName:"REGINA",
  primary:"#087FE5",gold:"#062B55",background:"#EAF4FF",
  promoFee:0,withdrawFee:0,withdrawMin:5000,
- whatsappGroup:"https://chat.whatsapp.com/KBYVbUFomvp1t1L0zm041M?s=cl&p=a&iam=2",
+ whatsappGroup:NEW_WHATSAPP_GROUP,
  telegramGroup:"https://t.me/+xkKTZJJPqH85",
- customerWhatsApp:"https://chat.whatsapp.com/KBYVbUFomvp1t1L0zm041M?s=cl&p=a&iam=2",
+ customerWhatsApp:NEW_CUSTOMER_WHATSAPP,
  apkUrl:""
 };
 
@@ -985,6 +1065,54 @@ $("welcomeOverlay").classList.add("hidden");
 function toggleAccountSection(id){
 $(id).classList.toggle("hidden");
 }
+
+/* INSTALLATION PWA SUR CHROME */
+async function installLSACE(){
+const status=$("installAppStatus");
+
+if(window.matchMedia("(display-mode: standalone)").matches||window.navigator.standalone===true){
+status.textContent="LSACE est déjà installée sur votre téléphone.";
+return;
+}
+
+if(deferredInstallPrompt){
+try{
+deferredInstallPrompt.prompt();
+const choice=await deferredInstallPrompt.userChoice;
+
+if(choice&&choice.outcome==="accepted"){
+status.textContent="Installation de LSACE acceptée. L'application sera ajoutée à votre écran d'accueil.";
+}else{
+status.textContent="Installation non effectuée. Vous pouvez réessayer ou utiliser le menu de Chrome.";
+}
+
+deferredInstallPrompt=null;
+}catch(error){
+console.error("Installation PWA :",error);
+status.textContent="Pour installer LSACE, ouvrez le menu Chrome ⋮ puis choisissez Installer l'application ou Ajouter à l'écran d'accueil.";
+}
+return;
+}
+
+status.innerHTML='Pour ajouter LSACE à votre téléphone :<br><strong>1.</strong> Ouvrez cette page dans Google Chrome.<br><strong>2.</strong> Appuyez sur les trois points <strong>⋮</strong> en haut à droite.<br><strong>3.</strong> Choisissez <strong>« Installer l'application »</strong> ou <strong>« Ajouter à l'écran d'accueil »</strong>.<br><strong>4.</strong> Confirmez l'ajout.';
+}
+
+window.addEventListener("beforeinstallprompt",event=>{
+event.preventDefault();
+deferredInstallPrompt=event;
+const status=$("installAppStatus");
+if(status){
+status.textContent="LSACE peut être installée directement. Appuyez sur le bouton INSTALLER LSACE.";
+}
+});
+
+window.addEventListener("appinstalled",()=>{
+deferredInstallPrompt=null;
+const status=$("installAppStatus");
+if(status)status.textContent="LSACE est maintenant installée sur votre téléphone.";
+const button=$("installAppButton");
+if(button)button.innerHTML='<i class="fa-solid fa-circle-check"></i> LSACE EST INSTALLÉE';
+});
 
 /* POINTAGE QUOTIDIEN */
 async function performDailyCheckin(){
@@ -1629,9 +1757,40 @@ function totalVIP(v){
 return Number(v.daily_revenue_fc||0)*Number(v.duration_days||35);
 }
 
+/* TABLEAU VIP SUR LA PAGE D'ACCUEIL */
+function renderHomeInvestmentTable(products){
+const box=$("homeInvestmentTable");
+if(!box)return;
+
+const rows=Array.isArray(products)?products:[];
+box.innerHTML="";
+
+if(!rows.length){
+box.innerHTML='<tr><td colspan="5">Aucun produit VIP disponible.</td></tr>';
+return;
+}
+
+rows.forEach(v=>{
+const duration=Number(v.duration_days||35);
+const total=Number(v.total_revenue_fc||totalVIP(v));
+const tr=document.createElement("tr");
+
+tr.innerHTML=`
+<td>${escapeHTML(v.code||"VIP")}</td>
+<td>${money(v.price_fc)}</td>
+<td>${money(v.daily_revenue_fc)}</td>
+<td><strong>${money(total)}</strong></td>
+<td>${duration} jours</td>
+`;
+
+box.appendChild(tr);
+});
+}
+
 function renderVIP(products){
 const box=$("shopVIP");
 box.innerHTML="";
+
 products.forEach(v=>{
 const el=document.createElement("div");
 el.className="vip-card";
@@ -1650,8 +1809,17 @@ async function loadVIPProducts(){
 const {data,error}=await db.from("power_station_vip_products")
 .select("id,code,price_fc,daily_revenue_fc,duration_days,total_revenue_fc,is_active")
 .eq("is_active",true).order("id");
-if(error){console.error(error);renderVIP(vipFallback);return;}
-renderVIP(data?.length?data:vipFallback);
+
+if(error){
+console.error(error);
+renderVIP(vipFallback);
+renderHomeInvestmentTable(vipFallback);
+return;
+}
+
+const products=data?.length?data:vipFallback;
+renderVIP(products);
+renderHomeInvestmentTable(products);
 }
 
 function renderPaymentNumbers(){
@@ -2287,6 +2455,7 @@ const links=[
 ];
 links.forEach(([id,url])=>{
 const a=$(id);
+if(!a)return;
 const valid=url&&/^https:\/\/(chat\.whatsapp\.com|wa\.me|t\.me)\//i.test(url);
 if(valid){a.href=url;a.style.opacity="1";a.style.pointerEvents="auto";}
 else{a.href="#";a.style.opacity=".5";a.style.pointerEvents="none";}
@@ -2321,6 +2490,15 @@ $("withdrawRules").textContent="Minimum : "+money(settings.withdrawMin)+". Frais
 
 function loadLocalSettings(){
 try{settings={...settings,...JSON.parse(localStorage.getItem("power_station_settings")||"{}")};}catch(e){}
+
+/* Remplacement des anciens liens par les nouveaux liens demandés */
+if(!settings.whatsappGroup||settings.whatsappGroup.includes("KBYVbUFomvp1t1L0zm041M")){
+settings.whatsappGroup=NEW_WHATSAPP_GROUP;
+}
+if(!settings.customerWhatsApp||settings.customerWhatsApp.includes("KBYVbUFomvp1t1L0zm041M")){
+settings.customerWhatsApp=NEW_CUSTOMER_WHATSAPP;
+}
+
 applySettings();
 }
 
@@ -2329,6 +2507,15 @@ const {data,error}=await db.from("power_station_public_settings").select("settin
 if(error){console.warn("Lecture paramètres Supabase :",error.message);return;}
 if(data?.settings){
 settings={...settings,...data.settings};
+
+/* Met à jour les anciennes adresses WhatsApp enregistrées dans Supabase */
+if(!settings.whatsappGroup||settings.whatsappGroup.includes("KBYVbUFomvp1t1L0zm041M")){
+settings.whatsappGroup=NEW_WHATSAPP_GROUP;
+}
+if(!settings.customerWhatsApp||settings.customerWhatsApp.includes("KBYVbUFomvp1t1L0zm041M")){
+settings.customerWhatsApp=NEW_CUSTOMER_WHATSAPP;
+}
+
 localStorage.setItem("power_station_settings",JSON.stringify(settings));
 applySettings();
 }
