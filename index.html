@@ -198,6 +198,25 @@ overflow-wrap:anywhere;
 .gift-admin-grid>div{min-width:0}
 .gift-admin-grid input{margin:6px 0}
 
+/* CALCUL DU RETRAIT */
+.withdraw-breakdown{
+background:#EAF4FF;
+border:1px solid #BBD9F3;
+border-radius:12px;
+padding:13px;
+margin:12px 0;
+font-size:13px;
+}
+.withdraw-breakdown .compact-line strong{color:var(--dark)}
+.withdraw-net{
+font-size:16px;
+font-weight:900;
+color:#07569A;
+padding-top:10px;
+margin-top:5px;
+border-top:1px solid #BBD9F3;
+}
+
 @media(max-width:430px){
 .vip-grid{grid-template-columns:1fr}
 .container{padding:8px}
@@ -362,10 +381,28 @@ overflow-wrap:anywhere;
 
 <div class="card">
 <h2><i class="fa-solid fa-money-bill-transfer"></i> Demande de retrait</h2>
-<div class="status warning">Conditions : VIP actif et demande entre 08h00 et 18h00, heure de Kinshasa.</div>
+
+<div class="status warning">
+<strong>Conditions de retrait LSACE :</strong><br>
+• VIP2 actif obligatoire.<br>
+• Retrait minimum : 5 000 FC.<br>
+• Du lundi au samedi uniquement.<br>
+• De 09h00 à 17h00, heure de Kinshasa.<br>
+• Dimanche : retraits fermés.<br>
+• Frais de retrait : 8 %.
+</div>
+
 <div class="saved-account" id="withdrawSavedAccount">Chargement de votre compte Mobile Money...</div>
-<p id="withdrawRules">Minimum : 5 000 FC.</p>
-<input id="withdrawAmount" type="number" min="5000" placeholder="Montant en FC">
+
+<p id="withdrawRules">Minimum : 5 000 FC. Frais : 8 %. Retraits du lundi au samedi, de 09h00 à 17h00.</p>
+
+<label for="withdrawAmount">Montant à retirer (FC)</label>
+<input id="withdrawAmount" type="number" min="5000" step="1" placeholder="Minimum 5 000 FC">
+
+<div id="withdrawCalculation" class="withdraw-breakdown">
+Saisissez le montant de votre retrait pour voir les frais et le montant net estimé.
+</div>
+
 <button class="red" style="width:100%" onclick="submitWithdrawal()">Envoyer ma demande</button>
 <div id="withdrawMessage" class="status hidden"></div>
 </div>
@@ -812,10 +849,10 @@ overflow-wrap:anywhere;
 <label>Frais promotionnels (%)</label>
 <input id="settingPromoFee" type="number">
 <label>Frais retrait (%)</label>
-<input id="settingWithdrawFee" type="number">
+<input id="settingWithdrawFee" type="number" value="8" readonly>
 <label>Retrait minimum FC</label>
-<input id="settingWithdrawMin" type="number">
-<p class="small">Horaires : 08h00 à 18h00, heure de Kinshasa.</p>
+<input id="settingWithdrawMin" type="number" value="5000" readonly>
+<p class="small">Règles fixes : VIP2 actif obligatoire. Retraits du lundi au samedi, de 09h00 à 17h00, heure de Kinshasa. Dimanche fermé. Frais : 8 %. Minimum : 5 000 FC.</p>
 <button class="green" style="width:100%" onclick="saveGlobalSettings()">Publier les paramètres pour tous les membres</button>
 <div id="settingsMessage" class="status hidden"></div>
 </div>
@@ -873,6 +910,11 @@ const SUPABASE_ANON_KEY="sb_publishable_M1LJ_gItIR_FbuK6oTPLKA_dZgvFRw6";
 const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 const $=id=>document.getElementById(id);
 
+/* NOUVELLES REGLES DE RETRAIT */
+const WITHDRAWAL_MIN=5000;
+const WITHDRAWAL_FEE=8;
+const WITHDRAWAL_TIMEZONE="Africa/Kinshasa";
+
 let currentUser=null,isAdmin=false,allMembers=[],allVIP=[],selectedVIP=null;
 let selectedMember=null,myReferralCode="",myReferralLink="";
 let teamCache=[],teamFilter="all",slideIndex=0,slideTimer=null;
@@ -885,7 +927,7 @@ let settings={
  orange:"899532643",orangeName:"JEANCQUELLINE",
  mpesa:"0861823718",mpesaName:"REGINA",
  primary:"#087FE5",gold:"#062B55",background:"#EAF4FF",
- promoFee:0,withdrawFee:0,withdrawMin:5000,
+ promoFee:0,withdrawFee:WITHDRAWAL_FEE,withdrawMin:WITHDRAWAL_MIN,
  whatsappGroup:"https://chat.whatsapp.com/Grnt021ErF9ErtwMZzUKGz?s=cl&p=a&iam=2",
  telegramGroup:"https://t.me/+xkKTZJJPqH85NDNk",
  customerWhatsApp:"https://wa.me/243965136330",
@@ -942,7 +984,7 @@ if(!v)return "-";
 const d=new Date(v);
 if(Number.isNaN(d.getTime()))return "-";
 return new Intl.DateTimeFormat("fr-FR",{
-timeZone:"Africa/Kinshasa",
+timeZone:WITHDRAWAL_TIMEZONE,
 day:"2-digit",month:"2-digit",year:"numeric",
 hour:"2-digit",minute:"2-digit",second:"2-digit",hourCycle:"h23"
 }).format(d);
@@ -955,6 +997,12 @@ if(p.startsWith("+243"))return p;
 if(p.startsWith("243"))return "+"+p;
 if(p.startsWith("0"))return "+243"+p.slice(1);
 return p.startsWith("+")?p:"+"+p;
+}
+
+/* GARANTIR LES FRAIS ET LE MINIMUM DEFINIS */
+function enforceWithdrawalSettings(){
+settings.withdrawFee=WITHDRAWAL_FEE;
+settings.withdrawMin=WITHDRAWAL_MIN;
 }
 
 async function checkSession(){
@@ -1306,7 +1354,7 @@ if(page==="home")showWelcome();
 if(page==="shop"){loadVIPProducts();loadActiveProducts();}
 if(page==="team")loadTeam();
 if(page==="active")loadActiveProducts();
-if(page==="withdraw"){loadWallet();loadSavedPayout(true);}
+if(page==="withdraw"){loadWallet();loadSavedPayout(true);updateWithdrawalCalculation();}
 if(page==="orders")loadOrders();
 if(page==="account")loadAccount();
 if(page==="admin")openAdmin();
@@ -1858,24 +1906,108 @@ if(progressBar)progressBar.style.width=progress+"%";
 },60000);
 }
 
-/* RETRAITS */
-function isWithdrawalTime(){
-const parts=new Intl.DateTimeFormat("en-GB",{
-timeZone:"Africa/Kinshasa",hour:"2-digit",minute:"2-digit",hourCycle:"h23"
+/* RETRAITS : JOURS ET HORAIRES DE KINSHASA */
+function getWithdrawalSchedule(){
+const parts=new Intl.DateTimeFormat("en-US",{
+timeZone:WITHDRAWAL_TIMEZONE,
+weekday:"short",
+hour:"2-digit",
+minute:"2-digit",
+hourCycle:"h23"
 }).formatToParts(new Date());
-const h=Number(parts.find(x=>x.type==="hour").value);
-const m=Number(parts.find(x=>x.type==="minute").value);
-const minutes=h*60+m;
-return minutes>=480&&minutes<1080;
+
+const weekday=parts.find(x=>x.type==="weekday")?.value;
+const hour=Number(parts.find(x=>x.type==="hour")?.value);
+const minute=Number(parts.find(x=>x.type==="minute")?.value);
+const minutes=hour*60+minute;
+
+const allowedDays=["Mon","Tue","Wed","Thu","Fri","Sat"];
+
+if(!allowedDays.includes(weekday)){
+return{
+allowed:false,
+message:"Les retraits sont fermés le dimanche. Revenez du lundi au samedi, de 09h00 à 17h00, heure de Kinshasa."
+};
 }
 
-async function hasActiveVIP(){
-const {data,error}=await db.from("ps_vip_activations")
-.select("id,status,expires_at").eq("user_id",currentUser.id).eq("status","active").limit(20);
+if(minutes<540||minutes>=1020){
+return{
+allowed:false,
+message:"Les retraits sont ouverts du lundi au samedi, uniquement de 09h00 à 17h00, heure de Kinshasa."
+};
+}
+
+return{allowed:true,message:"Retraits ouverts."};
+}
+
+/* VERIFIER SPECIFIQUEMENT UN VIP2 ACTIF */
+async function hasActiveVIP2(){
+if(!currentUser)return false;
+
+/* Récupérer l'identifiant du produit P2 */
+const {data:vip2,error:vipError}=await db.from("power_station_vip_products")
+.select("id,code")
+.eq("code","P2")
+.maybeSingle();
+
+if(vipError)throw vipError;
+if(!vip2)return false;
+
+/* Vérifier une activation P2 active appartenant au membre connecté */
+const {data:activations,error}=await db.from("ps_vip_activations")
+.select("id,status,expires_at,vip_product_id")
+.eq("user_id",currentUser.id)
+.eq("vip_product_id",vip2.id)
+.eq("status","active")
+.limit(50);
+
 if(error)throw error;
-return(data||[]).some(v=>!v.expires_at||new Date(v.expires_at)>new Date());
+
+const now=Date.now();
+
+return (activations||[]).some(v=>{
+if(!v.expires_at)return true;
+const expiry=new Date(v.expires_at).getTime();
+return Number.isFinite(expiry)&&expiry>now;
+});
 }
 
+/* CALCUL DES FRAIS ET DU MONTANT NET ESTIME */
+function updateWithdrawalCalculation(){
+const box=$("withdrawCalculation");
+if(!box)return;
+
+enforceWithdrawalSettings();
+
+const amount=Number($("withdrawAmount")?.value||0);
+
+if(!Number.isFinite(amount)||amount<=0){
+box.textContent="Saisissez le montant de votre retrait pour voir les frais et le montant net estimé.";
+return;
+}
+
+const fee=Math.round(amount*WITHDRAWAL_FEE/100);
+const net=amount-fee;
+
+box.innerHTML=`
+<div class="compact-line">
+<span>Montant demandé</span>
+<strong>${money(amount)}</strong>
+</div>
+<div class="compact-line">
+<span>Frais de retrait (8 %)</span>
+<strong>${money(fee)}</strong>
+</div>
+<div class="compact-line withdraw-net">
+<span>Montant net estimé à recevoir</span>
+<strong>${money(net)}</strong>
+</div>
+`;
+}
+
+$("withdrawAmount").addEventListener("input",updateWithdrawalCalculation);
+
+/* PORTEFEUILLE */
 async function loadWallet(){
 await checkSession();
 if(!currentUser){$("walletSummary").textContent="Connectez-vous.";return;}
@@ -1892,23 +2024,86 @@ $("walletSummary").innerHTML=`
 <br>Bonus : ${money(data.total_bonus)}`;
 }
 
+/* ENVOYER UNE DEMANDE DE RETRAIT */
 async function submitWithdrawal(){
 await checkSession();
+
 if(!currentUser)return showPage("auth");
-if(!isWithdrawalTime())return message("withdrawMessage","Les retraits sont ouverts de 08h00 à 18h00, heure de Kinshasa.","error");
+
+/* Vérification du jour et de l'heure de Kinshasa */
+const schedule=getWithdrawalSchedule();
+
+if(!schedule.allowed){
+return message("withdrawMessage",schedule.message,"error");
+}
+
+/* Vérification du compte Mobile Money */
 if(!savedPayout)await loadSavedPayout(false);
-if(!savedPayout)return message("withdrawMessage","Vous devez d'abord enregistrer votre compte Mobile Money dans la rubrique MOI.","error");
-let active=false;
-try{active=await hasActiveVIP();}catch(e){return message("withdrawMessage",e.message,"error");}
-if(!active)return message("withdrawMessage","Vous devez disposer d'un VIP actif.","error");
-let amount=Number($("withdrawAmount").value);
-if(!Number.isFinite(amount)||amount<Number(settings.withdrawMin))return message("withdrawMessage","Le montant minimum est de "+money(settings.withdrawMin)+".","error");
-if(!savedPayout.account_holder_name||!savedPayout.mobile_money_number||!savedPayout.provider)return message("withdrawMessage","Votre compte Mobile Money enregistré est incomplet. Modifiez-le dans MOI.","error");
+
+if(!savedPayout){
+return message("withdrawMessage","Vous devez d'abord enregistrer votre compte Mobile Money dans la rubrique MOI.","error");
+}
+
+/* Vérification obligatoire du VIP2 actif */
+let activeVIP2=false;
+
+try{
+activeVIP2=await hasActiveVIP2();
+}catch(e){
+return message("withdrawMessage","Impossible de vérifier votre VIP2 : "+e.message,"error");
+}
+
+if(!activeVIP2){
+return message("withdrawMessage","Vous devez disposer d'un VIP2 actif pour effectuer un retrait. Les autres VIP ne remplissent pas cette condition.","error");
+}
+
+/* Vérification du montant */
+const amount=Number($("withdrawAmount").value);
+
+if(!Number.isInteger(amount)||amount<WITHDRAWAL_MIN){
+return message("withdrawMessage","Le montant minimum de retrait est de "+money(WITHDRAWAL_MIN)+". Saisissez un montant entier en FC.","error");
+}
+
+/* Vérification du compte bénéficiaire */
+if(!savedPayout.account_holder_name||!savedPayout.mobile_money_number||!savedPayout.provider){
+return message("withdrawMessage","Votre compte Mobile Money enregistré est incomplet. Modifiez-le dans MOI.","error");
+}
+
+/* Présentation du montant net estimé */
+const fee=Math.round(amount*WITHDRAWAL_FEE/100);
+const net=amount-fee;
+
+const btn=document.querySelector("#withdraw button[onclick='submitWithdrawal()']");
+if(btn){
+btn.disabled=true;
+btn.textContent="Envoi de la demande...";
+}
+
+try{
 const {error}=await db.rpc("ps_submit_withdrawal",{p_amount:amount});
-if(error)return message("withdrawMessage",error.message,"error");
-message("withdrawMessage","Demande de retrait envoyée avec succès. Votre compte enregistré sera utilisé automatiquement.","success");
+
+if(error){
+return message("withdrawMessage","Demande refusée : "+error.message,"error");
+}
+
+message(
+"withdrawMessage",
+"Votre demande de retrait a été envoyée. Montant demandé : "+money(amount)+". Frais de 8 % : "+money(fee)+". Montant net estimé : "+money(net)+". Le paiement sera effectué après validation administrative.",
+"success"
+);
+
 $("withdrawAmount").value="";
+updateWithdrawalCalculation();
 await loadWallet();
+
+}catch(error){
+message("withdrawMessage","Erreur lors de l'envoi : "+error.message,"error");
+}finally{
+if(btn){
+btn.disabled=false;
+btn.textContent="Envoyer ma demande";
+}
+}
 }
 
 /* HISTORIQUE */
@@ -2311,11 +2506,16 @@ return true;
 }
 
 function applySettings(){
+enforceWithdrawalSettings();
 applyTheme();
 renderPaymentNumbers();
 applyCommunityLinks();
 applyAPKLink();
-$("withdrawRules").textContent="Minimum : "+money(settings.withdrawMin)+". Frais : "+settings.withdrawFee+" %. Retraits : 08h00–18h00.";
+$("withdrawRules").textContent=
+"Minimum : "+money(WITHDRAWAL_MIN)+
+". Frais : "+WITHDRAWAL_FEE+
+" %. VIP2 actif obligatoire. Retraits du lundi au samedi, de 09h00 à 17h00, heure de Kinshasa. Dimanche fermé.";
+updateWithdrawalCalculation();
 }
 
 /* Remplacement automatique des anciens liens sauvegardés */
@@ -2337,6 +2537,7 @@ try{
 settings={...settings,...JSON.parse(localStorage.getItem("power_station_settings")||"{}")};
 }catch(e){}
 migrateCommunityLinks();
+enforceWithdrawalSettings();
 localStorage.setItem("power_station_settings",JSON.stringify(settings));
 applySettings();
 }
@@ -2347,6 +2548,7 @@ if(error){console.warn("Lecture paramètres Supabase :",error.message);return;}
 if(data?.settings){
 settings={...settings,...data.settings};
 migrateCommunityLinks();
+enforceWithdrawalSettings();
 localStorage.setItem("power_station_settings",JSON.stringify(settings));
 applySettings();
 }
@@ -2354,6 +2556,7 @@ applySettings();
 
 function loadSettingsPanel(){
 if(!isAdmin)return;
+enforceWithdrawalSettings();
 $("settingAirtel").value=settings.airtel;
 $("settingAirtelName").value=settings.airtelName;
 $("settingOrange").value=settings.orange;
@@ -2364,8 +2567,8 @@ $("settingPrimary").value="#087FE5";
 $("settingGold").value="#062B55";
 $("settingBackground").value="#EAF4FF";
 $("settingPromoFee").value=settings.promoFee;
-$("settingWithdrawFee").value=settings.withdrawFee;
-$("settingWithdrawMin").value=settings.withdrawMin;
+$("settingWithdrawFee").value=WITHDRAWAL_FEE;
+$("settingWithdrawMin").value=WITHDRAWAL_MIN;
 $("settingWhatsAppGroup").value=settings.whatsappGroup||"";
 $("settingTelegramGroup").value=settings.telegramGroup||"";
 $("settingCustomerWhatsApp").value=settings.customerWhatsApp||"";
@@ -2375,6 +2578,7 @@ loadVIPSettings();
 
 async function saveGlobalSettings(){
 if(!await adminReady())return;
+
 settings={
 ...settings,
 airtel:$("settingAirtel").value.trim(),
@@ -2387,19 +2591,29 @@ primary:"#087FE5",
 gold:"#062B55",
 background:"#EAF4FF",
 promoFee:Number($("settingPromoFee").value),
-withdrawFee:Number($("settingWithdrawFee").value),
-withdrawMin:Number($("settingWithdrawMin").value),
+withdrawFee:WITHDRAWAL_FEE,
+withdrawMin:WITHDRAWAL_MIN,
 whatsappGroup:$("settingWhatsAppGroup").value.trim(),
 telegramGroup:$("settingTelegramGroup").value.trim(),
 customerWhatsApp:$("settingCustomerWhatsApp").value.trim(),
 apkUrl:$("settingApkUrl").value.trim()
 };
+
+enforceWithdrawalSettings();
+
 const {error}=await db.from("power_station_public_settings")
 .upsert({id:1,settings,updated_at:new Date().toISOString()},{onConflict:"id"});
+
 if(error)return message("settingsMessage","Erreur de publication Supabase : "+error.message,"error");
+
 localStorage.setItem("power_station_settings",JSON.stringify(settings));
 applySettings();
-message("settingsMessage","Paramètres publiés dans Supabase. Les membres pourront les recevoir à leur prochaine actualisation.","success");
+
+message(
+"settingsMessage",
+"Paramètres publiés. Frais de retrait : 8 %. Minimum : 5 000 FC. Les conditions affichées sont du lundi au samedi, de 09h00 à 17h00, avec VIP2 actif obligatoire.",
+"success"
+);
 }
 
 /* MODIFICATION DES PRODUITS VIP */
@@ -2452,6 +2666,8 @@ loadVIPProducts();
 loadLocalSettings();
 startPhotoSlider();
 await loadGlobalSettings();
+enforceWithdrawalSettings();
+applySettings();
 await checkSession();
 await loadVIPProducts();
 if(referralFromUrl){authMode("signup");showPage("auth");}
